@@ -175,11 +175,6 @@ $components = array(
         'plugins' => array(
         ),
         'chunks' => array(
-            'BackupMODXSnippetScriptSource' => array(
-                'category' => 'BackupMODX',
-                'description' => 'Source for MODX Backup script',
-                'static' => false,
-            ),
         ),
         'templates' => array(
         ),
