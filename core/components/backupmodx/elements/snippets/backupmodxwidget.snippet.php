@@ -34,6 +34,17 @@
  * @package backupmodx
  **/
 
+
+// Returns an empty string if user shouldn't see the widget
+$groups = $modx->getOption('groups', $scriptProperties, 'Administrator', true);
+if (strpos($groups, ',') !== false) {
+    $groups = explode(',', $groups);
+}
+if (!$modx->user->isMember($groups)) {
+    return '';
+}
+
+
 $config = $modx->getConfig();
 
 if (isset($_POST['backupMODX'])) {
@@ -44,7 +55,8 @@ if (isset($_POST['backupMODX'])) {
 	if (!empty($_POST["mysql"]) or !empty($_POST["files"])){
 	    $dir = $config[base_path] . (!empty($_POST["folder"]) ? $_POST["folder"]."backup" : "backup");
 	    $url = $config[base_url] . (!empty($_POST["folder"]) ? $_POST["folder"]."backup" : "backup");
-	    $base_path = $config[base_path];
+	    $base_path = MODX_BASE_PATH;
+	    $core_path = MODX_CORE_PATH;
 	    $date = date("Ymd-His");
 	    $dbase = $modx->getOption('dbname');
 	    $database_server = $config[host];
@@ -73,7 +85,7 @@ if (isset($_POST['backupMODX'])) {
 		
 		//File-Backup
 		if (!empty($_POST["files"])){
-			system("tar cf {$targetTar} --exclude=$dir $base_path");
+			system("tar cf {$targetTar} --exclude=$dir $base_path $core_path");
 		}
 		
 		//Combine SQL and Files in one archive

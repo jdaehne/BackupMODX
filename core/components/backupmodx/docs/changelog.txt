@@ -1,5 +1,15 @@
 Changelog for backupmodx
 
+backupmodx 1.0.2
+---------------------------------
++ Ability to define groups that can see the widget. Default is only: Administartor
+
+
+backupmodx 1.0.1
+---------------------------------
++ Includes "core-folder" placed outside the webroot.
+
+
 backupmodx 1.0.0
 ---------------------------------
 Initial Version
