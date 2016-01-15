@@ -1,5 +1,12 @@
 Changelog for backupmodx
 
+backupmodx 1.0.3
+---------------------------------
++ placing the sql-file in the root of combined tar-archive
++ checking if shell-commands working
++ excluding cache-folder to achieve smaller files
+
+
 backupmodx 1.0.2
 ---------------------------------
 + Ability to define groups that can see the widget. Default is only: Administartor
