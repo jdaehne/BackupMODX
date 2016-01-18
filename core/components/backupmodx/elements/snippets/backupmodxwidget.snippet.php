@@ -45,6 +45,11 @@ if (!$modx->user->isMember($groups)) {
 }
 
 
+//Check if server supports shell-commands
+if (!shell_exec("type type")) { return 'Your server does not support shell-commands. Backup not possible.'; }
+
+
+
 $config = $modx->getConfig();
 
 if (isset($_POST['backupMODX'])) {
