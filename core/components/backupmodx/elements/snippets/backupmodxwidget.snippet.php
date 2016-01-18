@@ -48,6 +48,8 @@ if (!$modx->user->isMember($groups)) {
 //Check if server supports shell-commands
 if (!shell_exec("type type")) { return 'Your server does not support shell-commands. Backup not possible.'; }
 
+//Get Properties
+$tarAlias = $modx->getOption('tarAlias', $scriptProperties, 'tar', true); //some websites may need a different alias for tar
 
 
 $config = $modx->getConfig();
@@ -90,13 +92,12 @@ if (isset($_POST['backupMODX'])) {
 		
 		//File-Backup
 		if (!empty($_POST["files"])){
-			system("tar cf {$targetTar} --exclude=$dir $base_path $core_path");
+			system("$tarAlias cf {$targetTar} --exclude=$dir $base_path $core_path");
 		}
 		
 		//Combine SQL and Files in one archive
 		if (file_exists($targetSql) and file_exists($targetTar) and filesize($targetSql) > 0) {
-			system("cp {$targetTar} {$targetCom}"); //copy files-archive
-			system("tar uf {$targetCom} -C $dir {$dbase}_{$date}_mysql.sql"); //adding sql-file in the root
+			system("$tarAlias cf {$targetCom} {$targetSql} {$targetTar}");
 		}
 		
 		$backup = true;

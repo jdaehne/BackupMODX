@@ -25,6 +25,18 @@ $properties = array (
     'lexicon' => 'backupmodx:properties',
     'area' => '',
   ),
+  'tarAlias' => 
+  array (
+    'name' => 'tarAlias',
+    'desc' => 'some server need an alias for tar like "/bin/pktar"',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => 'tar',
+    'lexicon' => NULL,
+    'area' => '',
+  ),
 );
 
 return $properties;

@@ -5,6 +5,7 @@ backupmodx 1.0.3
 + placing the sql-file in the root of combined tar-archive
 + checking if shell-commands working
 + excluding cache-folder to achieve smaller files
++ adding abbility to change tar-alias for different hosting-provider
 
 
 backupmodx 1.0.2
