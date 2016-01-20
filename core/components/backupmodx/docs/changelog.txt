@@ -1,5 +1,11 @@
 Changelog for backupmodx
 
+backupmodx 1.0.4
+---------------------------------
++ Bugfix: placing the sql-file in the root of combined tar-archive
++ Bugfix: excluding cache-folder to achieve smaller files
+
+
 backupmodx 1.0.3
 ---------------------------------
 + placing the sql-file in the root of combined tar-archive

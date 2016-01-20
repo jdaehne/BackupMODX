@@ -38,10 +38,10 @@
 // Returns an empty string if user shouldn't see the widget
 $groups = $modx->getOption('groups', $scriptProperties, 'Administrator', true);
 if (strpos($groups, ',') !== false) {
-    $groups = explode(',', $groups);
+	$groups = explode(',', $groups);
 }
 if (!$modx->user->isMember($groups)) {
-    return '';
+	return '';
 }
 
 
@@ -55,27 +55,27 @@ $tarAlias = $modx->getOption('tarAlias', $scriptProperties, 'tar', true); //some
 $config = $modx->getConfig();
 
 if (isset($_POST['backupMODX'])) {
-    
-    set_time_limit(0);
+
+	set_time_limit(0);
 	ini_set('max_execution_time', 0);
 
 	if (!empty($_POST["mysql"]) or !empty($_POST["files"])){
-	    $dir = $config[base_path] . (!empty($_POST["folder"]) ? $_POST["folder"]."backup" : "backup");
-	    $url = $config[base_url] . (!empty($_POST["folder"]) ? $_POST["folder"]."backup" : "backup");
-	    $base_path = MODX_BASE_PATH;
-	    $core_path = MODX_CORE_PATH;
-	    $date = date("Ymd-His");
-	    $dbase = $modx->getOption('dbname');
-	    $database_server = $config[host];
-	    $database_user = $config[username];
-	    $database_password = $config[password];
+		$dir = $config[base_path] . (!empty($_POST["folder"]) ? $_POST["folder"]."backup" : "backup");
+		$url = $config[base_url] . (!empty($_POST["folder"]) ? $_POST["folder"]."backup" : "backup");
+		$base_path = MODX_BASE_PATH;
+		$core_path = MODX_CORE_PATH;
+		$date = date("Ymd-His");
+		$dbase = $modx->getOption('dbname');
+		$database_server = $config[host];
+		$database_user = $config[username];
+		$database_password = $config[password];
 		$targetSql = "$dir/{$dbase}_{$date}_mysql.sql";
 		$targetTar = "$dir/{$dbase}_{$date}_files.tar";
 		$targetCom = "$dir/{$dbase}_{$date}_combined.tar";
 		$urlSql = "$url/{$dbase}_{$date}_mysql.sql";
 		$urlTar = "$url/{$dbase}_{$date}_files.tar";
 		$urlCom = "$url/{$dbase}_{$date}_combined.tar";
-		
+
 		//Create Folder
 		system("mkdir $dir");
 		
@@ -92,18 +92,19 @@ if (isset($_POST['backupMODX'])) {
 		
 		//File-Backup
 		if (!empty($_POST["files"])){
-			system("$tarAlias cf {$targetTar} --exclude=$dir $base_path $core_path");
+			system("$tarAlias cf {$targetTar} --exclude=$dir --exclude={$core_path}cache $base_path $core_path");
 		}
 		
 		//Combine SQL and Files in one archive
 		if (file_exists($targetSql) and file_exists($targetTar) and filesize($targetSql) > 0) {
-			system("$tarAlias cf {$targetCom} {$targetSql} {$targetTar}");
+			system("cp {$targetTar} {$targetCom}"); //copy files-archive
+			system("tar uf {$targetCom} -C $dir {$dbase}_{$date}_mysql.sql"); //adding sql-file in the root
 		}
 		
 		$backup = true;
 
-        //Filesize
-        if (file_exists($targetSql) and filesize($targetSql) > 0) {
+		//Filesize
+		if (file_exists($targetSql) and filesize($targetSql) > 0) {
 			$mysql_name = basename($targetSql);
 			$mysql_size = round(filesize($targetSql) / 1000000, 2);
 		}
@@ -136,31 +137,31 @@ if (!empty($_POST["removeBackup"])){
 
 if ($backup != true) {
 
-    echo '
-        <form method="post" action="">
-            <p>
-    		    Backup your MODX-Site:<br><br>
-    			<input type="checkbox" name="mysql" id="mysql" value="1" checked><label for="mysql"> MySQL Database</label><br />
-    			<input type="checkbox" name="files" id="files" value="1" checked><label for="files"> Files</label>
-    		</p>
-    		<br>
-    		<p>
-    			Folder to place Files: '.$config[base_path].' <input type="text" name="folder" value="assets/"> backup/<br>
-    		</p><br>
-            <input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="backupMODX" value="Backup Site!">
-        </form>';
+	echo '
+		<form method="post" action="">
+			<p>
+				Backup your MODX-Site:<br><br>
+				<input type="checkbox" name="mysql" id="mysql" value="1" checked><label for="mysql"> MySQL Database</label><br />
+				<input type="checkbox" name="files" id="files" value="1" checked><label for="files"> Files</label>
+			</p>
+			<br>
+			<p>
+				Folder to place Files: '.$config[base_path].' <input type="text" name="folder" value="assets/"> backup/<br>
+			</p><br>
+			<input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="backupMODX" value="Backup Site!">
+		</form>';
 }else {
-    if ($backup == true) {
-        echo'
-            <form method="post" action="">
-                <h3 style="color:grey">Backup Finished!</h3>
-    	    	<p>
-    	    	    <span style="display: inline-block; width: 90px;">MySQL:</span>'.(!empty($mysql_name) ? '<a href="'.$urlSql.'" target="_blank" download>'.$mysql_name.'</a> ('.$mysql_size.' MB)' : 'No Backup!').'<br />
-    	    	    <span style="display: inline-block; width: 90px;">Files:</span>'.(!empty($files_name) ? '<a href="'.$urlTar.'" target="_blank" download>'.$files_name.'</a> ('.$files_size.' MB)' : 'No Backup!').'
-    			    '.(!empty($combi_name) ? '<br /><span style="display: inline-block; width: 90px;">MySQL & Files:</span><a href="'.$urlCom.'" target="_blank" download>'.$combi_name.'</a> ('.$combi_size.' MB)' : '').'
-    	    	</p><br>
-    	    	<input type="hidden" name="dir" value="'.$dir.'" />
-    	    	<input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="removeBackup" value="Remove Backup">
-    	    </form>';
-    }
+	if ($backup == true) {
+		echo'
+			<form method="post" action="">
+				<h3 style="color:grey">Backup Finished!</h3>
+				<p>
+					<span style="display: inline-block; width: 90px;">MySQL:</span>'.(!empty($mysql_name) ? '<a href="'.$urlSql.'" target="_blank" download>'.$mysql_name.'</a> ('.$mysql_size.' MB)' : 'No Backup!').'<br />
+					<span style="display: inline-block; width: 90px;">Files:</span>'.(!empty($files_name) ? '<a href="'.$urlTar.'" target="_blank" download>'.$files_name.'</a> ('.$files_size.' MB)' : 'No Backup!').'
+					'.(!empty($combi_name) ? '<br /><span style="display: inline-block; width: 90px;">MySQL & Files:</span><a href="'.$urlCom.'" target="_blank" download>'.$combi_name.'</a> ('.$combi_size.' MB)' : '').'
+				</p><br>
+				<input type="hidden" name="dir" value="'.$dir.'" />
+				<input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="removeBackup" value="Remove Backup">
+			</form>';
+	}
 }
