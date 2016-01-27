@@ -98,7 +98,7 @@ if (isset($_POST['backupMODX'])) {
 		//Combine SQL and Files in one archive
 		if (file_exists($targetSql) and file_exists($targetTar) and filesize($targetSql) > 0) {
 			system("cp {$targetTar} {$targetCom}"); //copy files-archive
-			system("tar uf {$targetCom} -C $dir {$dbase}_{$date}_mysql.sql"); //adding sql-file in the root
+			system("$tarAlias uf {$targetCom} -C $dir {$dbase}_{$date}_mysql.sql"); //adding sql-file in the root
 		}
 		
 		$backup = true;
