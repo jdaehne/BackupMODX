@@ -1,5 +1,14 @@
 Changelog for backupmodx
 
+backupmodx 1.0.5
+---------------------------------
++ Bugfix: abbility to change tar-alias for different hosting-provider
++ Bugfix: keeps cache-folder included - only excludes all files inside the cache-folder to achieve a smaller tar-archive
++ Adding an optional readme file
++ Define additional files and folders to exclude in the backup
++ Define a directory to place the backup (inside or outside the webroot)
+
+
 backupmodx 1.0.4
 ---------------------------------
 + Bugfix: placing the sql-file in the root of combined tar-archive

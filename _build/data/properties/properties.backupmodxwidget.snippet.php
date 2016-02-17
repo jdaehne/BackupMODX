@@ -13,6 +13,18 @@
 
 
 $properties = array (
+  'excludes' => 
+  array (
+    'name' => 'excludes',
+    'desc' => 'file/folder, or comma-separated list of files/folders who will be excluded of the backup. Using file-path from the root. Example: /html/assets,/html/manager',
+    'type' => 'textarea',
+    'options' => 
+    array (
+    ),
+    'value' => '',
+    'lexicon' => NULL,
+    'area' => '',
+  ),
   'groups' => 
   array (
     'name' => 'groups',
@@ -34,6 +46,18 @@ $properties = array (
     array (
     ),
     'value' => 'tar',
+    'lexicon' => NULL,
+    'area' => '',
+  ),
+  'targetPath' => 
+  array (
+    'name' => 'targetPath',
+    'desc' => 'Directory of the backup files. No trailing slash! You can use {assets_path} as a placeholder for the assets folder. Example: {assets_path}folder',
+    'type' => 'textfield',
+    'options' => 
+    array (
+    ),
+    'value' => '{assets_path}',
     'lexicon' => NULL,
     'area' => '',
   ),
