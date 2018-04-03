@@ -59,7 +59,7 @@ $targetPath = rtrim($targetPath, '/').'/backup'; //removing trailing slash and a
 
 
 
-if(!function_exists(fileLink)) {
+if(!function_exists('fileLink')) {
     function fileLink($file, $title) {
         $file_root = MODX_BASE_PATH.str_replace(MODX_BASE_PATH, "", $file);
         $file_absolute = MODX_SITE_URL.str_replace(MODX_BASE_PATH, "", $file);
@@ -87,9 +87,9 @@ if (isset($_POST['backupMODX'])) {
 		$core_path = MODX_CORE_PATH;
 		$date = date("Ymd-His");
 		$dbase = $modx->getOption('dbname');
-		$database_server = $config[host];
-		$database_user = $config[username];
-		$database_password = $config[password];
+		$database_server = $config['host'];
+		$database_user = $config['username'];
+		$database_password = $config['password'];
 		$targetSql = "{$targetPath}/{$dbase}_{$date}_mysql.sql";
 		$targetTar = "{$targetPath}/{$dbase}_{$date}_files.tar";
 		$targetCom = "{$targetPath}/{$dbase}_{$date}_combined.tar";
