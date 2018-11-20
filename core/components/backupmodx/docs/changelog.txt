@@ -1,5 +1,12 @@
 Changelog for backupmodx
 
+backupmodx 2.0.0
+---------------------------------
++ Add cron scheduled backups
++ Add restore Database
++ Redesign Dashboard-Widget
+
+
 backupmodx 1.0.5
 ---------------------------------
 + Bugfix: abbility to change tar-alias for different hosting-provider

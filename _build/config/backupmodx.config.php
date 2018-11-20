@@ -15,15 +15,15 @@ $components = array(
     /* These are used to define the package and set values for placeholders */
     'packageName' => 'backupmodx',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
-    'packageDescription' => 'Backup your MODX-Site Widget',
-    'version' => '1.0.5',
-    'release' => 'beta',
-    'author' => 'Quadro - Jan Dähne',
-    'email' => 'info@quadro-system.de',
-    'authorUrl' => 'http://www.quadro-system.de',
+    'packageDescription' => 'Backup Extra for MODX',
+    'version' => '2.0.0',
+    'release' => 'pl',
+    'author' => 'Jan Dähne',
+    'email' => '<https://www.quadro-system.de>',
+    'authorUrl' => 'https://www.quadro-system.de',
     'authorSiteName' => "Quadro",
-    'packageDocumentationUrl' => 'http://www.quadro-system.de/modx-extras/backupmodx.html',
-    'copyright' => '2015',
+    'packageDocumentationUrl' => 'https://www.quadro-system.de/modx-extras/backup-modx/',
+    'copyright' => '2018',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -56,18 +56,116 @@ $components = array(
      * their namespace to the lowercase package name of your extra */
 
     'newSystemSettings' => array(
+        'backupmodx_system_setting1' => array( // key
+            'key' => 'backupmodx.excludes',
+            'name' => 'Exclude Files / Folders',
+            'description' => 'Files / Folders to exclude from the Backup. Comma separatet list. Assets Placeholder is available. Example: {assets_path}uploads/',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => '',
+            'area' => 'Admin',
+        ),
+        'backupmodx_system_setting2' => array( // key
+            'key' => 'backupmodx.targetPath',
+            'name' => 'Backup Target Path',
+            'description' => 'The path to the folder to store the backups. Assets Placeholder is available. Example: {core_path}backups/',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => '{core_path}components/backupmodx/backups/',
+            'area' => 'Admin',
+        ),
+        'backupmodx_system_setting3' => array( // key
+            'key' => 'backupmodx.cronKey',
+            'name' => 'Cron Security Key',
+            'description' => 'Security-Key for cron scheduled Backups. Can be any string.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => '',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting4' => array( // key
+            'key' => 'backupmodx.mysqldumpAlias',
+            'name' => 'Alias mysqldump',
+            'description' => 'Alias for mysqldump.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => 'mysqldump',
+            'area' => 'Database',
+        ),
+        'backupmodx_system_setting5' => array( // key
+            'key' => 'backupmodx.zipAlias',
+            'name' => 'Alias zip',
+            'description' => 'Alias for zip compression.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => 'zip',
+            'area' => 'Files',
+        ),
+        'backupmodx_system_setting6' => array( // key
+            'key' => 'backupmodx.cronFiles',
+            'name' => 'Backup Files',
+            'description' => 'Whether or not to include MODX Files in Cron-Backup.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'combo-boolean',
+            'value' => 'true',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting7' => array( // key
+            'key' => 'backupmodx.cronDatabase',
+            'name' => 'Backup Database',
+            'description' => 'Whether or not to include Database in Cron-Backup.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'combo-boolean',
+            'value' => 'true',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting8' => array( // key
+            'key' => 'backupmodx.cronNote',
+            'name' => 'Note',
+            'description' => 'Optional descriptional txt-file added to the Backup.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textarea',
+            'value' => '',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting9' => array( // key
+            'key' => 'backupmodx.cronEnable',
+            'name' => 'Enable Cron',
+            'description' => 'Enable or Disable Cron.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'combo-boolean',
+            'value' => 'false',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting10' => array( // key
+            'key' => 'backupmodx.cronMaxDatabase',
+            'name' => 'Max Databases',
+            'description' => 'Maximum stored Backups of Databas.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => '10',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting11' => array( // key
+            'key' => 'backupmodx.cronMaxFiles',
+            'name' => 'Max Files',
+            'description' => 'Maximum stored Backups of Files.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => '5',
+            'area' => 'Cron',
+        ),
+        'backupmodx_system_setting12' => array( // key
+            'key' => 'backupmodx.mysqlAlias',
+            'name' => 'Alias mysql',
+            'description' => 'Alias for mysql.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => 'mysql',
+            'area' => 'Database',
+        ),
     ),
 
-    /* ************************ NEW SYSTEM EVENTS ************************* */
-
-    /* Array of your new System Events (not default
-     * MODX System Events). Listed here so they can be created during
-     * install and removed during uninstall.
-     *
-     * Warning: Do *not* list regular MODX System Events here !!! */
-
-    'newSystemEvents' => array(
-    ),
 
     /* ************************ NAMESPACE(S) ************************* */
     /* (optional) Typically, there's only one namespace which is set
@@ -83,24 +181,7 @@ $components = array(
 
     ),
 
-    /* ************************ CONTEXT(S) ************************* */
-    /* (optional) List any contexts other than the 'web' context here
-    */
 
-    'contexts' => array(
-    ),
-
-    /* *********************** CONTEXT SETTINGS ************************ */
-
-    /* If your extra needs Context Settings, set their field values here.
-     * You can also create or edit them in the Manager (Edit Context -> Context Settings),
-     * and export them with exportObjects. If you do that, be sure to set
-     * their namespace to the lowercase package name of your extra.
-     * The context_key should be the name of an actual context.
-     * */
-
-    'contextSettings' => array(
-    ),
 
     /* ************************* CATEGORIES *************************** */
     /* (optional) List of categories. This is only necessary if you
@@ -109,37 +190,9 @@ $components = array(
     */
 
     'categories' => array(
-        'BackupMODX' => array(
+        'backupmodx' => array(
             'category' => 'BackupMODX',
             'parent' => '',  /* top level category */
-        ),
-    ),
-
-    /* *************************** MENUS ****************************** */
-
-    /* If your extra needs Menus, you can create them here
-     * or create them in the Manager, and export them with exportObjects.
-     * Be sure to set their namespace to the lowercase package name
-     * of your extra.
-     *
-     * Every menu should have exactly one action */
-
-    'menus' => array(
-    ),
-    
-    'widgets' => array(
-        'BackupMODX' => array(
-            'name' => 'Backup MODX',
-            'description' => 'Backup MODX Widget',
-            'namespace' => 'backupmodx',
-            'type' => 'snippet',
-            'content' => 'BackupMODXWidget',
-            'size' => 'half',
-            'lexicon' => 'backupmodx:default',
-            'dashboards' => array(
-                /* dashboard ID => rank (default dashboard is 1)*/
-                1 => 0,
-            ),
         ),
     ),
 
@@ -162,47 +215,23 @@ $components = array(
 
 
     'elements' => array(
-
-        'propertySets' => array(
-        ),
         'snippets' => array(
             'BackupMODXWidget' => array(
-                'category' => 'BackupMODX',
-                'description' => 'Backup MODX Dashboard widget',
+                'category' => 'backupMODX',
+                'description' => 'BackupMODX Dashboard widget.',
                 'static' => false,
             ),
         ),
-        'plugins' => array(
-        ),
         'chunks' => array(
-        ),
-        'templates' => array(
-        ),
-        'templateVars' => array(
+            'backupMODXWidget' => array(
+                'category' => 'backupMODX',
+            ),
         ),
     ),
     /* (optional) will make all element objects static - 'static' field above will be ignored */
     'allStatic' => false,
 
 
-    /* ************************* RESOURCES ****************************
-     Important: This list only affects Bootstrap. There is another
-     list of resources below that controls ExportObjects.
-     * ************************************************************** */
-    /* Array of Resource pagetitles for your Extra; All other fields optional.
-       You can set any resource field here */
-    'resources' => array(
-    ),
-
-
-    /* Array of languages for which you will have language files,
-     *  and comma-separated list of topics
-     *  ('.inc.php' will be added as a suffix). */
-    'languages' => array(
-        'en' => array(
-            'default',
-        ),
-    ),
     /* ********************************************* */
     /* Define optional directories to create under assets.
      * Add your own as needed.
@@ -210,9 +239,19 @@ $components = array(
      * Set to hasAssets = false to skip.
      * Empty js and/or css files will be created.
      */
-    'hasAssets' => false,
+    'hasAssets' => true,
 
     'assetsDirs' => array(
+        /* If true, a default (empty) CSS file will be created */
+        'css' => false,
+
+        /* If true, a default (empty) JS file will be created */
+        'js' => false,
+
+        'images' => false,
+        'audio' => false,
+        'video' => false,
+        'themes' => false,
     ),
     /* minify any JS files */
     'minifyJS' => false,
@@ -227,12 +266,10 @@ $components = array(
        (no trailing slash on directory)
        if 'createCmpFiles is true, these will be ignored.
     */
-    'jsFiles' => array(
-    ),
+    'jsFiles' => array(),
 
     /* Desired CSS files */
-    'cssFiles' => array(
-    ),
+    'cssFiles' => array(),
 
     /* ********************************************* */
     /* Define basic directories and files to be created in project*/
@@ -245,7 +282,7 @@ $components = array(
     ),
 
     /* (optional) Description file for GitHub project home page */
-    'readme.md' => true,
+    'readme.md' => false,
     /* assume every package has a core directory */
     'hasCore' => true,
 
@@ -259,7 +296,7 @@ $components = array(
      * (other resolvers may be created above for TVs and plugins).
      * Suffix 'resolver.php' will be added automatically */
     'resolvers' => array(
-        'default',
+        'default'
     ),
 
     /* (optional) Validators can abort the install after checking
@@ -267,8 +304,7 @@ $components = array(
      * prefix of suffix) or '' 'default' creates a default resolver
      *  named after the package suffix 'validator.php' will be added */
 
-    'validators' => array(
-    ),
+    'validators' => array(),
 
     /* (optional) install.options is needed if you will interact
      * with user during the install.
@@ -276,7 +312,7 @@ $components = array(
      * Set this to 'install.options' or ''
      * The file will be created as _build/install.options/user.input.php
      * Don't change the filename or directory name. */
-    'install.options' => '',
+    'install.options' => 'install.options',
 
 
     /* Suffixes to use for resource and element code files (not implemented)  */
@@ -311,6 +347,12 @@ $components = array(
      *
      * Set to array() if there are no classes. */
     'classes' => array(
+        'AnotherClass' => 'backupmodx:backupmodx',
+
+        /* (optional) - Specify methods for each class.
+           if 'function' is missing, 'public function ' will
+           be prepended. Curly braces will be added   */
+        'methods' => array(),
     ),
 
     /* ************************************
@@ -343,22 +385,37 @@ $components = array(
        import, and export. */
 
     'processors' => array(
+        'mgr/snippet:getlist',
+        'mgr/snippet:changecategory',
+        'mgr/snippet:remove',
+
+        'mgr/chunk:getlist',
+        'mgr/chunk:changecategory',
+        'mgr/chunk:remove',
     ),
 
     /* These will automatically go to core/components/yourcomponent/controllers[/directory]/filename
        Format: directory:filename */
 
     'controllers' => array(
+        ':home.class.php',
     ),
 
     /* These will automatically go in assets/components/yourcomponent/ */
 
     'connectors' => array(
+        'connector.php'
+
     ),
     /* These will automatically go to assets/components/yourcomponent/js[/directory]/filename
        Format: directory:filename */
 
     'cmpJsFiles' => array(
+        ':backupmodx.class.js',
+        'sections:home.js',
+        'widgets:home.panel.js',
+        'widgets:snippet.grid.js',
+        'widgets:chunk.grid.js',
     ),
 
     /* These go to core/components/componentName/templates/
@@ -368,6 +425,7 @@ $components = array(
      */
 
     'cmpTemplates' => array (
+         'mgr:<div id="backupmodx-panel-home-div"></div>',
     ),
 
 
@@ -387,19 +445,9 @@ $components = array(
      * of desired resources
     */
     'process' => array(
-        'contexts',
         'snippets',
-        'plugins',
-        'templateVars',
-        'templates',
         'chunks',
-        'resources',
-        'propertySets',
-        'systemSettings',
-        'contextSettings',
-        'systemEvents',
-        'menus',
-        'widgets',
+        'systemSettings'
     ),
     /*  Array  of resources to process. You can specify specific resources
         or parent (container) resources, or both.
@@ -409,8 +457,7 @@ $components = array(
         duplicate pagetitles */
     'getResourcesById' => false,
 
-    'exportResources' => array(
-    ),
+    'exportResources' => array(),
     /* Array of resource parent IDs to get children of. */
     'parents' => array(),
     /* Also export the listed parent resources
@@ -421,7 +468,7 @@ $components = array(
     /* ******************** LEXICON HELPER SETTINGS ***************** */
     /* These settings are used by LexiconHelper */
     'rewriteCodeFiles' => false,  /* remove ~~descriptions */
-    'rewriteLexiconFiles' => true, /* automatically add missing strings to lexicon files */
+    'rewriteLexiconFiles' => false, /* automatically add missing strings to lexicon files */
     /* ******************************************* */
 
     /* Array of aliases used in code for the properties array.
