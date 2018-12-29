@@ -76,7 +76,7 @@
   <div style="padding-bottom: 1rem;">
      <label for="apikey-server">Backup Target Path:</label>
      <input type="text" name="targetPath" id="targetpath" value="'.$values['targetPath'].'" align="left" size="40" maxlength="60" />
-     <div class="field_desc">The path to the folder to store the backups. Assets Placeholder is available.</div>
+     <div class="field_desc">The path to the folder to store the backups. "{core_path} & {assets_path}" Placeholders are available.</div>
   </div>
   <div style="padding-bottom: 1rem;">
      <label for="apikey-server">Cron Security Key:</label>

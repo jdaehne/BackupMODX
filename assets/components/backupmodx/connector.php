@@ -9,6 +9,9 @@ require_once MODX_CONNECTORS_PATH.'index.php';
 $modelPath = $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/backupmodx/model/backupmodx/';
 $modx->loadClass('BackupMODX', $modelPath, true, true);
 
+// timeouts
+set_time_limit(0);
+ini_set('max_execution_time', 0);
 
 define('AJAX_PATH', $modx->getOption('core_path').'components/backupmodx/processors/');
 
