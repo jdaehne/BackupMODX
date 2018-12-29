@@ -140,7 +140,7 @@ $components = array(
         'backupmodx_system_setting10' => array( // key
             'key' => 'backupmodx.cronMaxDatabase',
             'name' => 'Max Databases',
-            'description' => 'Maximum stored Backups of Databas.',
+            'description' => 'Maximum stored Backups of Database.',
             'namespace' => 'backupmodx',
             'xtype' => 'textfield',
             'value' => '10',
@@ -163,6 +163,15 @@ $components = array(
             'xtype' => 'textfield',
             'value' => 'mysql',
             'area' => 'Database',
+        ),
+        'backupmodx_system_setting13' => array( // key
+            'key' => 'backupmodx.groups',
+            'name' => 'Groups',
+            'description' => 'Group or comma separated list of Groups. This Groups will have access to the widget.',
+            'namespace' => 'backupmodx',
+            'xtype' => 'textfield',
+            'value' => 'Administrator',
+            'area' => 'Admin',
         ),
     ),
 
@@ -193,6 +202,24 @@ $components = array(
         'backupmodx' => array(
             'category' => 'BackupMODX',
             'parent' => '',  /* top level category */
+        ),
+    ),
+
+
+
+    'widgets' => array(
+        'BackupMODX' => array(
+            'name' => 'BackupMODX',
+            'description' => 'Backup MODX Widget',
+            'namespace' => 'backupmodx',
+            'type' => 'snippet',
+            'content' => 'BackupMODXWidget',
+            'size' => 'half',
+            'lexicon' => 'backupmodx:default',
+            'dashboards' => array(
+                /* dashboard ID => rank (default dashboard is 1)*/
+                1 => 0,
+            ),
         ),
     ),
 
@@ -446,7 +473,7 @@ $components = array(
     */
     'process' => array(
         'snippets',
-        'chunks',
+        'propertySets',
         'systemSettings'
     ),
     /*  Array  of resources to process. You can specify specific resources

@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/assets/components/backupmodx/css/widget.css" />
+<link rel="stylesheet" type="text/css" href="[[++site_url]]assets/components/backupmodx/css/widget.css" />
 
 <form class="hide" method="post" action="" id="backupmodx-form-download">
 	<h3 style="color:grey">Backup Finished!</h3>
@@ -65,7 +65,7 @@
     function templatingFiles(files) {
         var tpl = new Ext.XTemplate(
             '<tpl>',
-            '<div><a class="backupmodxWidget__downloadLink" href="/assets/components/backupmodx/download/download.php?file={filename}&folder={name}" download><i class="backupmodxWidget__downloadIcon icon icon-{icon}"></i> {label} <i>({size} MB)</i> <i class="backupmodxWidget__downloadIcon--download icon icon-download"></i></a></div>',
+            '<div><a class="backupmodxWidget__downloadLink" href="[[++site_url]]assets/components/backupmodx/download/download.php?file={filename}&folder={name}" download><i class="backupmodxWidget__downloadIcon icon icon-{icon}"></i> {label} <i>({size} MB)</i> <i class="backupmodxWidget__downloadIcon--download icon icon-download"></i></a></div>',
             '</tpl>'
         );
 
