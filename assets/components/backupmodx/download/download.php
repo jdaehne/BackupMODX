@@ -38,5 +38,16 @@ header("Content-Type: " . $mimeType);
 header("Content-Length: " . filesize($file));
 
 // dump the file and stop the script
-readfile($file);
-exit;
+$chunksize = 1*(1024*1024); // how many bytes per chunk
+$buffer = '';
+$handle = fopen($file, 'rb');
+
+if ($handle === false) {
+    return false;
+}
+while (!feof($handle)) {
+    $buffer = fread($handle, $chunksize);
+    print $buffer;
+}
+
+return fclose($handle);
