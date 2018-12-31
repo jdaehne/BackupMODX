@@ -1,5 +1,12 @@
 Changelog for backupmodx
 
+backupmodx 2.0.1
+---------------------------------
++ Fix Ajax timeout
++ Fix download large files
++ Fix custom assets_path (Thanks to mcnickel)
+
+
 backupmodx 2.0.0
 ---------------------------------
 + Add cron scheduled backups
