@@ -21,6 +21,8 @@ if (!$modx->user->isMember($groups)) {
 
 // Load Class
 $modelPath = $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/backupmodx/model/backupmodx/';
+$assetsUrl = $modx->getOption('assets_url', null, MODX_ASSETS_URL);
+$assetsUrl = substr($assetsUrl, 1);
 $modx->loadClass('BackupMODX', $modelPath, true, true);
 
 
@@ -48,4 +50,5 @@ if (isset($_POST['restorebackupmodx'])) {
 
 return $modx->getChunk('backupMODXWidget', array(
     'backup' => is_array($_SESSION['tmpActiveBackup'])? json_encode($_SESSION['tmpActiveBackup']) : '',
+    'assetsurl' => $assetsUrl,
 ));

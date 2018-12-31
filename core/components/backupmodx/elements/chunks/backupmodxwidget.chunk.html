@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="[[++site_url]]assets/components/backupmodx/css/widget.css" />
+<link rel="stylesheet" type="text/css" href="[[++site_url]][[+assetsurl]]components/backupmodx/css/widget.css" />
 
 <form class="hide" method="post" action="" id="backupmodx-form-download">
 	<h3 style="color:grey">Backup Finished!</h3>
@@ -69,7 +69,7 @@
     function templatingFiles(files) {
         var tpl = new Ext.XTemplate(
             '<tpl>',
-            '<div><a class="backupmodxWidget__downloadLink" href="[[++site_url]]assets/components/backupmodx/download/download.php?file={filename}&folder={name}" download><i class="backupmodxWidget__downloadIcon icon icon-{icon}"></i> {label} <i>({size} MB)</i> <i class="backupmodxWidget__downloadIcon--download icon icon-download"></i></a></div>',
+            '<div><a class="backupmodxWidget__downloadLink" href="[[++site_url]][[+assetsurl]]components/backupmodx/download/download.php?file={filename}&folder={name}" download><i class="backupmodxWidget__downloadIcon icon icon-{icon}"></i> {label} <i>({size} MB)</i> <i class="backupmodxWidget__downloadIcon--download icon icon-download"></i></a></div>',
             '</tpl>'
         );
 
@@ -98,7 +98,7 @@
         Ext.get('backupmodx-spinner').addClass('show');
 
         Ext.Ajax.request({
-            url: '../assets/components/backupmodx/connector.php',
+            url: '../[[+assetsurl]]components/backupmodx/connector.php',
             params: {
                 action: 'backup',
                 database: document.getElementById("backupmodx-input-database").checked,
@@ -133,7 +133,7 @@
         Ext.get('backupmodx-form-restore').addClass('show');
 
         Ext.Ajax.request({
-            url: '../assets/components/backupmodx/connector.php',
+            url: '../[[+assetsurl]]components/backupmodx/connector.php',
             params: {
                 action: 'getbackups'
             },
