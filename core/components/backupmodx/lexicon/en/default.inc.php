@@ -36,7 +36,7 @@
 
 
  $_lang['setting_backupmodx.excludes'] = 'Exclude Files / Folders';
- $_lang['setting_backupmodx.excludes_desc'] = 'Files / Folders to exclude from the Backup. Comma separatet list. Assets Placeholder is available. Example: {assets_path}uploads/';
+ $_lang['setting_backupmodx.excludes_desc'] = 'Files / Folders to exclude from the Backup. Comma separated list. Assets Placeholder is available. Example: {assets_path}uploads/';
 
  $_lang['setting_backupmodx.targetPath'] = 'Backup Target Path';
  $_lang['setting_backupmodx.targetPath_desc'] = 'The path to the folder to store the backups. Core & Assets Placeholder is available. Example: {core_path}backups/';
