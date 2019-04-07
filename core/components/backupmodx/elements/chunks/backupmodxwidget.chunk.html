@@ -1,0 +1,171 @@
+<link rel="stylesheet" type="text/css" href="[[++site_url]][[+assetsurl]]components/backupmodx/css/widget.css" />
+
+<form class="hide" method="post" action="" id="backupmodx-form-download">
+	<h3 style="color:grey">Backup Finished!</h3>
+	<p>Download:</p>
+	<div class="backupmodxWidget__downloads" id="backupmodx-download-container"></div>
+	<input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="removebackupmodx" value="Remove Backup">
+    <a class="backupmodxWidget__restoreLink" onclick="restoreBackupModx();">Restore a Backup</a>
+</form>
+
+<form class="hide" method="post" action="" id="backupmodx-form-restore">
+	<p>Restore Backup:</p>
+    <div class="backupmodxWidget__restore" id="backupmodx-restore-container"></div>
+    <input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="restorebackupmodx" value="Restore Backup!">
+    <a href="?" class="backupmodxWidget__restoreLink">Cancel</a>
+</form>
+
+<div id="backupmodx-spinner" class="backupmodxSpinner__wrapper hide">
+    <div class="backupmodxSpinner">
+        <i class="icon icon-modx backupmodxSpinner__icon"></i>
+        <i class="icon icon-modx backupmodxSpinner__icon"></i>
+        <i class="icon icon-modx backupmodxSpinner__icon"></i>
+    </div>
+    <center>
+        <h3>Backup MODX</h3>
+        <p>Backup is in progress.</p>
+    </center>
+</div>
+
+
+<form onsubmit="event.preventDefault(); backupMODX();" id="backupmodx-form-backup">
+	<p>Backup your MODX-Site:</p>
+	<label class="backupmodxWidget__selectBox">
+	    <input type="checkbox" name="files" value="1" id="backupmodx-input-files">
+	    <div class="backupmodxWidget__downloadLink" download><i class="backupmodxWidget__downloadIcon icon icon-zip"></i> Files <i class="backupmodxWidget__downloadIcon--download icon icon-check"></i></div>
+	</label>
+	<label class="backupmodxWidget__selectBox">
+	    <input type="checkbox" name="database" value="1" id="backupmodx-input-database">
+	    <div class="backupmodxWidget__downloadLink" download><i class="backupmodxWidget__downloadIcon icon icon-sql"></i> Database <i class="backupmodxWidget__downloadIcon--download icon icon-check"></i></div>
+	</label>
+
+    <label class="backupmodxWidget__textBox">
+        <p>Add a readme file: <span style="color: grey;">(txt-file)</span></p>
+	    <textarea class="backupmodxWidget__textarea" name="note" placeholder="Type your optional notes here..." id="backupmodx-input-note"></textarea>
+    </label>
+
+    <input class="x-btn x-btn-small x-btn-icon-small-left primary-button x-btn-noicon" type="submit" name="backupmodx" value="Backup Site!">
+    <a class="backupmodxWidget__restoreLink" onclick="restoreBackupModx();">Restore a Backup</a>
+</form>
+
+
+<script type="text/javascript">
+    [[+backup:isnot=``:then=`
+        Ext.get('backupmodx-form-backup').addClass('hide');
+        var files = Ext.decode('[[+backup]]');
+        templatingFiles(files.files);
+        Ext.get('backupmodx-form-download').addClass('show');
+    `:else=``]]
+
+
+	// Set longer timeout limit for Ajax
+    Ext.Ajax.timeout = 120000;
+
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * *
+	// * Templating Files
+	// *
+	// *
+    function templatingFiles(files) {
+        var tpl = new Ext.XTemplate(
+            '<tpl>',
+            '<div><a class="backupmodxWidget__downloadLink" href="[[++site_url]][[+assetsurl]]components/backupmodx/download/download.php?file={filename}&folder={name}" download><i class="backupmodxWidget__downloadIcon icon icon-{icon}"></i> {label} <i>({size} MB)</i> <i class="backupmodxWidget__downloadIcon--download icon icon-download"></i></a></div>',
+            '</tpl>'
+        );
+
+        files.database['icon'] = 'sql';
+        files.database['label'] = 'Database';
+
+        files.files['icon'] = 'zip';
+        files.files['label'] = 'Files';
+
+        files.note['icon'] = 'txt';
+        files.note['label'] = 'Note';
+
+        if (files.database != "") { tpl.overwrite(Ext.get('backupmodx-download-container'), files.database); }
+        if (files.files != "") { tpl.append(Ext.get('backupmodx-download-container'), files.files); }
+        if (files.note != "") { tpl.append(Ext.get('backupmodx-download-container'), files.note); }
+    }
+
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * *
+	// * Backup MODX
+	// *
+	// *
+    function backupMODX() {
+
+        Ext.get('backupmodx-form-backup').addClass('hide');
+        Ext.get('backupmodx-spinner').addClass('show');
+
+        Ext.Ajax.request({
+            url: '../[[+assetsurl]]components/backupmodx/connector.php',
+            params: {
+                action: 'backup',
+                database: document.getElementById("backupmodx-input-database").checked,
+                files: document.getElementById("backupmodx-input-files").checked,
+                note: document.getElementById("backupmodx-input-note").value
+            },
+            success: function(response, opts){
+                // Decode JSON
+                var data = Ext.decode(response.responseText);
+
+                templatingFiles(data.results.files);
+
+                Ext.get('backupmodx-spinner').removeClass('show');
+                Ext.get('backupmodx-form-download').addClass('show');
+
+            },
+            failure: function(response, opts) {
+                alert('Error: Failing AJAX...');
+            }
+        });
+    }
+
+
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * *
+	// * Restore Backups
+	// *
+	// *
+    function restoreBackupModx() {
+        Ext.get('backupmodx-form-backup').addClass('hide').removeClass('show');
+        Ext.get('backupmodx-form-download').addClass('hide').removeClass('show');
+        Ext.get('backupmodx-form-restore').addClass('show');
+
+        Ext.Ajax.request({
+            url: '../[[+assetsurl]]components/backupmodx/connector.php',
+            params: {
+                action: 'getbackups'
+            },
+            success: function(response, opts){
+                // Decode JSON
+                var data = Ext.decode(response.responseText);
+
+                var files = data.results;
+
+                var tpl = new Ext.XTemplate(
+                    '<tpl for=".">',
+                    '<div class="backupmodxWidget__restoreItem">',
+                    '<div><strong>{date_format}</strong> | {note}</div>',
+                    '<label class="backupmodxWidget__selectBox">',
+            	    '<input type="radio" name="database" value="{name}">',
+                	'<div class="backupmodxWidget__downloadLink" download><i class="backupmodxWidget__downloadIcon icon icon-sql"></i> Database <i class="backupmodxWidget__downloadIcon--download icon icon-check"></i></div>',
+                	'</label>',
+                    '</div>',
+                    '</tpl>'
+                );
+
+                if (files != "") {
+                    tpl.overwrite(Ext.get('backupmodx-restore-container'), files);
+                }
+
+            },
+            failure: function(response, opts) {
+                alert('Error: Failing AJAX...');
+            }
+        });
+    }
+
+
+
+</script>

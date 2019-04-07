@@ -2,10 +2,10 @@
 backupmodx
 
 
-Author: Quadro - Jan Dähne info@quadro-system.de
-Copyright 2015
+Author: Jan Dähne <https://www.quadro-system.de>
+Copyright 2018
 
-Official Documentation: http://www.quadro-system.de/modx-extras/backupmodx.html
+Official Documentation: https://www.quadro-system.de/modx-extras/backup-modx/
 
 Bugs and Feature Requests: https://github.com:jdaehne/BackupMODX
 

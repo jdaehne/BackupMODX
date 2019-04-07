@@ -500,6 +500,8 @@ if ($minifyJS) {
     $helper->mc_minify($minimizer, $dir, $jsAll);
 }
 
+
+
 /* Create each Category and its Elements */
 
 $i = 0;
@@ -882,7 +884,7 @@ if ($hasMenu) {
 }
 
 /* Next-to-last step - pack in the license file, readme.txt, changelog,
- * and setup options 
+ * and setup options
  */
 $attr = array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),

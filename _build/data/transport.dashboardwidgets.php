@@ -24,14 +24,14 @@ $dashboardWidgets = array();
 $dashboardWidgets[1] = $modx->newObject('modDashboardWidget');
 $dashboardWidgets[1]->fromArray(array (
   'id' => 1,
-  'name' => 'Backup MODX',
+  'name' => 'BackupMODX',
   'description' => 'Backup MODX Widget',
   'type' => 'snippet',
   'content' => 'BackupMODXWidget',
   'namespace' => 'backupmodx',
   'lexicon' => 'backupmodx:default',
   'size' => 'half',
-  'name_trans' => 'Backup MODX',
+  'name_trans' => 'BackupMODX',
   'description_trans' => 'Backup MODX Widget',
 ), '', true, true);
 return $dashboardWidgets;

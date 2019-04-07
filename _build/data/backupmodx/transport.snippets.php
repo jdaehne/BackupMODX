@@ -2,8 +2,8 @@
 /**
  * snippets transport file for backupmodx extra
  *
- * Copyright 2015 by Quadro - Jan Dähne info@quadro-system.de
- * Created on 12-16-2015
+ * Copyright 2018 by Jan Dähne <https://www.quadro-system.de>
+ * Created on 11-20-2018
  *
  * @package backupmodx
  * @subpackage build
@@ -38,5 +38,6 @@ $snippets[1]->setContent(file_get_contents($sources['source_core'] . '/elements/
 $properties = include $sources['data'].'properties/properties.backupmodxwidget.snippet.php';
 $snippets[1]->setProperties($properties);
 unset($properties);
+
 
 return $snippets;

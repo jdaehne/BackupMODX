@@ -2,8 +2,8 @@
 /**
  * Resolver for backupmodx extra
  *
- * Copyright 2015 by Quadro - Jan Dähne info@quadro-system.de
- * Created on 12-16-2015
+ * Copyright 2018 by Jan Dähne <https://www.quadro-system.de>
+ * Created on 10-19-2018
  *
  * backupmodx is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
@@ -31,7 +31,23 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-            /* [[+code]] */
+
+            $settings = array(
+                'cronKey',
+                'targetPath',
+            );
+            foreach ($settings as $key) {
+                if (isset($options[$key])) {
+                    $setting = $object->xpdo->getObject('modSystemSetting',array('key' => 'backupmodx.'.$key));
+                    if ($setting != null) {
+                        $setting->set('value',$options[$key]);
+                        $setting->save();
+                    } else {
+                        $object->xpdo->log(xPDO::LOG_LEVEL_ERROR,'[BackupMODX] backupmodx.'.$key.' setting could not be found, so the setting could not be changed.');
+                    }
+                }
+            }
+
             break;
 
         case xPDOTransport::ACTION_UNINSTALL:
