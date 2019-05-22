@@ -10,7 +10,7 @@
  
 
 // Returns an empty string if user shouldn't see the widget
-$groups = $modx->getOption('groups', $scriptProperties, 'Administrator', true);
+$groups = $modx->getOption('backupmodx.groups', $scriptProperties, 'Administrator', true);
 if (strpos($groups, ',') !== false) {
 	$groups = explode(',', $groups);
 }
