@@ -1,75 +1,39 @@
 <?php
 /**
- * en default topic lexicon file for backupmodx extra
- *
- * Copyright 2015 by Quadro - Jan Dähne info@quadro-system.de
- * Created on 12-16-2015
- *
- * backupmodx is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * backupmodx is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * backupmodx; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
+ * Default Lexicon Entries for BackupMODX
  *
  * @package backupmodx
+ * @subpackage lexicon
  */
+$_lang['backupmodx.widget'] = 'BackupMODX';
+$_lang['backupmodx.widget_desc'] = 'Backup dashboard widget';
 
-/**
- * Description
- * -----------
- * en default topic lexicon strings
- *
- * Variables
- * ---------
- * @var $modx modX
- * @var $scriptProperties array
- *
- * @package backupmodx
- **/
+$_lang['backupmodx.add_readme'] = 'Add a readme file <span>(txt-file)</span>:';
+$_lang['backupmodx.btn_cancel'] = 'Cancel';
+$_lang['backupmodx.btn_remove'] = 'Remove Backup';
+$_lang['backupmodx.btn_restore'] = 'Restore Backup';
+$_lang['backupmodx.btn_start'] = 'Backup Site';
+$_lang['backupmodx.database'] = 'Database';
+$_lang['backupmodx.download'] = 'Download';
+$_lang['backupmodx.files'] = 'Files';
+$_lang['backupmodx.intro'] = 'Backup your MODX-Site';
+$_lang['backupmodx.notes'] = 'Type your optional notes here...';
+$_lang['backupmodx.restore'] = 'Restore Backup';
 
+$_lang['backupmodx.err_backup_ne'] = 'The backup does not exist!';
+$_lang['backupmodx.err_create_backup'] = 'Error creating backup!';
+$_lang['backupmodx.err_create_target_path'] = 'Error creating target path!';
+$_lang['backupmodx.err_missing_backup_options'] = 'You did not select any elements to backup!';
+$_lang['backupmodx.err_missing_restore_options'] = 'You did not select any elements to restore!';
+$_lang['backupmodx.err_msg_title'] = 'Error!';
+$_lang['backupmodx.err_no_backups_available'] = 'No backups available!';
+$_lang['backupmodx.err_no_restore_available'] = 'No backups available for restore!';
+$_lang['backupmodx.err_pdo_exeption'] = 'PDO Exeption! Please read the BackupMODX error log for more information.';
+$_lang['backupmodx.err_unknown'] = 'Error: Failing AJAX ...';
 
- $_lang['setting_backupmodx.excludes'] = 'Exclude Files / Folders';
- $_lang['setting_backupmodx.excludes_desc'] = 'Files / Folders to exclude from the Backup. Comma separatet list. Assets Placeholder is available. Example: {assets_path}uploads/';
+$_lang['backupmodx.success_msg_title'] = 'Success!';
+$_lang['backupmodx.success_restore'] = 'The database backup was successfully restored. The manager will be reloaded after confirming this message.';
 
- $_lang['setting_backupmodx.targetPath'] = 'Backup Target Path';
- $_lang['setting_backupmodx.targetPath_desc'] = 'The path to the folder to store the backups. Core & Assets Placeholder is available. Example: {core_path}backups/';
-
- $_lang['setting_backupmodx.cronKey'] = 'Cron Security Key';
- $_lang['setting_backupmodx.cronKey_desc'] = 'Security-Key for cron scheduled Backups. Can be any string.';
-
- $_lang['setting_backupmodx.mysqldumpAlias'] = 'Alias mysqldump';
- $_lang['setting_backupmodx.mysqldumpAlias_desc'] = 'Alias for mysqldump.';
-
- $_lang['setting_backupmodx.zipAlias'] = 'Alias zip';
- $_lang['setting_backupmodx.zipAlias_desc'] = 'Alias for zip compression.';
-
- $_lang['setting_backupmodx.cronFiles'] = 'Backup Files';
- $_lang['setting_backupmodx.cronFiles_desc'] = 'Whether or not to include MODX Files in Cron-Backup.';
-
- $_lang['setting_backupmodx.cronDatabase'] = 'Backup Database';
- $_lang['setting_backupmodx.cronDatabase_desc'] = 'Whether or not to include Database in Cron-Backup.';
-
- $_lang['setting_backupmodx.cronNote'] = 'Note';
- $_lang['setting_backupmodx.cronNote_desc'] = 'Optional descriptional txt-file added to the Backup.';
-
- $_lang['setting_backupmodx.cronEnable'] = 'Enable Cron';
- $_lang['setting_backupmodx.cronEnable_desc'] = 'Enable or Disable Cron.';
-
- $_lang['setting_backupmodx.cronMaxDatabase'] = 'Max Databases';
- $_lang['setting_backupmodx.cronMaxDatabase_desc'] = 'Maximum stored Backups of Database.';
-
- $_lang['setting_backupmodx.cronMaxFiles'] = 'Max Files';
- $_lang['setting_backupmodx.cronMaxFiles_desc'] = 'Maximum stored Backups of Files.';
-
- $_lang['setting_backupmodx.mysqlAlias'] = 'Alias mysql';
- $_lang['setting_backupmodx.mysqlAlias_desc'] = 'Alias for mysql.';
-
- $_lang['setting_backupmodx.groups'] = 'Groups';
- $_lang['setting_backupmodx.groups_desc'] = 'Group or comma separated list of Groups. This Groups will have access to the widget.';
+$_lang['backupmodx.msg_finished'] = 'Backup Finished!';
+$_lang['backupmodx.msg_progress_text'] = 'Backup is in progress.';
+$_lang['backupmodx.msg_progress_title'] = 'BackupMODX';
