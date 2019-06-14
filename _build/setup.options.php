@@ -4,12 +4,15 @@
  *
  * @package backupmodx
  * @subpackage build
+ *
+ * @var array $options
+ * @var xPDOObject $object
  */
 
 // Defaults
 $defaults = array(
     'cronKey' => substr(md5(openssl_random_pseudo_bytes(20)), -12),
-    'targetPath' => '{core_path}components/backupmodx/backups/',
+    'targetPath' => '{core_path}backup/',
 );
 
 $output = '';

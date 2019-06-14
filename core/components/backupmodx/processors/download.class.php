@@ -50,7 +50,7 @@ class BackupMODXDownloadProcessor extends modProcessor
             header('Content-Length: ' . @filesize($download));
 
             $chunksize = 1*(1024*1024); // how many bytes per chunk
-            $handle = fopen($file, 'rb');
+            $handle = fopen($download, 'rb');
 
             if ($handle === false) {
                 return false;

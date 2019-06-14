@@ -58,7 +58,7 @@ class Backup extends BackupMODX
      */
     public function backupFiles($filename = null)
     {
-        $excludeFolders = $this->excludeFolders;
+        $excludeFolders = array_merge($this->excludeFolders, array($this->getOption('targetPath')));
         if ($this->getOption('excludeFolders') != '') {
             $excludeFolders = array_merge($excludeFolders, explode(',', $this->getOption('excludeFolders')));
         }
@@ -66,6 +66,11 @@ class Backup extends BackupMODX
         $excludeFiles = $this->excludeFiles;
         if ($this->getOption('excludeFiles') != '') {
             $excludeFiles = array_merge($excludeFiles, explode(',', $this->getOption('excludeFiles')));
+        }
+
+        if ($this->getOption('debug')) {
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Excluded ' . count($excludeFolders) . ' folders.', $this->getOption('logTarget'), 'BackupMODX');
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Folder list:' . "\n" . print_r($excludeFolders, true), $this->getOption('logTarget'), 'BackupMODX');
         }
 
         $stripPrefix = self::stripPrefix();
