@@ -68,15 +68,16 @@ Ext.extend(backupmodx, Ext.Component, {
                     Ext.get('backupmodx-spinner').addClass('hide');
                     Ext.get('backupmodx-form-download').removeClass('hide');
                 },
-                failure: function () {
-                    Ext.get('backupmodx-spinner').addClass('hide');
-                    Ext.get('backupmodx-form-download').removeClass('hide');
+                failure: function (response) {
+                    var data = Ext.decode(response.responseText);
                     Ext.Msg.show({
                         title: _('backupmodx.err_msg_title'),
-                        msg: _('backupmodx.err_unknown'),
+                        msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });
+                    Ext.get('backupmodx-spinner').addClass('hide');
+                    Ext.get('backupmodx-form-backup').removeClass('hide');
                 }
             });
         } else {
@@ -124,10 +125,11 @@ Ext.extend(backupmodx, Ext.Component, {
                     Ext.get('backupmodx-restore-btn').addClass('hide');
                 }
             },
-            failure: function () {
+            failure: function (response) {
+                var data = Ext.decode(response.responseText);
                 Ext.Msg.show({
                     title: _('backupmodx.err_msg_title'),
-                    msg: _('backupmodx.err_unknown'),
+                    msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
                     buttons: Ext.MessageBox.OK,
                     icon: Ext.MessageBox.ERROR
                 });
@@ -162,10 +164,11 @@ Ext.extend(backupmodx, Ext.Component, {
                     Ext.get('backupmodx-form-download').addClass('hide');
                 }
             },
-            failure: function () {
+            failure: function (response) {
+                var data = Ext.decode(response.responseText);
                 Ext.Msg.show({
                     title: _('backupmodx.err_msg_title'),
-                    msg: _('backupmodx.err_unknown'),
+                    msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
                     buttons: Ext.MessageBox.OK,
                     icon: Ext.MessageBox.ERROR
                 });
@@ -196,16 +199,17 @@ Ext.extend(backupmodx, Ext.Component, {
                     } else {
                         Ext.Msg.show({
                             title: _('backupmodx.err_msg_title'),
-                            msg: data.message,
+                            msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
                             buttons: Ext.MessageBox.OK,
                             icon: Ext.MessageBox.WARNING
                         });
                     }
                 },
-                failure: function () {
+                failure: function (response) {
+                    var data = Ext.decode(response.responseText);
                     Ext.Msg.show({
                         title: _('backupmodx.err_msg_title'),
-                        msg: _('backupmodx.err_unknown'),
+                        msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });

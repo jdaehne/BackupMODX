@@ -199,6 +199,7 @@ class Backup extends BackupMODX
     {
         set_time_limit(0);
         ini_set('max_execution_time', 0);
+        register_shutdown_function(array($this, 'shutdown'));
 
         $filename = $this->createFilename();
         $targetPath = $this->targetPath($filename);
@@ -278,11 +279,13 @@ class Backup extends BackupMODX
         if ($factor === 0) {
             return sprintf('%d', $bytes / pow(1024, $factor)) . ' Bytes';
         } else {
-            return sprintf('%.'.$decimals.'f', $bytes / pow(1024, $factor)) . ' ' . @$sz[$factor] . 'B';
+            return sprintf('%.' . $decimals . 'f', $bytes / pow(1024, $factor)) . ' ' . @$sz[$factor] . 'B';
         }
     }
 
     /**
+     * Get an array of all files to backup
+     *
      * @param string $directory
      * @param array $excludeFolders
      * @param array $excludeFiles
@@ -357,5 +360,26 @@ class Backup extends BackupMODX
             }
         }
         return $stripPrefix;
+    }
+
+    /**
+     * Display a shutdown message (i.e. in case of reaching the maximum
+     * execution time) instead of just a blank result
+     */
+    public function shutdown()
+    {
+        $error = error_get_last();
+        if (is_array($error)) {
+            $message = (isset($error['message'])) ? $error['message'] : 'Unknown Error!';
+            if (php_sapi_name() == 'cli') {
+                fwrite(STDERR, $message . "\n");
+                exit(1);
+            } else {
+                exit(json_encode(array(
+                    'success' => false,
+                    'message' => $message,
+                )));
+            }
+        }
     }
 }
