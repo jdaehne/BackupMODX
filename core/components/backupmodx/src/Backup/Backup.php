@@ -135,7 +135,10 @@ class Backup extends BackupMODX
 
         try {
             $dump = new IMysqldump\Mysqldump('mysql:host=' . $host . ';dbname=' . $database, $username, $password, array(
-                'add-drop-table' => true
+                'add-drop-table' => true,
+                'exclude-tables' => array(
+                    $this->modx->getTableName('modSession')
+                )
             ));
             $dump->start($target);
 

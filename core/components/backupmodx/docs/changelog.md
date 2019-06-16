@@ -8,7 +8,7 @@ backupmodx 3.0.0
 + Debug option logging the files to backup and other information in backupmodx.log
 + Completely AJAX driven dashboard widget
 + Every text displayed in the browser is translateable
-+ Catch an error during php shutdown to display maximum execution time errors
++ Catch an error during php shutdown to display (i.e. maximum execution time) errors
 
 backupmodx 2.0.1
 ---------------------------------
