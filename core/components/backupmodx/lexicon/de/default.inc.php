@@ -5,6 +5,8 @@
  * @package backupmodx
  * @subpackage lexicon
  */
+$_lang['backupmodx'] = 'BackupMODX';
+
 $_lang['backupmodx.widget'] = 'BackupMODX';
 $_lang['backupmodx.widget_desc'] = 'Backup Dashboard Widget';
 
