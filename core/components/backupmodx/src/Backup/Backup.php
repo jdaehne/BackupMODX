@@ -372,7 +372,7 @@ class Backup extends BackupMODX
     public function shutdown()
     {
         $error = error_get_last();
-        if (is_array($error)) {
+        if (is_array($error) && isset($error['type']) && $error['type'] === E_ERROR) {
             $message = (isset($error['message'])) ? $error['message'] : 'Unknown Error!';
             if (php_sapi_name() == 'cli') {
                 fwrite(STDERR, $message . "\n");
