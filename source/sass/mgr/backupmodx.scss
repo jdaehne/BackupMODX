@@ -1,3 +1,7 @@
+$treehillstudio-color: #a9ba2f;
+$red: #be0000;
+$primary: #00948e;
+
 .backupmodxWidget {
   .downloadLink {
     text-decoration: none;
@@ -35,7 +39,7 @@
     margin-right: 0;
   }
   .textBox {
-    padding-top: 10px;
+    padding: 5px 0;
     display: block;
     span {
       color: grey;
@@ -145,5 +149,32 @@
   }
   40% {
     transform: scale(1.0);
+  }
+}
+
+.buttons {
+  position: relative;
+}
+
+.backupmodx_about {
+  cursor: pointer;
+  height: 20px;
+  opacity: 0.25;
+  transition: opacity 0.5s;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.backupmodx_window {
+  a {
+    color: darken($treehillstudio-color, 10);
+    text-decoration: none;
+    &:hover {
+      color: darken($treehillstudio-color, 25);
+    }
   }
 }

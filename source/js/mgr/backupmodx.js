@@ -223,6 +223,21 @@ Ext.extend(backupmodx, Ext.Component, {
                 icon: Ext.MessageBox.WARNING
             });
         }
+    },
+    about: function () {
+        var msg = '<span style="display: inline-block; text-align: center">' +
+            '<img width="300" src="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro@2x.png 2x" alt"Quadro"><br>' +
+            '<span style="display: block;margin-bottom: 10px">© 2015-2019 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
+            '<img width="200" src="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt"Treehill Studio"><br>' +
+            'Version 3.0.x created by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a>' +
+            '</span>';
+        Ext.Msg.show({
+            title: _('backupmodx') + ' ' + BackupMODX.config.version,
+            msg: msg,
+            buttons: Ext.Msg.OK,
+            cls: 'backupmodx_window',
+            width: 330
+        });
     }
 });
 Ext.reg('backupmodx', backupmodx);

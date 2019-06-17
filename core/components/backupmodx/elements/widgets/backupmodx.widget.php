@@ -43,7 +43,9 @@ class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
     BackupMODX.config = ' . json_encode($backupmodx->options, JSON_PRETTY_PRINT) . ';
 });</script>');
 
-            return $this->getFileChunk($backupmodx->getOption('templatesPath') . 'backupmodx.widget.tpl');
+            return $this->getFileChunk($backupmodx->getOption('templatesPath') . 'backupmodx.widget.tpl', array(
+                'backupmodx.assets_url' => $backupmodx->getOption('assetsUrl')
+            ));
         } else {
             return '';
         }

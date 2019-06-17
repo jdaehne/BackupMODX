@@ -73,6 +73,47 @@ module.exports = function (grunt) {
                 dest: 'assets/components/backupmodx/css/mgr/backupmodx.min.css'
             }
         },
+        imagemin: {
+            png: {
+                options: {
+                    optimizationLevel: 7
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'source/img/',
+                        src: ['**/*.png'],
+                        dest: 'assets/components/backupmodx/img/',
+                        ext: '.png'
+                    }
+                ]
+            },
+            jpg: {
+                options: {
+                    progressive: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'source/img/',
+                        src: ['**/*.jpg'],
+                        dest: 'assets/components/backupmodx/img/',
+                        ext: '.jpg'
+                    }
+                ]
+            },
+            gif: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'source/img/',
+                        src: ['**/*.gif'],
+                        dest: 'assets/components/backupmodx/img/',
+                        ext: '.gif'
+                    }
+                ]
+            }
+        },
         watch: {
             js: {
                 files: [
@@ -117,6 +158,18 @@ module.exports = function (grunt) {
                         replacement: 'version = \'' + '<%= modx.version %>' + '\''
                     }]
                 }
+            },
+            widget: {
+                files: [{
+                    src: 'source/js/mgr/backupmodx.js',
+                    dest: 'source/js/mgr/backupmodx.js'
+                }],
+                options: {
+                    replacements: [{
+                        pattern: /© 2015(-\d{4})? by/g,
+                        replacement: '© ' + (new Date().getFullYear() > 2015 ? '2015-' : '') + new Date().getFullYear() + ' by'
+                    }]
+                }
             }
         }
     });
@@ -124,6 +177,7 @@ module.exports = function (grunt) {
     //load the packages
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-postcss');
