@@ -40,7 +40,7 @@ class BackupMODX
      * The version
      * @var string $version
      */
-    public $version = '3.0.0-rc4';
+    public $version = '3.0.0-rc5';
 
     /**
      * The class options
