@@ -16,7 +16,7 @@ know. If you also know how to enhance the extra/code - please feel free to
 contribute to the GitHub Repository.
 
 ## New in 2.x
-- Cron scheduled aAckups
+- Cron scheduled Backups
 - Database restore option
 
 ## New in 3.x
