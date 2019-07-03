@@ -201,13 +201,17 @@ class BackupMODX {
             }
 
 
+			$labels = explode( '--', $folder );
+            $labeldate   = date_create_from_format( 'Y-m-d His', $labels[0] . ' ' . $labels[1] );
+            $date_format = date_format( $labeldate, 'F d Y - H:i a' );
+
             $backups[] = array(
-                'name' => $folder,
-                'path' => $this->targetPath,
-                'date' => filemtime($this->targetPath . $folder),
-                'date_format' => date("F d Y - H:i a", filemtime($this->targetPath . $folder)),
-                'note' => $note,
-                'files' => $files,
+                'name'        => $folder,
+                'path'        => $this->targetPath,
+                'date'        => filemtime( $this->targetPath . $folder ),
+                'date_format' => $date_format,
+                'note'        => $note,
+                'files'       => $files,
             );
         }
 
