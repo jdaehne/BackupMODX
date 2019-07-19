@@ -1,0 +1,180 @@
+$treehillstudio-color: #a9ba2f;
+$red: #be0000;
+$primary: #00948e;
+
+.backupmodxWidget {
+  .downloadLink {
+    text-decoration: none;
+    display: block;
+    padding: 0.4em 3em 0.4em 1em;
+    color: #fff;
+    border-radius: 4px;
+    background: #32AB9A;
+    margin: 0.5em 0;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid transparent;
+    &:hover {
+      background: #4095ca;
+      color: #fff;
+    }
+  }
+  .icon {
+    display: inline-block;
+    margin-right: 1em;
+  }
+  .download {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.7em;
+    margin-right: 0;
+  }
+  .textBox {
+    padding: 5px 0;
+    display: block;
+    span {
+      color: grey;
+    }
+  }
+  .textarea {
+    box-sizing: border-box;
+    appearance: none;
+    width: 100%;
+    height: 60px;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 5px 0 5px 0;
+    padding: 5px;
+  }
+  .restore {
+    padding: 1em 0;
+  }
+  .downloads {
+    padding-bottom: 1em;
+  }
+  /* Checkboxes */
+  .selectBox {
+    input[type="checkbox"], input[type="radio"] {
+      display: none;
+      &:checked + .downloadLink {
+        background: #32AB9A;
+        color: #fff;
+        border-color: transparent;
+        .download {
+          &:before {
+            opacity: 1;
+            animation: 0.5s ease backupmodxcheck;
+          }
+        }
+      }
+    }
+    .downloadLink {
+      background: transparent;
+      color: inherit;
+      border-color: #ccc;
+      &:hover {
+        background: #4095ca;
+        color: #fff;
+        border-color: #4095ca;
+      }
+      .download {
+        &:before {
+          opacity: 0;
+          transition: inherit;
+        }
+      }
+    }
+  }
+  /* helper */
+  .hide {
+    display: none;
+  }
+  .x-btn {
+    font-size: 11px;
+  }
+  button {
+    margin: 0 2px 0 0;
+  }
+  /* Spinner */
+  .spinnerWrapper {
+    .spinner {
+      margin: 0 auto 30px;
+      width: 70px;
+      text-align: center;
+      .icon {
+        font-size: 20px;
+        display: inline-block;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        margin-right: 0;
+        &:nth-child(1) {
+          animation-delay: -0.32s;
+        }
+        &:nth-child(2) {
+          animation-delay: -0.16s;
+        }
+      }
+    }
+    margin: 50px;
+    .text {
+      text-align: center;
+    }
+  }
+}
+
+@keyframes backupmodxcheck {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1.0);
+  }
+}
+
+.buttons {
+  position: relative;
+}
+
+.backupmodx_about {
+  cursor: pointer;
+  height: 20px;
+  opacity: 0.25;
+  transition: opacity 0.5s;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.backupmodx_window {
+  a {
+    color: darken($treehillstudio-color, 10);
+    text-decoration: none;
+    &:hover {
+      color: darken($treehillstudio-color, 25);
+    }
+  }
+}

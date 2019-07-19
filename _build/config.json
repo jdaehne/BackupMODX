@@ -1,0 +1,110 @@
+{
+  "name": "BackupMODX",
+  "lowCaseName": "backupmodx",
+  "description": "Backup dashboard widget for MODX",
+  "author": "Jan Dähne",
+  "version": "3.0.0-rc7",
+  "package": {
+    "elements": {
+      "widgets": [
+        {
+          "name": "backupmodx.widget",
+          "description": "backupmodx.widget_desc",
+          "content": "backupmodx.widget.php",
+          "type": "file",
+          "size": "half"
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "debug",
+        "type": "combo-boolean",
+        "area": "system",
+        "value": "0"
+      },
+      {
+        "key": "excludeFolders",
+        "area": "system",
+        "value": ""
+      },
+      {
+        "key": "excludeFiles",
+        "area": "system",
+        "value": ""
+      },
+      {
+        "key": "targetPath",
+        "area": "system",
+        "value": "{core_path}backup/"
+      },
+      {
+        "key": "cronKey",
+        "area": "cron",
+        "value": ""
+      },
+      {
+        "key": "cronFiles",
+        "type": "combo-boolean",
+        "area": "cron",
+        "value": "1"
+      },
+      {
+        "key": "cronDatabase",
+        "type": "combo-boolean",
+        "area": "cron",
+        "value": "1"
+      },
+      {
+        "key": "cronNote",
+        "area": "cron",
+        "value": ""
+      },
+      {
+        "key": "cronEnable",
+        "type": "combo-boolean",
+        "area": "cron",
+        "value": "0"
+      },
+      {
+        "key": "cronMaxDatabase",
+        "area": "cron",
+        "value": "10"
+      },
+      {
+        "key": "cronMaxFiles",
+        "area": "cron",
+        "value": "5"
+      },
+      {
+        "key": "groups",
+        "area": "system",
+        "value": "Administrator"
+      }
+    ]
+  },
+  "dependencies": [
+    {
+      "name": "php",
+      "version": ">=5.6"
+    },
+    {
+      "name": "modx",
+      "version": ">=2.6"
+    }
+  ],
+  "build": {
+    "readme": "docs/readme.md",
+    "license": "docs/license.md",
+    "changelog": "docs/changelog.md",
+    "setupOptions": {
+      "source": "setup.options.php"
+    },
+    "resolver": {
+      "after": [
+        "resolve.setupoptions.php",
+        "resolve.cleanup.php"
+      ]
+    }
+  }
+}

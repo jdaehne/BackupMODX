@@ -1,0 +1,30 @@
+{
+  "name": "treehillstudio/backupmodx",
+  "type": "project",
+  "require": {
+    "php": ">=5.6.0",
+    "chumper/zipper": "^1.0",
+    "ifsnop/mysqldump-php": "^2.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "BackupMODX\\": "src/"
+    }
+  },
+  "license": "GPLv2",
+  "authors": [
+    {
+      "name": "Jan Dähne",
+      "email": "info@quadro-system.de"
+    },
+    {
+      "name": "Thomas Jakobi",
+      "email": "thomas.jakobi@partout.info"
+    }
+  ],
+  "config": {
+    "platform": {
+      "php": "5.6.40"
+    }
+  }
+}

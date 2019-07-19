@@ -1,18 +1,12 @@
 <?php
 /**
- * Create backup
+ * Remove backup
  *
  * @package backupmodx
  * @subpackage processor
  */
 
-// Timeouts
-set_time_limit(0);
-ini_set('max_execution_time', 0);
-
-use BackupMODX\Backup\Backup;
-
-class BackupMODXBackupProcessor extends modProcessor
+class BackupMODXRemovebackupProcessor extends modProcessor
 {
     /** @var BackupMODX $backupmodx */
     public $backupmodx;
@@ -34,19 +28,11 @@ class BackupMODXBackupProcessor extends modProcessor
 
     public function process()
     {
-        $database = ($this->getProperty('database') == 'true') ? true : false;
-        $files = ($this->getProperty('files') == 'true') ? true : false;
-        $note = $this->getProperty('note');
+        $this->backupmodx->removeBackup($_SESSION['tmpActiveBackup']['filename']);
+        unset($_SESSION['tmpActiveBackup']);
 
-        $backup = new Backup($this->modx);
-        $result = $backup->backup($files, $database, $note);
-        if (is_array($result)) {
-            $_SESSION['tmpActiveBackup'] = $result;
-            return $this->outputArray($result, 1);
-        } else {
-            return $this->failure($result);
-        }
+        return $this->outputArray(array(), 0);
     }
 }
 
-return 'BackupMODXBackupProcessor';
+return 'BackupMODXRemovebackupProcessor';

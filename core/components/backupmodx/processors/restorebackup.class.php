@@ -1,6 +1,6 @@
 <?php
 /**
- * Create backup
+ * Restore backup
  *
  * @package backupmodx
  * @subpackage processor
@@ -10,9 +10,9 @@
 set_time_limit(0);
 ini_set('max_execution_time', 0);
 
-use BackupMODX\Backup\Backup;
+use BackupMODX\Backup\Restore;
 
-class BackupMODXBackupProcessor extends modProcessor
+class BackupMODXRestorebackupProcessor extends modProcessor
 {
     /** @var BackupMODX $backupmodx */
     public $backupmodx;
@@ -34,19 +34,16 @@ class BackupMODXBackupProcessor extends modProcessor
 
     public function process()
     {
-        $database = ($this->getProperty('database') == 'true') ? true : false;
-        $files = ($this->getProperty('files') == 'true') ? true : false;
-        $note = $this->getProperty('note');
+        $database = $this->getProperty('database');
 
-        $backup = new Backup($this->modx);
-        $result = $backup->backup($files, $database, $note);
-        if (is_array($result)) {
-            $_SESSION['tmpActiveBackup'] = $result;
-            return $this->outputArray($result, 1);
+        $restore = new Restore($this->modx);
+        $result = $restore->restoreBackup($database);
+        if ($result === true) {
+            return $this->success();
         } else {
             return $this->failure($result);
         }
     }
 }
 
-return 'BackupMODXBackupProcessor';
+return 'BackupMODXRestorebackupProcessor';
