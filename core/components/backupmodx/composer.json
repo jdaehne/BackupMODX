@@ -1,6 +1,5 @@
 {
   "name": "treehillstudio/backupmodx",
-  "type": "project",
   "require": {
     "php": ">=5.6.0",
     "chumper/zipper": "^1.0",

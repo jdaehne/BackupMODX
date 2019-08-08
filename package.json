@@ -1,6 +1,8 @@
 {
   "name": "backupmodx",
   "description": "Backup dashboard widget for MODX",
+  "author": "Jan Dähne",
+  "private": true,
   "devDependencies": {
     "autoprefixer": "^9.6.0",
     "grunt": "^1.0.4",
