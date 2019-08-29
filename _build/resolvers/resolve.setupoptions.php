@@ -22,7 +22,7 @@ if ($object->xpdo) {
                 'key' => 'backupmodx.targetPath'
             ));
             if ($setting != null) {
-                $setting->set('value', $modx->getOption('targetPath', $options, '{core_path}components/backupmodx/backups/'));
+                $setting->set('value', $modx->getOption('targetPath', $options, '{core_path}backup/'));
                 $setting->save();
             } else {
                 $modx->log(xPDO::LOG_LEVEL_ERROR, 'The backupmodx.targetPath system setting was not found and can\'t be updated.');
