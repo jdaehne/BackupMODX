@@ -88,12 +88,16 @@ class Backup extends BackupMODX
         $files = array_merge($files, $this->getFiles(MODX_MANAGER_PATH, $excludeFolders, $excludeFiles, $stripPrefix));
 
         if ($this->getOption('debug')) {
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Backup ' . count($files) . ' files.', $this->getOption('logTarget'), 'BackupMODX');
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File list:' . "\n" . print_r($files, true), $this->getOption('logTarget'), 'BackupMODX');
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup ' . count($files) . ' files.', $this->getOption('logTarget'), 'BackupMODX');
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup files list:' . "\n" . print_r($files, true), $this->getOption('logTarget'), 'BackupMODX');
         }
 
         $filename = $filename ? $filename : $this->createFilename();
         $target = $this->targetPath($filename) . $filename . '.zip';
+
+        if ($this->getOption('debug')) {
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup target: ' . $target, $this->getOption('logTarget'), 'BackupMODX');
+        }
 
         $zipper = new Zipper();
         try {
@@ -143,8 +147,9 @@ class Backup extends BackupMODX
             $dump->start($target);
 
             if ($this->getOption('debug')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Backup database.', $this->getOption('logTarget'), 'BackupMODX');
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Backup size:' . $this->humanFilesize(filesize($target), 2), $this->getOption('logTarget'), 'BackupMODX');
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup.', $this->getOption('logTarget'), 'BackupMODX');
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup size: ' . $this->humanFilesize(filesize($target), 2), $this->getOption('logTarget'), 'BackupMODX');
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup target: ' . $target, $this->getOption('logTarget'), 'BackupMODX');
             }
 
             return array(
