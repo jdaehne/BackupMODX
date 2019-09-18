@@ -1,5 +1,10 @@
+[![Crowdin](https://badges.crowdin.net/backupmodx/localized.svg)](https://crowdin.com/project/backupmodx)
+
 # BackupMODX
+
 Backup Dashboard Widget for MODX CMS.
+
+## Features
 
 The BackupMODX extra is a tiny dashboard widget. Just place the widget into your
 dashboard and click the "Backup" button whenever you need a quick backup of your
@@ -15,25 +20,28 @@ needs. If you have any problems/errors while using this extra - please let us
 know. If you also know how to enhance the extra/code - please feel free to
 contribute to the GitHub Repository.
 
-## New in 2.x
-- Cron scheduled Backups
-- Database restore option
+## Installation
 
-## New in 3.x
-- Removed exec calls
-- Debug option logging the files to backup and other information in backupmodx.log
-- Completely AJAX driven dashboard widget
+MODX Package Management
+
+## Usage
+
+Install via package manager and add the BackupMODX widget to the dashboard.
 
 ## System Settings
-| Setting | Description |
-| --- | --- |
-| backupmodx.excludes | Files / Folders to exclude from the Backup. Comma separatet list. Assets Placeholder is available. Example: {assets_path}uploads/ |
-| backupmodx.targetPath | The path to the folder to store the backups. Assets Placeholder is available. Example: {core_path}backups/ |
-| backupmodx.cronKey | Security-Key for cron scheduled Backups. Can be any string. |
-| backupmodx.cronFiles | Whether or not to include MODX Files in Cron-Backup. |
-| backupmodx.cronDatabase | Whether or not to include Database in Cron-Backup. |
-| backupmodx.cronNote | Optional descriptional txt-file added to the Backup. |
-| backupmodx.cronEnable | Enable or Disable Cron. |
-| backupmodx.cronMaxDatabase | Maximum stored Backups of Databas. |
-| backupmodx.cronMaxFiles | Maximum stored Backups of Files. |
-| backupmodx.groups | Group or comma separated list of Groups. This Groups will have access to the widget. |
+Setting | Description | Default
+--------|-------------|--------
+backupmodx.excludes | Files / Folders to exclude from the Backup. Comma separated list. core_path/assets_path placeholder are available. Example: {assets_path}uploads/ |
+backupmodx.targetPath | The path to the folder to store the backups. core_path/assets_path placeholder are available. Example: {core_path}backups/ | {core_path}backup/
+backupmodx.cronKey | Security key for cron scheduled backups. Can be any string. |
+backupmodx.cronFiles | Whether or not to include MODX files in cron-backup. | Yes
+backupmodx.cronDatabase | Whether or not to include the database in cron-backup. | Yes
+backupmodx.cronNote | Optional descriptional txt-file added to the backup. |
+backupmodx.cronEnable | Enable cron. | No
+backupmodx.cronMaxDatabase | Maximum stored backups of databases. | 5
+backupmodx.cronMaxFiles | Maximum stored backups of files. | 5
+backupmodx.groups | Comma separated list of groups names, that will have access to the widget. | Administrator
+
+## Translations
+
+Translations of the package could be done on [Crowdin](https://crowdin.com/project/backupmodx)
