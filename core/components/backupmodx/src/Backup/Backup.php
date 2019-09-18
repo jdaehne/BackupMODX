@@ -99,8 +99,8 @@ class Backup extends BackupMODX
             $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup target: ' . $target, $this->getOption('logTarget'), 'BackupMODX');
         }
 
-        $zipper = new Zipper();
         try {
+            $zipper = new Zipper();
             $zipper->make($target);
             foreach ($files as $path => $name) {
                 $zipper->add($path, $name);
