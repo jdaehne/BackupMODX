@@ -50,7 +50,6 @@
         </label>
 
         <div class="buttons">
-            <img class="backupmodx_about" onclick="BackupMODX.about();return false" height="30" src="[[+backupmodx.assets_url]]img/mgr/quadro-small.png" srcset="[[+backupmodx.assets_url]]img/mgr/quadro-small@2x.png 2x" alt="Quadro">
             <button class="x-btn primary-button" type="submit">[[%backupmodx.btn_start? &namespace=`backupmodx`]]</button>
             <button class="x-btn" onclick="BackupMODX.restore();return false">[[%backupmodx.btn_restore? &namespace=`backupmodx`]]</button>
         </div>

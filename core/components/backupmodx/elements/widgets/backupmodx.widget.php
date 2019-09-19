@@ -9,42 +9,81 @@
 class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
 {
     /**
+     * @var BackupMODX
+     */
+    public $backupmodx;
+
+    public $cssBlockClass = 'dashboard-block-quadro" id="dashboard-block-quadro';
+
+    /**
+     * Renders the content of the block in the appropriate size
+     * @return string
+     */
+    public function process()
+    {
+        $output = $this->render();
+        if (!empty($output)) {
+            $widgetArray = $this->widget->toArray();
+            $widgetArray['content'] = $output;
+            $widgetArray['class'] = $this->cssBlockClass;
+            $widgetArray['name_trans'] .= '<span class="quadro-widget-about" onclick="BackupMODX.about()"><img width="80" height="20" src="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small.png" srcset="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small@2x.png 2x" alt="Quadro"></span>';
+            $output = $this->getFileChunk('dashboard/block.tpl', $widgetArray);
+            $output = preg_replace('@\[\[(.[^\[\[]*?)\]\]@si', '', $output);
+            $output = preg_replace('@\[\[(.[^\[\[]*?)\]\]@si', '', $output);
+        }
+        return $output;
+    }
+
+    /**
+     * modDashboardWidgetBackupModx constructor.
+     * @param xPDO $modx
+     * @param modDashboardWidget $widget
+     * @param modManagerController $controller
+     */
+    public function __construct(xPDO &$modx, modDashboardWidget &$widget, modManagerController &$controller)
+    {
+        parent::__construct($modx, $widget, $controller);
+
+        $corePath = $this->modx->getOption('backupmodx.core_path', null, $this->modx->getOption('core_path') . 'components/backupmodx/');
+        $this->backupmodx = $this->modx->getService('backupmodx', 'BackupMODX', $corePath . '/model/backupmodx/', array(
+            'core_path' => $corePath
+        ));
+
+        $this->controller->addLexiconTopic($this->widget->get('lexicon'));
+    }
+
+    /**
      * @return string
      */
     public function render()
     {
-        $corePath = $this->modx->getOption('backupmodx.core_path', null, $this->modx->getOption('core_path') . 'components/backupmodx/');
-        $backupmodx = $this->modx->getService('backupmodx', 'BackupMODX', $corePath . '/model/backupmodx/', array(
-            'core_path' => $corePath
-        ));
-
-        $groups = $backupmodx->getOption('groups');
+        $groups = $this->backupmodx->getOption('groups');
         if (strpos($groups, ',') !== false) {
             $groups = array_map('trim', explode(',', $groups));
         }
         if ($this->modx->user->isMember($groups)) {
             $this->controller->addLexiconTopic($this->widget->get('lexicon'));
 
-            $assetsUrl = $backupmodx->getOption('assetsUrl');
-            $jsUrl = $backupmodx->getOption('jsUrl') . 'mgr/';
+            $assetsUrl = $this->backupmodx->getOption('assetsUrl');
+            $jsUrl = $this->backupmodx->getOption('jsUrl') . 'mgr/';
             $jsSourceUrl = $assetsUrl . '../../../source/js/mgr/';
-            $cssUrl = $backupmodx->getOption('cssUrl') . 'mgr/';
+            $cssUrl = $this->backupmodx->getOption('cssUrl') . 'mgr/';
             $cssSourceUrl = $assetsUrl . '../../../source/css/mgr/';
 
-            if ($backupmodx->getOption('debug') && ($backupmodx->getOption('assetsUrl') != MODX_ASSETS_URL . 'components/backupmodx/')) {
-                $this->controller->addJavascript($jsSourceUrl . 'backupmodx.js');
-                $this->controller->addJavascript($jsSourceUrl . 'helper/util.js');
-                $this->controller->addCss($cssSourceUrl . 'backupmodx.css');
+            if ($this->backupmodx->getOption('debug') && ($this->backupmodx->getOption('assetsUrl') != MODX_ASSETS_URL . 'components/backupmodx/')) {
+                $this->controller->addJavascript($jsSourceUrl . 'backupmodx.js?v=v' . $this->backupmodx->version);
+                $this->controller->addJavascript($jsSourceUrl . 'helper/util.js?v=v' . $this->backupmodx->version);
+                $this->controller->addCss($cssSourceUrl . 'backupmodx.css?v=v' . $this->backupmodx->version);
             } else {
-                $this->controller->addJavascript($jsUrl . 'backupmodx.min.js');
-                $this->controller->addCss($cssUrl . 'backupmodx.min.css');
+                $this->controller->addJavascript($jsUrl . 'backupmodx.min.js?v=v' . $this->backupmodx->version);
+                $this->controller->addCss($cssUrl . 'backupmodx.min.css?v=v' . $this->backupmodx->version);
             }
             $this->controller->addHtml('<script>Ext.onReady(function() {
-    BackupMODX.config = ' . json_encode($backupmodx->options, JSON_PRETTY_PRINT) . ';
+    BackupMODX.config = ' . json_encode($this->backupmodx->options, JSON_PRETTY_PRINT) . ';
 });</script>');
 
-            return $this->getFileChunk($backupmodx->getOption('templatesPath') . 'backupmodx.widget.tpl', array(
-                'backupmodx.assets_url' => $backupmodx->getOption('assetsUrl')
+            return $this->getFileChunk($this->backupmodx->getOption('templatesPath') . 'backupmodx.widget.tpl', array(
+                'backupmodx.assets_url' => $this->backupmodx->getOption('assetsUrl')
             ));
         } else {
             return '';
