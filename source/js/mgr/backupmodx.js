@@ -227,7 +227,7 @@ Ext.extend(backupmodx, Ext.Component, {
     about: function () {
         var msg = '<span style="display: inline-block; text-align: center">' +
             '<img width="200" style="margin: 0 50px;" src="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro@2x.png 2x" alt"Quadro"><br>' +
-            '<span style="display: block;margin-bottom: 40px">© 2015-2019 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
+            '<span style="display: block;margin-bottom: 20px">© 2015-2019 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
             '<img width="200" src="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio"><br>' +
             'Version 3.x refactored by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a>' +
             '</span>';

@@ -200,20 +200,6 @@
   position: relative;
 }
 
-.backupmodx_about {
-  cursor: pointer;
-  height: 20px;
-  opacity: 0.25;
-  transition: opacity 0.5s;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.backupmodx_about:hover {
-  opacity: 1;
-}
-
 .backupmodx_window a {
   color: #849125;
   text-decoration: none;
@@ -221,4 +207,21 @@
 
 .backupmodx_window a:hover {
   color: #4d5415;
+}
+
+.dashboard-block-quadro {
+  position: relative;
+}
+
+.quadro-widget-about {
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  top: 15px;
+  opacity: 0.25;
+  transition: opacity 0.5s;
+}
+
+.quadro-widget-about:hover {
+  opacity: 1;
 }

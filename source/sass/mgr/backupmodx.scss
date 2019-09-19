@@ -156,19 +156,6 @@ $primary: #00948e;
   position: relative;
 }
 
-.backupmodx_about {
-  cursor: pointer;
-  height: 20px;
-  opacity: 0.25;
-  transition: opacity 0.5s;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  &:hover {
-    opacity: 1;
-  }
-}
-
 .backupmodx_window {
   a {
     color: darken($treehillstudio-color, 10);
@@ -176,5 +163,21 @@ $primary: #00948e;
     &:hover {
       color: darken($treehillstudio-color, 25);
     }
+  }
+}
+
+.dashboard-block-quadro {
+  position: relative;
+}
+
+.quadro-widget-about {
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  top: 15px;
+  opacity: 0.25;
+  transition: opacity 0.5s;
+  &:hover {
+    opacity: 1;
   }
 }
