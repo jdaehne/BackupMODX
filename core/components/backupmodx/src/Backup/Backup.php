@@ -379,6 +379,9 @@ class Backup extends BackupMODX
         $error = error_get_last();
         if (is_array($error) && isset($error['type']) && $error['type'] === E_ERROR) {
             $message = (isset($error['message'])) ? $error['message'] : 'Unknown Error!';
+            if ($this->getOption('debug')) {
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Script terminated with the error ' . $message, $this->getOption('logTarget'), 'BackupMODX');
+            }
             if (php_sapi_name() == 'cli') {
                 fwrite(STDERR, $message . "\n");
                 exit(1);
