@@ -43,6 +43,11 @@ backupmodx.excludeFolders | Folders to be excluded from the backup. Comma separa
 backupmodx.groups | Comma separated list of groups names, that will have access to the widget. | Administrator
 backupmodx.targetPath | The path to the folder to store the backups. Path placeholder (`{assets_path}`, `{base_path}`, `{core_path}`) are available. Example: `{core_path}backups/` | {core_path}backup/
 
+
+## Cron job
+Setup a cronJob for the Script locatet in: `assets/components/backupmodx/cron.php` and add your cronkey as a `key` parameter. If your provider does not support cronJobs you can also use services like [Cron-Job.org](https://cron-job.org/). The setup could look like: `https://yourdomain.com/assets/components/backupmodx/cron.php?key=xyz123456789`
+
+
 ## Translations
 
 Translations of the package could be done on [Crowdin](https://crowdin.com/project/backupmodx)
