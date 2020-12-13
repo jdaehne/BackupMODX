@@ -38,10 +38,15 @@ backupmodx.cronKey | Security key for cron scheduled backups. Can be any string.
 backupmodx.cronMaxDatabase | Maximum stored backups of the database. | 5
 backupmodx.cronMaxFiles | Maximum stored backups of files. | 5
 backupmodx.cronNote | Optional descriptional txt-file added to the backup. |
-backupmodx.excludeFiles | Files to be excluded from the backup. Comma separated list. Regular expressions are possible. Example: \..* for file names, that start with a dot. |
-backupmodx.excludeFolders | Folders to be excluded from the backup. Comma separated list. Path placeholder are available. Example: {assets_path}uploads/ |
+backupmodx.excludeFiles | Files to be excluded from the backup. Comma separated list. Regular expressions are possible. Example: `\..*` for file names, that start with a dot. |
+backupmodx.excludeFolders | Folders to be excluded from the backup. Comma separated list. Path placeholder (`{assets_path}`, `{base_path}`, `{core_path}`) are available. Example: `{assets_path}uploads/` |
 backupmodx.groups | Comma separated list of groups names, that will have access to the widget. | Administrator
-backupmodx.targetPath | The path to the folder to store the backups. Path placeholder are available. Example: {core_path}backups/ | {core_path}backup/
+backupmodx.targetPath | The path to the folder to store the backups. Path placeholder (`{assets_path}`, `{base_path}`, `{core_path}`) are available. Example: `{core_path}backups/` | {core_path}backup/
+
+
+## Cron job
+Setup a cronJob for the Script locatet in: `assets/components/backupmodx/cron.php` and add your cronkey as a `key` parameter. If your provider does not support cronJobs you can also use services like [Cron-Job.org](https://cron-job.org/). The setup could look like: `https://yourdomain.com/assets/components/backupmodx/cron.php?key=xyz123456789`
+
 
 ## Translations
 
