@@ -45,7 +45,7 @@ class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
         parent::__construct($modx, $widget, $controller);
 
         $corePath = $this->modx->getOption('backupmodx.core_path', null, $this->modx->getOption('core_path') . 'components/backupmodx/');
-        $this->backupmodx = $this->modx->getService('backupmodx', 'BackupMODX', $corePath . '/model/backupmodx/', array(
+        $this->backupmodx = $this->modx->getService('backupmodx', 'BackupMODX', $corePath . 'model/backupmodx/', array(
             'core_path' => $corePath
         ));
 
