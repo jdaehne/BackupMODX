@@ -1,13 +1,18 @@
+# BackupMODX
 
-backupmodx
+Dashboard widget to backup your MODX site
 
-Author: Jan Dähne <https://www.quadro-system.de>
-Copyright 2018
+- Author: Jan Dähne <https://www.quadro-system.de>
+- License: GPLv2
 
-Official Documentation: https://www.quadro-system.de/modx-extras/backup-modx/
+## Installation
 
-Bugs and Feature Requests: https://github.com:jdaehne/BackupMODX
+MODX Package Management
 
-Questions: http://forums.modx.com
+## Documentation
 
-Created by MyComponent
+https://www.quadro-system.de/modx-extras/backup-modx/
+
+## Bugs and Feature Requests
+
+https://github.com/jdaehne/BackupMODX/issues

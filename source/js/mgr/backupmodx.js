@@ -49,7 +49,7 @@ Ext.extend(backupmodx, Ext.Component, {
             Ext.get('backupmodx-spinner').removeClass('hide');
             Ext.Ajax.request({
                 url: BackupMODX.config.connectorUrl,
-                timeout: 120000,
+                timeout: ((BackupMODX.config.timelimit || 120) * 1000) + 1000,
                 params: {
                     action: 'backup',
                     database: database,
@@ -61,18 +61,23 @@ Ext.extend(backupmodx, Ext.Component, {
                     if (data.success) {
                         BackupMODX.templatingFiles(data.results.files);
                         Ext.get('backupmodx-remove-btn').removeClass('hide');
+                        Ext.get('backupmodx-form-download').removeClass('hide');
                     } else {
-                        Ext.get('backupmodx-download-container').dom.innerText = data.message;
-                        Ext.get('backupmodx-remove-btn').addClass('hide');
+                        Ext.Msg.show({
+                            title: _('backupmodx.err_msg_title'),
+                            msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.ERROR
+                        });
                     }
                     Ext.get('backupmodx-spinner').addClass('hide');
-                    Ext.get('backupmodx-form-download').removeClass('hide');
+                    Ext.get('backupmodx-form-backup').removeClass('hide');
                 },
                 failure: function (response) {
                     var data = Ext.decode(response.responseText);
                     Ext.Msg.show({
                         title: _('backupmodx.err_msg_title'),
-                        msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
+                        msg: _('backupmodx.err_timeout'),
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });
@@ -227,7 +232,7 @@ Ext.extend(backupmodx, Ext.Component, {
     about: function () {
         var msg = '<span style="display: inline-block; text-align: center">' +
             '<img width="200" style="margin: 0 50px;" src="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro@2x.png 2x" alt"Quadro"><br>' +
-            '<span style="display: block;margin-bottom: 20px">© 2015-2019 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
+            '<span style="display: block;margin-bottom: 20px">© 2015-2021 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
             '<img width="200" src="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio"><br>' +
             'Version 3.x refactored by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a>' +
             '</span>';

@@ -9,7 +9,7 @@ $primary: #00948e;
     padding: 0.4em 3em 0.4em 1em;
     color: #fff;
     border-radius: 4px;
-    background: #32AB9A;
+    background: #32ab9a;
     margin: 0.5em 0;
     font-size: 14px;
     transition: all 0.3s ease;
@@ -67,7 +67,7 @@ $primary: #00948e;
     input[type="checkbox"], input[type="radio"] {
       display: none;
       &:checked + .downloadLink {
-        background: #32AB9A;
+        background: #32ab9a;
         color: #fff;
         border-color: transparent;
         .download {
@@ -179,5 +179,9 @@ $primary: #00948e;
   transition: opacity 0.5s;
   &:hover {
     opacity: 1;
+  }
+  &.modx3 {
+    right: 50%;
+    transform: translateX(+50%);
   }
 }

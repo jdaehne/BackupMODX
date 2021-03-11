@@ -22,14 +22,14 @@ class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
     public function process()
     {
         $output = $this->render();
+        $modxVersion = $this->modx->getVersionData();
         if (!empty($output)) {
             $widgetArray = $this->widget->toArray();
             $widgetArray['content'] = $output;
             $widgetArray['class'] = $this->cssBlockClass;
-            $widgetArray['name_trans'] .= '<span class="quadro-widget-about" onclick="BackupMODX.about()"><img width="80" height="20" src="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small.png" srcset="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small@2x.png 2x" alt="Quadro"></span>';
+            $widgetArray['name_trans'] .= '<span class="quadro-widget-about modx' . $modxVersion['version'] . '" onclick="BackupMODX.about()"><img width="80" height="20" src="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small.png" srcset="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small@2x.png 2x" alt="Quadro"></span>';
             $output = $this->getFileChunk('dashboard/block.tpl', $widgetArray);
-            $output = preg_replace('@\[\[(.[^\[\[]*?)\]\]@si', '', $output);
-            $output = preg_replace('@\[\[(.[^\[\[]*?)\]\]@si', '', $output);
+            $output = preg_replace('@\[\[(?:[^]\[]+|(?R))*+]]@is', '', $output);
         }
         return $output;
     }
@@ -40,12 +40,12 @@ class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
      * @param modDashboardWidget $widget
      * @param modManagerController $controller
      */
-    public function __construct(xPDO &$modx, modDashboardWidget &$widget, modManagerController &$controller)
+    public function __construct(xPDO &$modx, &$widget, &$controller)
     {
         parent::__construct($modx, $widget, $controller);
 
         $corePath = $this->modx->getOption('backupmodx.core_path', null, $this->modx->getOption('core_path') . 'components/backupmodx/');
-        $this->backupmodx = $this->modx->getService('backupmodx', 'BackupMODX', $corePath . '/model/backupmodx/', array(
+        $this->backupmodx = $this->modx->getService('backupmodx', 'BackupMODX', $corePath . 'model/backupmodx/', array(
             'core_path' => $corePath
         ));
 

@@ -31,3 +31,5 @@ $_lang['setting_backupmodx.groups'] = 'Группы';
 $_lang['setting_backupmodx.groups_desc'] = 'Название группы пользователей или список групп, разделенный запятой. Эти группы будут иметь доступ к виджету.';
 $_lang['setting_backupmodx.targetPath'] = 'Путь к резервной копии';
 $_lang['setting_backupmodx.targetPath_desc'] = 'Путь к директории, где будут храниться резервные копии. Core и Assets плейсхолдеры доступны. Пример: {core_path}backups/';
+$_lang['setting_backupmodx.timelimit'] = 'Backup Timelimit';
+$_lang['setting_backupmodx.timelimit_desc'] = 'Timelimit for the backup in seconds.';

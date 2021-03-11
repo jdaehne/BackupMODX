@@ -6,7 +6,7 @@
  * @subpackage build
  *
  * @var array $options
- * @var xPDOObject $object
+ * @var modX $modx
  */
 
 // Defaults

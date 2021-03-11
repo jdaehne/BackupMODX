@@ -29,6 +29,7 @@ MODX Package Management
 Install via package manager and add the BackupMODX widget to the dashboard.
 
 ## System Settings
+
 Setting | Description | Default
 --------|-------------|--------
 backupmodx.cronDatabase | Whether or not to include the database in cron-backup. | Yes
@@ -37,17 +38,22 @@ backupmodx.cronFiles | Whether or not to include MODX files in cron-backup. | Ye
 backupmodx.cronKey | Security key for cron scheduled backups. Can be any string. |
 backupmodx.cronMaxDatabase | Maximum stored backups of the database. | 5
 backupmodx.cronMaxFiles | Maximum stored backups of files. | 5
-backupmodx.cronNote | Optional descriptional txt-file added to the backup. |
+backupmodx.cronNote | Optional description txt file added to the backup. |
 backupmodx.excludeFiles | Files to be excluded from the backup. Comma separated list. Regular expressions are possible. Example: `\..*` for file names, that start with a dot. |
 backupmodx.excludeFolders | Folders to be excluded from the backup. Comma separated list. Path placeholder (`{assets_path}`, `{base_path}`, `{core_path}`) are available. Example: `{assets_path}uploads/` |
 backupmodx.groups | Comma separated list of groups names, that will have access to the widget. | Administrator
 backupmodx.targetPath | The path to the folder to store the backups. Path placeholder (`{assets_path}`, `{base_path}`, `{core_path}`) are available. Example: `{core_path}backups/` | {core_path}backup/
-
+backupmodx.timelimit | Timelimit for the backup in seconds. | 120
 
 ## Cron job
-Setup a cronJob for the Script locatet in: `assets/components/backupmodx/cron.php` and add your cronkey as a `key` parameter. If your provider does not support cronJobs you can also use services like [Cron-Job.org](https://cron-job.org/). The setup could look like: `https://yourdomain.com/assets/components/backupmodx/cron.php?key=xyz123456789`
 
+Setup a cronJob for the Script located in
+`assets/components/backupmodx/cron.php` and append your cronkey as a `key`
+parameter. If your provider does not support cronjobs you can also use an online
+service like [cron-job.org](https://cron-job.org/). The web cronjob looks like:
+`https://yourdomain.com/assets/components/backupmodx/cron.php?key=xyz123456789`
 
 ## Translations
 
-Translations of the package could be done on [Crowdin](https://crowdin.com/project/backupmodx)
+Translations of the package could be done on
+[Crowdin](https://crowdin.com/project/backupmodx)

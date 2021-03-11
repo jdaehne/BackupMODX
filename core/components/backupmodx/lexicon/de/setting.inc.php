@@ -31,3 +31,5 @@ $_lang['setting_backupmodx.groups'] = 'Gruppen';
 $_lang['setting_backupmodx.groups_desc'] = 'Gruppenname oder Komma separierte Liste von Gruppennamen, welche das Widget verwenden dürfen.';
 $_lang['setting_backupmodx.targetPath'] = 'Backup Ziel Pfad';
 $_lang['setting_backupmodx.targetPath_desc'] = 'Pfad zum Speichern des Backups. Pfad-Platzhalter sind möglich. Beispiel: {core_path}components/backupmodx/backups/';
+$_lang['setting_backupmodx.timelimit'] = 'Backup Zeitlimit';
+$_lang['setting_backupmodx.timelimit_desc'] = 'Zeitlimit für das Backup in Sekunden.';

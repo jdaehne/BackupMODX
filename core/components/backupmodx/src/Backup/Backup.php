@@ -110,7 +110,7 @@ class Backup extends BackupMODX
                 'name' => $filename,
                 'filename' => basename($target),
                 'path' => $target,
-                'size' => $this->humanFilesize(filesize($target), 2),
+                'size' => $this->humanFilesize(filesize($target)),
             );
         } catch (Exception $e) {
             $msg = 'Zip Error: ' . $e->getMessage();
@@ -148,7 +148,7 @@ class Backup extends BackupMODX
 
             if ($this->getOption('debug')) {
                 $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup.', $this->getOption('logTarget'), 'BackupMODX');
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup size: ' . $this->humanFilesize(filesize($target), 2), $this->getOption('logTarget'), 'BackupMODX');
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup size: ' . $this->humanFilesize(filesize($target)), $this->getOption('logTarget'), 'BackupMODX');
                 $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup target: ' . $target, $this->getOption('logTarget'), 'BackupMODX');
             }
 
@@ -156,7 +156,7 @@ class Backup extends BackupMODX
                 'name' => $filename,
                 'filename' => basename($target),
                 'path' => $target,
-                'size' => $this->humanFilesize(filesize($target), 2),
+                'size' => $this->humanFilesize(filesize($target)),
             );
         } catch (Exception $e) {
             $msg = 'mysqldump Error: ' . $e->getMessage();
@@ -191,7 +191,7 @@ class Backup extends BackupMODX
             'name' => $filename,
             'filename' => basename($target),
             'path' => $target,
-            'size' => $this->humanFilesize(filesize($target), 2),
+            'size' => $this->humanFilesize(filesize($target)),
         );
     }
 
@@ -201,12 +201,13 @@ class Backup extends BackupMODX
      * @param bool $files
      * @param bool $database
      * @param string $message
+     * @param int $timelimit
      * @return array|string|null
      */
-    public function backup($files = true, $database = true, $message = '')
+    public function backup($files = true, $database = true, $message = '', $timelimit = 0)
     {
-        set_time_limit(0);
-        ini_set('max_execution_time', 0);
+        set_time_limit($timelimit);
+        ini_set('max_execution_time', $timelimit);
         register_shutdown_function(array($this, 'shutdown'));
 
         $filename = $this->createFilename();

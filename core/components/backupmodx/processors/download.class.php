@@ -63,6 +63,7 @@ class BackupMODXDownloadProcessor extends modProcessor
             fclose($handle);
             die();
         }
+        return false;
     }
 }
 

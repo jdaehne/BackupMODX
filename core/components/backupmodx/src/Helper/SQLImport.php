@@ -13,18 +13,21 @@
 
 namespace BackupMODX\Helper;
 
+use Exception;
+use modX;
+
 class SQLImport
 {
     /**
      * Loads an SQL stream into the database one command at a time.
      *
-     * @param \modX $modx A reference to the modX instance.
+     * @param modX $modx A reference to the modX instance.
      * @param string $sqlFile The filename of the file containing the mysql-dump data.
      * @param bool $logQuery Return a log of all executed queries.
      * @return bool|string|array Returns true or ["success" => true, "log" => $log], if the SQL was imported successfully.
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function importSQL(\modX $modx, $sqlFile, $logQuery = false)
+    public static function importSQL(modX $modx, $sqlFile, $logQuery = false)
     {
         # read file into array
         $file = file($sqlFile);
@@ -61,8 +64,7 @@ class SQLImport
                         }
                         $stmt = $modx->prepare($sql);
                         if (!$stmt->execute()) {
-                            $test = $stmt->errorInfo();
-                            throw new \Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
+                            throw new Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
                         }
                         $sql = '';
                     } else {
@@ -74,8 +76,7 @@ class SQLImport
                 if ($delimiter) {
                     $stmt = $modx->prepare("{$sql} {$query}");
                     if (!$stmt->execute()) {
-                        $test = $stmt->errorInfo();
-                        throw new \Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
+                        throw new Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
                     }
                     if ($logQuery) {
                         $log .= "{$sql} {$query}\n---\n";
