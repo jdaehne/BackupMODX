@@ -3,7 +3,7 @@
   "lowCaseName": "backupmodx",
   "description": "Backup dashboard widget for MODX",
   "author": "Jan Dähne",
-  "version": "3.0.1-pl",
+  "version": "3.0.2-pl",
   "package": {
     "elements": {
       "widgets": [
@@ -22,6 +22,11 @@
         "type": "combo-boolean",
         "area": "system",
         "value": "0"
+      },
+      {
+        "key": "timelimit",
+        "area": "system",
+        "value": "120"
       },
       {
         "key": "excludeFolders",

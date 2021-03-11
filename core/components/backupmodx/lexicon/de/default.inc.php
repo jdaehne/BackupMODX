@@ -22,16 +22,17 @@ $_lang['backupmodx.intro'] = 'Sicheren Sie ihre MODX-Site';
 $_lang['backupmodx.notes'] = 'Geben Sie hier Ihre optionalen Notizen ein ...';
 $_lang['backupmodx.restore'] = 'Backup wiederherstellen';
 
-$_lang['backupmodx.err_backup_ne'] = 'Die Sicherung existiert nicht!';
-$_lang['backupmodx.err_create_backup'] = 'Fehler beim Erstellen der Sicherung!';
+$_lang['backupmodx.err_backup_ne'] = 'Das Backup existiert nicht!';
+$_lang['backupmodx.err_create_backup'] = 'Fehler beim Erstellen des Backups!';
 $_lang['backupmodx.err_create_target_path'] = 'Fehler beim Erstellen des Zielpfads!';
-$_lang['backupmodx.err_missing_backup_options'] = 'Sie haben keine zu sichernden Elemente ausgewählt!';
-$_lang['backupmodx.err_missing_restore_options'] = 'Sie haben keine wiederherzustellenden Elemente ausgewählt!';
+$_lang['backupmodx.err_missing_backup_options'] = 'Sie haben keine Elemente für das Backup ausgewählt!';
+$_lang['backupmodx.err_missing_restore_options'] = 'Sie haben keine Elemente zum Wiederherstellen ausgewählt!';
 $_lang['backupmodx.err_msg_title'] = 'Fehler!';
-$_lang['backupmodx.err_no_backups_available'] = 'Keine Backups verfügbar!';
-$_lang['backupmodx.err_no_restore_available'] = 'Keine Backups für die Wiederherstellung verfügbar!';
+$_lang['backupmodx.err_no_backups_available'] = 'Keine Backups vorhanden!';
+$_lang['backupmodx.err_no_restore_available'] = 'Keine Backups zum Wiederherstellen verfügbar!';
 $_lang['backupmodx.err_pdo_exeption'] = 'PDO-Fehler! Bitte lesen Sie das BackupMODX-Fehlerprotokoll für weitere Informationen.';
-$_lang['backupmodx.err_unknown'] = 'Fehler: AJAX Aufruf fehlgeschlagen ...';
+$_lang['backupmodx.err_timeout'] = 'Zeitüberschreitungsfehler';
+$_lang['backupmodx.err_unknown'] = 'Unbekannter Fehler!';
 
 $_lang['backupmodx.success_msg_title'] = 'Erfolg!';
 $_lang['backupmodx.success_restore'] = 'Die Datenbanksicherung wurde erfolgreich wiederhergestellt. Der Manager wird neu geladen, nachdem diese Nachricht bestätigt wurde.';

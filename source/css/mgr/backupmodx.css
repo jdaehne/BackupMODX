@@ -10,7 +10,7 @@
   padding: 0.4em 3em 0.4em 1em;
   color: #fff;
   border-radius: 4px;
-  background: #32AB9A;
+  background: #32ab9a;
   margin: 0.5em 0;
   font-size: 14px;
   transition: all 0.3s ease;
@@ -82,7 +82,7 @@
 }
 
 .backupmodxWidget .selectBox input[type="checkbox"]:checked + .downloadLink, .backupmodxWidget .selectBox input[type="radio"]:checked + .downloadLink {
-  background: #32AB9A;
+  background: #32ab9a;
   color: #fff;
   border-color: transparent;
 }
@@ -224,4 +224,9 @@
 
 .quadro-widget-about:hover {
   opacity: 1;
+}
+
+.quadro-widget-about.modx3 {
+  right: 50%;
+  transform: translateX(50%);
 }

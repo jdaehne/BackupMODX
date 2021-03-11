@@ -34,12 +34,13 @@ class BackupMODXBackupProcessor extends modProcessor
 
     public function process()
     {
-        $database = ($this->getProperty('database') == 'true') ? true : false;
-        $files = ($this->getProperty('files') == 'true') ? true : false;
+        $database = $this->getProperty('database') == 'true';
+        $files = $this->getProperty('files') == 'true';
         $note = $this->getProperty('note');
+        $timelimit = $this->backupmodx->getOption('timelimit', array(), 120);
 
         $backup = new Backup($this->modx);
-        $result = $backup->backup($files, $database, $note);
+        $result = $backup->backup($files, $database, $note, $timelimit);
         if (is_array($result)) {
             $_SESSION['tmpActiveBackup'] = $result;
             return $this->outputArray($result, 1);

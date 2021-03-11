@@ -31,7 +31,8 @@ $_lang['backupmodx.err_msg_title'] = 'Error!';
 $_lang['backupmodx.err_no_backups_available'] = 'No backups available!';
 $_lang['backupmodx.err_no_restore_available'] = 'No backups available for restore!';
 $_lang['backupmodx.err_pdo_exeption'] = 'PDO Exeption! Please read the BackupMODX error log for more information.';
-$_lang['backupmodx.err_unknown'] = 'Error: Failing AJAX ...';
+$_lang['backupmodx.err_timeout'] = 'Timeout error!';
+$_lang['backupmodx.err_unknown'] = 'Unknown error!';
 
 $_lang['backupmodx.success_msg_title'] = 'Success!';
 $_lang['backupmodx.success_restore'] = 'The database backup was successfully restored. The manager will be reloaded after confirming this message.';

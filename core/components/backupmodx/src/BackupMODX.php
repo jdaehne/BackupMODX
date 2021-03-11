@@ -2,7 +2,7 @@
 /**
  * BackupMODX
  *
- * Copyright 2015-2019 by Jan Dähne <thomas.jakobi@partout.info>
+ * Copyright 2015-2021 by Jan Dähne <thomas.jakobi@partout.info>
  *
  * @package backupmodx
  * @subpackage classfile
@@ -40,7 +40,7 @@ class BackupMODX
      * The version
      * @var string $version
      */
-    public $version = '3.0.1-pl';
+    public $version = '3.0.2-pl';
 
     /**
      * The class options
@@ -93,6 +93,7 @@ class BackupMODX
             'mysqldumpAlias' => $this->getOption('mysqldumpAlias', $options, 'mysqldump'),
             'debug' => (bool)$this->getOption('debug', $options, false),
             'logTarget' => json_decode($this->getOption('logTarget', $options, '{"target":"FILE","options":{"filename":"' . $this->namespace . '.log"}}'), true),
+            'timelimit' => (int) $this->getOption('timelimit', $options, 120)
         ));
 
         $lexicon = $this->modx->getService('lexicon', 'modLexicon');
