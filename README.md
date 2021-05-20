@@ -1,4 +1,4 @@
-[![Crowdin](https://badges.crowdin.net/backupmodx/localized.svg)](https://crowdin.com/project/backupmodx)
+[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/-/modx-backupmodx-standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/modx-backupmodx-standard/)
 
 # BackupMODX
 
@@ -53,7 +53,10 @@ parameter. If your provider does not support cronjobs you can also use an online
 service like [cron-job.org](https://cron-job.org/). The web cronjob looks like:
 `https://yourdomain.com/assets/components/backupmodx/cron.php?key=xyz123456789`
 
+## License
+
+The project is licensed under the [GPLv2 license](https://github.com/Jako/BackupMODX/blob/master/core/components/backupmodx/docs/license.md).
+
 ## Translations
 
-Translations of the package could be done on
-[Crowdin](https://crowdin.com/project/backupmodx)
+Translations of the package can be made for the [Default Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-backupmodx-standard/) and the [System Setting Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-backupmodx-system-settings/)
