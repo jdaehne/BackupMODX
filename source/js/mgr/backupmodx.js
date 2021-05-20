@@ -42,7 +42,7 @@ Ext.extend(backupmodx, Ext.Component, {
     backup: function () {
         var database = document.getElementById('backupmodx-input-database').checked,
             files = document.getElementById('backupmodx-input-files').checked,
-            note = document.getElementById('backupmodx-input-note').checked;
+            note = document.getElementById('backupmodx-input-note').value;
 
         if (database || files) {
             Ext.get('backupmodx-form-backup').addClass('hide');
@@ -69,9 +69,9 @@ Ext.extend(backupmodx, Ext.Component, {
                             buttons: Ext.MessageBox.OK,
                             icon: Ext.MessageBox.ERROR
                         });
+                        Ext.get('backupmodx-form-backup').removeClass('hide');
                     }
                     Ext.get('backupmodx-spinner').addClass('hide');
-                    Ext.get('backupmodx-form-backup').removeClass('hide');
                 },
                 failure: function (response) {
                     var data = Ext.decode(response.responseText);

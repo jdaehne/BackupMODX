@@ -111,6 +111,8 @@ $primary: #00948e;
       margin: 0 auto 30px;
       width: 70px;
       text-align: center;
+      animation: none;
+      border: none;
       .icon {
         font-size: 20px;
         display: inline-block;
@@ -122,6 +124,9 @@ $primary: #00948e;
         &:nth-child(2) {
           animation-delay: -0.16s;
         }
+      }
+      &:before {
+        border: none;
       }
     }
     margin: 50px;

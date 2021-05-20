@@ -130,6 +130,9 @@
   margin: 0 auto 30px;
   width: 70px;
   text-align: center;
+  -webkit-animation: none;
+          animation: none;
+  border: none;
 }
 
 .backupmodxWidget .spinnerWrapper .spinner .icon {
@@ -148,6 +151,10 @@
 .backupmodxWidget .spinnerWrapper .spinner .icon:nth-child(2) {
   -webkit-animation-delay: -0.16s;
           animation-delay: -0.16s;
+}
+
+.backupmodxWidget .spinnerWrapper .spinner:before {
+  border: none;
 }
 
 .backupmodxWidget .spinnerWrapper .text {

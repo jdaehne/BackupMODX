@@ -3,7 +3,7 @@
   "lowCaseName": "backupmodx",
   "description": "Backup dashboard widget for MODX",
   "author": "Jan Dähne",
-  "version": "3.0.2-pl",
+  "version": "3.0.3-pl",
   "package": {
     "elements": {
       "widgets": [
