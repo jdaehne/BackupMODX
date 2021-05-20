@@ -79,7 +79,7 @@ class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
                 $this->controller->addCss($cssUrl . 'backupmodx.min.css?v=v' . $this->backupmodx->version);
             }
             $this->controller->addHtml('<script>Ext.onReady(function() {
-    BackupMODX.config = ' . json_encode($this->backupmodx->options, JSON_PRETTY_PRINT) . ';
+    BackupMODX.config = ' . json_encode($this->backupmodx->options, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
 });</script>');
 
             return $this->getFileChunk($this->backupmodx->getOption('templatesPath') . 'backupmodx.widget.tpl', array(
