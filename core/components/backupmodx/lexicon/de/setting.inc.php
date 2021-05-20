@@ -6,7 +6,6 @@
  * @subpackage lexicon
  */
 $_lang['area_cron'] = 'Cron';
-
 $_lang['setting_backupmodx.cronDatabase'] = 'Backup Datenbank';
 $_lang['setting_backupmodx.cronDatabase_desc'] = 'Datenbank bei Cron-Backup berücksichtigen.';
 $_lang['setting_backupmodx.cronEnable'] = 'Cron aktivieren';
@@ -14,7 +13,7 @@ $_lang['setting_backupmodx.cronEnable_desc'] = 'Cron-Backup aktivieren oder deak
 $_lang['setting_backupmodx.cronFiles'] = 'Backup Dateien';
 $_lang['setting_backupmodx.cronFiles_desc'] = 'Dateien bei Cron-Backup berücksichtigen.';
 $_lang['setting_backupmodx.cronKey'] = 'Cron Sicherheitsschlüssel';
-$_lang['setting_backupmodx.cronKey_desc'] = 'Sicherheitsschlüssel für Cron gesteuerte Backups. (Sting)';
+$_lang['setting_backupmodx.cronKey_desc'] = 'Sicherheitsschlüssel für Cron gesteuerte Backups. Kann eine beliebige Zeichenfolge sein.';
 $_lang['setting_backupmodx.cronMaxDatabase'] = 'Max Datenbanken';
 $_lang['setting_backupmodx.cronMaxDatabase_desc'] = 'Maximale Anzahl von Datenbanken die als Backup vorgehalten werden sollen.';
 $_lang['setting_backupmodx.cronMaxFiles'] = 'Max Dateien';

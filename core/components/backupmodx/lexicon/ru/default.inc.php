@@ -6,37 +6,32 @@
  * @subpackage lexicon
  */
 $_lang['backupmodx'] = 'BackupMODX';
-
 $_lang['backupmodx.widget'] = 'BackupMODX';
-$_lang['backupmodx.widget_desc'] = 'Backup dashboard widget';
-
-$_lang['backupmodx.add_readme'] = 'Add a readme file <span>(txt-file)</span>:';
-$_lang['backupmodx.btn_cancel'] = 'Cancel';
-$_lang['backupmodx.btn_remove'] = 'Remove Backup';
-$_lang['backupmodx.btn_restore'] = 'Restore Backup';
-$_lang['backupmodx.btn_start'] = 'Backup Site';
-$_lang['backupmodx.database'] = 'Database';
-$_lang['backupmodx.download'] = 'Download';
-$_lang['backupmodx.files'] = 'Files';
-$_lang['backupmodx.intro'] = 'Backup your MODX-Site';
-$_lang['backupmodx.notes'] = 'Type your optional notes here...';
-$_lang['backupmodx.restore'] = 'Restore Backup';
-
-$_lang['backupmodx.err_backup_ne'] = 'The backup does not exist!';
-$_lang['backupmodx.err_create_backup'] = 'Error creating backup!';
-$_lang['backupmodx.err_create_target_path'] = 'Error creating target path!';
-$_lang['backupmodx.err_missing_backup_options'] = 'You did not select any elements to backup!';
-$_lang['backupmodx.err_missing_restore_options'] = 'You did not select any elements to restore!';
-$_lang['backupmodx.err_msg_title'] = 'Error!';
-$_lang['backupmodx.err_no_backups_available'] = 'No backups available!';
-$_lang['backupmodx.err_no_restore_available'] = 'No backups available for restore!';
-$_lang['backupmodx.err_pdo_exeption'] = 'PDO Exeption! Please read the BackupMODX error log for more information.';
-$_lang['backupmodx.err_timeout'] = 'Timeout error!';
-$_lang['backupmodx.err_unknown'] = 'Unknown error!';
-
-$_lang['backupmodx.success_msg_title'] = 'Success!';
-$_lang['backupmodx.success_restore'] = 'The database backup was successfully restored. The manager will be reloaded after confirming this message.';
-
-$_lang['backupmodx.msg_finished'] = 'Backup Finished!';
-$_lang['backupmodx.msg_progress_text'] = 'Backup is in progress.';
+$_lang['backupmodx.widget_desc'] = 'Виджет приборной панели резервного копирования';
+$_lang['backupmodx.add_readme'] = 'Добавьте файл readme <span>(txt-файл)</span>:';
+$_lang['backupmodx.btn_cancel'] = 'Отмена';
+$_lang['backupmodx.btn_remove'] = 'Удалить резервную копию';
+$_lang['backupmodx.btn_restore'] = 'Восстановление резервной копии';
+$_lang['backupmodx.btn_start'] = 'Резервный сайт';
+$_lang['backupmodx.database'] = 'База данных';
+$_lang['backupmodx.download'] = 'Скачать';
+$_lang['backupmodx.files'] = 'Файлы';
+$_lang['backupmodx.intro'] = 'Резервное копирование вашего MODX-сайта';
+$_lang['backupmodx.notes'] = 'Введите здесь свои дополнительные примечания …';
+$_lang['backupmodx.restore'] = 'Восстановление резервной копии';
+$_lang['backupmodx.err_backup_ne'] = 'Резервная копия не существует!';
+$_lang['backupmodx.err_create_backup'] = 'Ошибка при создании резервной копии!';
+$_lang['backupmodx.err_create_target_path'] = 'Ошибка при создании целевого пути!';
+$_lang['backupmodx.err_missing_backup_options'] = 'Вы не выбрали ни одного элемента для резервного копирования!';
+$_lang['backupmodx.err_missing_restore_options'] = 'Вы не выбрали ни одного элемента для восстановления!';
+$_lang['backupmodx.err_msg_title'] = 'Ошибка!';
+$_lang['backupmodx.err_no_backups_available'] = 'Резервные копии отсутствуют!';
+$_lang['backupmodx.err_no_restore_available'] = 'Резервные копии для восстановления недоступны!';
+$_lang['backupmodx.err_pdo_exeption'] = 'Исключение PDO! Пожалуйста, прочитайте журнал ошибок BackupMODX для получения дополнительной информации.';
+$_lang['backupmodx.err_timeout'] = 'Ошибка тайм-аута!';
+$_lang['backupmodx.err_unknown'] = 'Неизвестная ошибка!';
+$_lang['backupmodx.success_msg_title'] = 'Успех!';
+$_lang['backupmodx.success_restore'] = 'Резервная копия базы данных была успешно восстановлена. Менеджер будет перезагружен после подтверждения этого сообщения.';
+$_lang['backupmodx.msg_finished'] = 'Резервное копирование завершено!';
+$_lang['backupmodx.msg_progress_text'] = 'Выполняется резервное копирование.';
 $_lang['backupmodx.msg_progress_title'] = 'BackupMODX';
