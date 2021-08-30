@@ -135,7 +135,9 @@ if ($object->xpdo) {
                         $countPlacements++;
                     }
                 }
-                $oldWidget->remove();
+                if ($oldWidget) {
+                    $oldWidget->remove();
+                }
 
                 if ($countPlacements) {
                     $modx->log(xPDO::LOG_LEVEL_INFO, 'Changed ' . $countPlacements . ' legacy widget placements and removed the legacy widget.');
