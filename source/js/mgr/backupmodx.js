@@ -241,7 +241,7 @@ Ext.extend(backupmodx, Ext.Component, {
             msg: msg,
             buttons: Ext.Msg.OK,
             cls: 'backupmodx_window',
-            width: 330
+            width: 358
         });
     }
 });
