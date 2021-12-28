@@ -166,8 +166,8 @@ module.exports = function (grunt) {
                 }],
                 options: {
                     replacements: [{
-                        pattern: /© 2015(-\d{4})? by/g,
-                        replacement: '© ' + (new Date().getFullYear() > 2015 ? '2015-' : '') + new Date().getFullYear() + ' by'
+                        pattern: /&copy; 2015(-\d{4})? by/g,
+                        replacement: '&copy; ' + (new Date().getFullYear() > 2015 ? '2015-' : '') + new Date().getFullYear() + ' by'
                     }]
                 }
             }
