@@ -2,7 +2,7 @@
 /**
  * BackupMODX
  *
- * Copyright 2015-2019 by Jan Dähne <thomas.jakobi@partout.info>
+ * Copyright 2015-2019 by Jan Dähne <office@treehillstudio.com>
  *
  * @package backupmodx
  */
