@@ -3,7 +3,7 @@
  * Download
  *
  * @package backupmodx
- * @subpackage processor
+ * @subpackage processors
  */
 
 class BackupMODXDownloadProcessor extends modProcessor

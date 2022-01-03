@@ -3,7 +3,7 @@
  * Remove backup
  *
  * @package backupmodx
- * @subpackage processor
+ * @subpackage processors
  */
 
 class BackupMODXRemovebackupProcessor extends modProcessor

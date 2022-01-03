@@ -3,7 +3,7 @@
  * Restore backup
  *
  * @package backupmodx
- * @subpackage processor
+ * @subpackage processors
  */
 
 // Timeouts

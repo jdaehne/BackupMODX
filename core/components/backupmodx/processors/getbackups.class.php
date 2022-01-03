@@ -3,7 +3,7 @@
  * Get backups
  *
  * @package backupmodx
- * @subpackage processor
+ * @subpackage processors
  */
 
 class BackupMODXGetbackupsProcessor extends modProcessor
