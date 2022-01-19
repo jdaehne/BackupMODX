@@ -64,6 +64,7 @@ if (is_array($result)) {
     if (php_sapi_name() == 'cli') {
         exit(0);
     } else {
+        @session_write_close();
         exit;
     }
 } else {
@@ -71,7 +72,8 @@ if (is_array($result)) {
         fwrite(STDERR, $result . "\n");
         exit(1);
     } else {
-        exit ($result);
+        @session_write_close();
+        exit($result);
     }
 }
 
