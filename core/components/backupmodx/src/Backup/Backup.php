@@ -1,6 +1,6 @@
 <?php
 /**
- * Backup
+ * Backup Backup
  *
  * @package backupmodx
  * @subpackage classfile
