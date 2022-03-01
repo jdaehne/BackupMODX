@@ -1,16 +1,5 @@
 {
   "name": "treehillstudio/backupmodx",
-  "require": {
-    "php": ">=5.6.0",
-    "chumper/zipper": "^1.0",
-    "ifsnop/mysqldump-php": "^2.7"
-  },
-  "autoload": {
-    "psr-4": {
-      "BackupMODX\\": "src/"
-    }
-  },
-  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Jan Dähne",
@@ -21,9 +10,20 @@
       "email": "office@treehillstudio.com"
     }
   ],
+  "license": "GPL-2.0-or-later",
   "config": {
     "platform": {
-      "php": "5.6.40"
+      "php": "5.6.0"
+    }
+  },
+  "require": {
+    "php": ">=5.6.0",
+    "chumper/zipper": "^1.0",
+    "ifsnop/mysqldump-php": "^2.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "BackupMODX\\": "src/"
     }
   }
 }
