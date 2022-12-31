@@ -154,7 +154,7 @@ module.exports = function (grunt) {
                 }],
                 options: {
                     replacements: [{
-                        pattern: /version = '\d+.\d+.\d+[-a-z0-9]*'/ig,
+                        pattern: /version = '\d+\.\d+\.\d+[-a-z0-9]*'/ig,
                         replacement: 'version = \'' + '<%= modx.version %>' + '\''
                     }]
                 }
