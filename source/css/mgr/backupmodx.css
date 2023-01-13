@@ -3,7 +3,6 @@
   /* helper */
   /* Spinner */
 }
-
 .backupmodxWidget .downloadLink {
   text-decoration: none;
   display: block;
@@ -19,17 +18,14 @@
   cursor: pointer;
   border: 1px solid transparent;
 }
-
 .backupmodxWidget .downloadLink:hover {
   background: #4095ca;
   color: #fff;
 }
-
 .backupmodxWidget .icon {
   display: inline-block;
   margin-right: 1em;
 }
-
 .backupmodxWidget .download {
   position: absolute;
   right: 0;
@@ -45,16 +41,13 @@
   padding: 0 0.7em;
   margin-right: 0;
 }
-
 .backupmodxWidget .textBox {
   padding: 5px 0;
   display: block;
 }
-
 .backupmodxWidget .textBox span {
   color: grey;
 }
-
 .backupmodxWidget .textarea {
   box-sizing: border-box;
   -webkit-appearance: none;
@@ -68,109 +61,74 @@
   margin: 5px 0 5px 0;
   padding: 5px;
 }
-
 .backupmodxWidget .restore {
   padding: 1em 0;
 }
-
 .backupmodxWidget .downloads {
   padding-bottom: 1em;
 }
-
-.backupmodxWidget .selectBox input[type="checkbox"], .backupmodxWidget .selectBox input[type="radio"] {
+.backupmodxWidget .selectBox input[type=checkbox], .backupmodxWidget .selectBox input[type=radio] {
   display: none;
 }
-
-.backupmodxWidget .selectBox input[type="checkbox"]:checked + .downloadLink, .backupmodxWidget .selectBox input[type="radio"]:checked + .downloadLink {
+.backupmodxWidget .selectBox input[type=checkbox]:checked + .downloadLink, .backupmodxWidget .selectBox input[type=radio]:checked + .downloadLink {
   background: #32ab9a;
   color: #fff;
   border-color: transparent;
 }
-
-.backupmodxWidget .selectBox input[type="checkbox"]:checked + .downloadLink .download:before, .backupmodxWidget .selectBox input[type="radio"]:checked + .downloadLink .download:before {
+.backupmodxWidget .selectBox input[type=checkbox]:checked + .downloadLink .download:before, .backupmodxWidget .selectBox input[type=radio]:checked + .downloadLink .download:before {
   opacity: 1;
-  -webkit-animation: 0.5s ease backupmodxcheck;
-          animation: 0.5s ease backupmodxcheck;
+  animation: 0.5s ease backupmodxcheck;
 }
-
 .backupmodxWidget .selectBox .downloadLink {
   background: transparent;
   color: inherit;
   border-color: #ccc;
 }
-
 .backupmodxWidget .selectBox .downloadLink:hover {
   background: #4095ca;
   color: #fff;
   border-color: #4095ca;
 }
-
 .backupmodxWidget .selectBox .downloadLink .download:before {
   opacity: 0;
   transition: inherit;
 }
-
 .backupmodxWidget .hide {
   display: none;
 }
-
 .backupmodxWidget .x-btn {
   font-size: 11px;
 }
-
 .backupmodxWidget button {
   margin: 0 2px 0 0;
 }
-
 .backupmodxWidget .spinnerWrapper {
   margin: 50px;
 }
-
 .backupmodxWidget .spinnerWrapper .spinner {
   margin: 0 auto 30px;
   width: 70px;
   text-align: center;
-  -webkit-animation: none;
-          animation: none;
+  animation: none;
   border: none;
 }
-
 .backupmodxWidget .spinnerWrapper .spinner .icon {
   font-size: 20px;
   display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-          animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
   margin-right: 0;
 }
-
 .backupmodxWidget .spinnerWrapper .spinner .icon:nth-child(1) {
-  -webkit-animation-delay: -0.32s;
-          animation-delay: -0.32s;
+  animation-delay: -0.32s;
 }
-
 .backupmodxWidget .spinnerWrapper .spinner .icon:nth-child(2) {
-  -webkit-animation-delay: -0.16s;
-          animation-delay: -0.16s;
+  animation-delay: -0.16s;
 }
-
 .backupmodxWidget .spinnerWrapper .spinner:before {
   border: none;
 }
-
 .backupmodxWidget .spinnerWrapper .text {
   text-align: center;
-}
-
-@-webkit-keyframes backupmodxcheck {
-  0% {
-    transform: scale(1);
-  }
-  70% {
-    transform: scale(2);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 @keyframes backupmodxcheck {
@@ -184,16 +142,6 @@
     transform: scale(1);
   }
 }
-
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% {
-    transform: scale(0);
-  }
-  40% {
-    transform: scale(1);
-  }
-}
-
 @keyframes sk-bouncedelay {
   0%, 80%, 100% {
     transform: scale(0);
@@ -202,7 +150,6 @@
     transform: scale(1);
   }
 }
-
 .buttons {
   position: relative;
 }
@@ -211,7 +158,6 @@
   color: #b2bf28;
   text-decoration: none;
 }
-
 .backupmodx_window a:hover {
   color: #77801a;
 }
@@ -228,11 +174,9 @@
   opacity: 0.25;
   transition: opacity 0.5s;
 }
-
 .quadro-widget-about:hover {
   opacity: 1;
 }
-
 .quadro-widget-about.modx3 {
   right: 50%;
   transform: translateX(50%);

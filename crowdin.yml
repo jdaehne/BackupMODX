@@ -1,4 +1,0 @@
-files:
-  - source: /core/components/backupmodx/lexicon/en/*.php
-    translation: >-
-      /core/components/backupmodx/lexicon/%two_letters_code%/%original_file_name%
