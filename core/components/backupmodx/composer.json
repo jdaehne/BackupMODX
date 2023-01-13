@@ -13,13 +13,13 @@
   "license": "GPL-2.0-or-later",
   "config": {
     "platform": {
-      "php": "5.6.0"
+      "php": "7.4"
     }
   },
   "require": {
-    "php": ">=5.6.0",
-    "chumper/zipper": "^1.0",
-    "ifsnop/mysqldump-php": "^2.7"
+    "php": ">=7.4",
+    "ifsnop/mysqldump-php": "^2.7",
+    "madnest/madzipper": "^1.2"
   },
   "autoload": {
     "psr-4": {

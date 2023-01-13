@@ -9,7 +9,7 @@
 namespace BackupMODX\Backup;
 
 use BackupMODX;
-use Chumper\Zipper\Zipper;
+use Madnest\Madzipper\Madzipper;
 use Exception;
 use Ifsnop\Mysqldump as IMysqldump;
 use modX;
@@ -100,7 +100,7 @@ class Backup extends BackupMODX
         }
 
         try {
-            $zipper = new Zipper();
+            $zipper = new Madzipper();
             $zipper->make($target);
             foreach ($files as $path => $name) {
                 $zipper->add($path, $name);

@@ -2,7 +2,7 @@
 /**
  * BackupMODX
  *
- * Copyright 2015-2019 by Jan Dähne <office@treehillstudio.com>
+ * Copyright 2015-2023 by Jan Dähne <info@quadro-system.de>
  *
  * @package backupmodx
  */

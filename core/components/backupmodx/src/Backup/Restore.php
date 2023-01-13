@@ -2,8 +2,6 @@
 /**
  * Backup Restore
  *
- * Copyright 2015-2019 by Jan Dähne <office@treehillstudio.com>
- *
  * @package backupmodx
  * @subpackage classfile
  */

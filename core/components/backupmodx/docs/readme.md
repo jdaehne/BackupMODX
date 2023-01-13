@@ -2,7 +2,7 @@
 
 Dashboard widget to backup your MODX site
 
-- Author: Jan Dähne <https://www.quadro-system.de>
+- Author: Jan Dähne <info@quadro-system.de>
 - License: GPLv2
 
 ## Installation
