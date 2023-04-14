@@ -2,7 +2,7 @@
   "name": "BackupMODX",
   "lowCaseName": "backupmodx",
   "description": "Backup dashboard widget for MODX",
-  "author": "Jan Dähne",
+  "author": "Jan Dähne, Thomas Jakobi",
   "version": "3.1.0",
   "package": {
     "elements": {
