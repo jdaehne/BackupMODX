@@ -25,7 +25,7 @@ use xPDO;
 class Backup extends BackupMODX
 {
     /**
-     * Remove constructor
+     * Backup constructor
      *
      * @param modX $modx
      * @param array $options

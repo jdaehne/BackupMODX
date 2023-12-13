@@ -18,7 +18,7 @@ class BackupMODXRestorebackupProcessor extends modProcessor
     public $backupmodx;
 
     /**
-     * BackupMODXGetProcessor constructor.
+     * BackupMODXRestorebackupProcessor constructor.
      * @param modX $modx A reference to the modX instance
      * @param array $properties An array of properties
      */

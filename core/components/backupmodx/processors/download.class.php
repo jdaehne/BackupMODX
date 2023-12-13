@@ -12,7 +12,7 @@ class BackupMODXDownloadProcessor extends modProcessor
     public $backupmodx;
 
     /**
-     * BackupMODXGetProcessor constructor.
+     * BackupMODXDownloadProcessor constructor.
      * @param modX $modx A reference to the modX instance
      * @param array $properties An array of properties
      */

@@ -20,7 +20,7 @@ use xPDO;
 class Restore extends BackupMODX
 {
     /**
-     * Remove constructor
+     * Restore constructor
      *
      * @param modX $modx
      * @param array $options
