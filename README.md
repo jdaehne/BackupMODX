@@ -1,4 +1,4 @@
-[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/-/modx-backupmodx-standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/modx-backupmodx-standard/)
+[![Default Lexicon](https://hosted.weblate.org/widgets/modx-extras/backupmodx/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/backupmodx/standard/)
 
 # BackupMODX
 
@@ -59,4 +59,4 @@ The project is licensed under the [GPLv2 license](https://github.com/Jako/Backup
 
 ## Translations
 
-Translations of the package can be made for the [Default Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-backupmodx-standard/) and the [System Setting Lexicon](https://hosted.weblate.org/projects/modx-extras/modx-backupmodx-system-settings/)
+Translations of the package can be made for the [Default Lexicon](https://hosted.weblate.org/projects/modx-extras/backupmodx/standard/) and the [System Setting Lexicon](https://hosted.weblate.org/projects/modx-extras/backupmodx/system-settings/)
