@@ -10,7 +10,7 @@
 
 use BackupMODX\Backup\Backup;
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php';
+require_once dirname(__FILE__, 4) . '/config.core.php';
 require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
 require_once MODX_CONNECTORS_PATH . 'index.php';
 
@@ -21,7 +21,7 @@ $backupmodx = $modx->getService('backupmodx', 'BackupMODX', $corePath . 'model/b
 ));
 
 // Check if Cron is enabled
-if ($backupmodx->getOption('cronEnable') != true) {
+if (!$backupmodx->getOption('cronEnable')) {
     $msg = 'Access Denied. Cron is disabled in MODX system-settings.';
     if (php_sapi_name() == 'cli') {
         fwrite(STDERR, $msg . "\n");

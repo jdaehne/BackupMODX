@@ -9,6 +9,7 @@
 namespace BackupMODX\Backup;
 
 use BackupMODX;
+use FilesystemIterator;
 use Madnest\Madzipper\Madzipper;
 use Exception;
 use Ifsnop\Mysqldump as IMysqldump;
@@ -41,6 +42,7 @@ class Backup extends BackupMODX
     public $excludeFolders = array(
         '{core_path}cache',
         '{core_path}packages',
+        '{core_path}vendor',
     );
 
     /**
@@ -63,6 +65,7 @@ class Backup extends BackupMODX
             $excludeFolders = array_merge($excludeFolders, explode(',', $this->getOption('excludeFolders')));
         }
         $excludeFolders = array_map(array($this, 'translatePath'), $excludeFolders);
+        $excludeFolders = array_map(array($this, 'trimPath'), $excludeFolders);
         $excludeFiles = $this->excludeFiles;
         if ($this->getOption('excludeFiles') != '') {
             $excludeFiles = array_merge($excludeFiles, explode(',', $this->getOption('excludeFiles')));
@@ -75,7 +78,7 @@ class Backup extends BackupMODX
 
         $stripPrefix = self::stripPrefix();
 
-        // Collect all files to backup in the different MODX folders
+        // Collect all files to back up in the different MODX folders
         $files = $this->getFiles(MODX_BASE_PATH, array_merge(array(
             MODX_ASSETS_PATH,
             MODX_CONNECTORS_PATH,
@@ -89,10 +92,14 @@ class Backup extends BackupMODX
 
         if ($this->getOption('debug')) {
             $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup ' . count($files) . ' files.', $this->getOption('logTarget'), 'BackupMODX');
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup files list:' . "\n" . print_r($files, true), $this->getOption('logTarget'), 'BackupMODX');
+            $fileSizeList = [];
+            foreach ($files as $file) {
+                $fileSizeList[] = $stripPrefix . $file . ': ' . $this->humanFilesize(filesize($stripPrefix . $file));
+            }
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup files list:' . "\n" . print_r($fileSizeList, true), $this->getOption('logTarget'), 'BackupMODX');
         }
 
-        $filename = $filename ? $filename : $this->createFilename();
+        $filename = $filename ?: $this->createFilename();
         $target = $this->targetPath($filename) . $filename . '.zip';
 
         if ($this->getOption('debug')) {
@@ -134,7 +141,7 @@ class Backup extends BackupMODX
         $password = $this->modx->getOption('password');
         $database = $this->modx->getOption('dbname');
 
-        $filename = $filename ? $filename : $this->createFilename();
+        $filename = $filename ?: $this->createFilename();
         $target = $this->targetPath($filename) . $filename . '.sql';
 
         try {
@@ -176,7 +183,7 @@ class Backup extends BackupMODX
      */
     public function createNote($message, $filename = null)
     {
-        $filename = $filename ? $filename : $this->createFilename();
+        $filename = $filename ?: $this->createFilename();
         $target = $this->targetPath($filename) . $filename . '.txt';
 
         $fp = fopen($target, 'wb');
@@ -216,7 +223,7 @@ class Backup extends BackupMODX
         // Create Backupdirectory if not exists
         $cacheManager = $this->modx->getCacheManager();
         if ($cacheManager->writeTree($targetPath)) {
-            if ($database == true) {
+            if ($database) {
                 $database = $this->backupDatabase($filename);
             }
             if ($message != '') {
@@ -224,7 +231,7 @@ class Backup extends BackupMODX
             } else {
                 $note = '';
             }
-            if ($files == true) {
+            if ($files) {
                 $files = $this->backupFiles($filename);
             }
 
@@ -269,7 +276,7 @@ class Backup extends BackupMODX
      */
     private function targetPath($filename)
     {
-        $filename = $filename ? $filename : $this->createFilename();
+        $filename = $filename ?: $this->createFilename();
 
         return $this->getOption('targetPath') . $filename . '/';
     }
@@ -293,7 +300,16 @@ class Backup extends BackupMODX
     }
 
     /**
-     * Get an array of all files to backup
+     * @param string $path
+     * @return string
+     */
+    public function trimPath($path)
+    {
+        return rtrim($path, '/');
+    }
+
+    /**
+     * Get an array of all files to back up
      *
      * @param string $directory
      * @param array $excludeFolders
@@ -337,7 +353,7 @@ class Backup extends BackupMODX
             return $file->isFile();
         };
 
-        $innerIterator = new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS);
+        $innerIterator = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator($innerIterator, $filter));
 
         foreach ($iterator as $path => $fileInfo) {

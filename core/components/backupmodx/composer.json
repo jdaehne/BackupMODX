@@ -18,6 +18,8 @@
   },
   "require": {
     "php": ">=7.4",
+    "ext-json": "*",
+    "ext-openssl": "*",
     "ifsnop/mysqldump-php": "^2.7",
     "madnest/madzipper": "^1.2"
   },

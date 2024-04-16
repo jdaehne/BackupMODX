@@ -30,6 +30,6 @@ $_lang['setting_backupmodx.excludeFolders_desc'] = 'Folders to be excluded from 
 $_lang['setting_backupmodx.groups'] = 'Groups';
 $_lang['setting_backupmodx.groups_desc'] = 'Comma separated list of groups names, that will have access to the widget.';
 $_lang['setting_backupmodx.targetPath'] = 'Backup Target Path';
-$_lang['setting_backupmodx.targetPath_desc'] = 'The path to the folder to store the backups. Path placeholder are available. Example: {core_path}backups/';
+$_lang['setting_backupmodx.targetPath_desc'] = 'The path to the folder to store the backups. Path placeholder are available. Example: {core_path}backup/';
 $_lang['setting_backupmodx.timelimit'] = 'Backup Timelimit';
 $_lang['setting_backupmodx.timelimit_desc'] = 'Timelimit for the backup in seconds.';

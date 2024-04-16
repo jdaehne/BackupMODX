@@ -32,12 +32,9 @@
   top: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.2);
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-flex-align: center;
-      align-items: center;
+  justify-content: center;
+  align-items: center;
   padding: 0 0.7em;
   margin-right: 0;
 }

@@ -2,7 +2,7 @@
 /**
  * BackupMODX
  *
- * Copyright 2015-2023 by Jan Dähne <info@quadro-system.de>
+ * Copyright 2015-2024 by Jan Dähne <info@quadro-system.de>
  *
  * @package backupmodx
  * @subpackage classfile
@@ -40,7 +40,7 @@ class BackupMODX
      * The version
      * @var string $version
      */
-    public $version = '3.1.0';
+    public $version = '3.1.1';
 
     /**
      * The class options
@@ -249,13 +249,13 @@ class BackupMODX
      */
     public function cleanCronBackups($maxDatabase = 10, $maxFiles = 5)
     {
-        $max = $maxFiles > $maxDatabase ? $maxFiles : $maxDatabase;
+        $max = max($maxFiles, $maxDatabase);
 
         $backups = $this->getBackups();
 
         // Remove old files
         foreach (array_slice($backups, $maxFiles) as $backup) {
-            if (isset($backup['files']) && isset($backup['files']['files'])) {
+            if (isset($backup['files']['files'])) {
                 $file = $backup['path'] . $backup['name'] . '/' . $backup['files']['files'];
                 if (file_exists($file)) {
                     unlink($file);
@@ -265,7 +265,7 @@ class BackupMODX
 
         // Remove old databases
         foreach (array_slice($backups, $maxDatabase) as $backup) {
-            if (isset($backup['files']) && isset($backup['files']['database'])) {
+            if (isset($backup['files']['database'])) {
                 $file = $backup['path'] . $backup['name'] . '/' . $backup['files']['database'];
                 if (file_exists($file)) {
                     unlink($file);

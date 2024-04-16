@@ -29,6 +29,6 @@ $_lang['setting_backupmodx.excludeFolders_desc'] = 'Папки должны бы
 $_lang['setting_backupmodx.groups'] = 'Группы';
 $_lang['setting_backupmodx.groups_desc'] = 'Название группы пользователей или список групп, разделенный запятой. Эти группы будут иметь доступ к виджету.';
 $_lang['setting_backupmodx.targetPath'] = 'Путь к резервной копии';
-$_lang['setting_backupmodx.targetPath_desc'] = 'Путь к директории, где будут храниться резервные копии. Core и Assets плейсхолдеры доступны. Пример: {core_path}backups/';
+$_lang['setting_backupmodx.targetPath_desc'] = 'Путь к директории, где будут храниться резервные копии. Core и Assets плейсхолдеры доступны. Пример: {core_path}backup/';
 $_lang['setting_backupmodx.timelimit'] = 'Ограничение времени резервного копирования';
 $_lang['setting_backupmodx.timelimit_desc'] = 'Ограничение по времени для резервного копирования в секундах.';

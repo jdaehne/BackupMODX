@@ -29,7 +29,7 @@ class modDashboardWidgetBackupModx extends modDashboardWidgetInterface
             $widgetArray['class'] = $this->cssBlockClass;
             $widgetArray['name_trans'] .= '<span class="quadro-widget-about modx' . $modxVersion['version'] . '" onclick="BackupMODX.about()"><img width="80" height="20" src="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small.png" srcset="' . $this->backupmodx->getOption('assetsUrl') . 'img/mgr/quadro-small@2x.png 2x" alt="Quadro"></span>';
             $output = $this->getFileChunk('dashboard/block.tpl', $widgetArray);
-            $output = preg_replace('@\[\[(?:[^]\[]+|(?R))*+]]@is', '', $output);
+            $output = preg_replace('@\[\[(?:[^]\[]+|(?R))*+]]@i', '', $output);
         }
         return $output;
     }
