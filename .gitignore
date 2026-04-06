@@ -1,7 +1,5 @@
-_build/build.config.php
+.idea
 config.core.php
-
-_build/site
 
 icon/*.svg
 
