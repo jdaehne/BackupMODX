@@ -24,18 +24,18 @@ Ext.extend(backupmodx, Ext.Component, {
         );
         Ext.get('backupmodx-download-container').dom.innerText = '';
         if (files.database !== '') {
-            files.database['icon'] = 'sql';
-            files.database['label'] = 'Database';
+            files.data.icon = 'sql';
+            files.data.label = 'Database';
             tpl.append(Ext.get('backupmodx-download-container'), files.database);
         }
         if (files.files !== '') {
-            files.files['icon'] = 'zip';
-            files.files['label'] = 'Files';
+            files.data.icon = 'zip';
+            files.data.label = 'Files';
             tpl.append(Ext.get('backupmodx-download-container'), files.files);
         }
         if (files.note !== '') {
-            files.note['icon'] = 'txt';
-            files.note['label'] = 'Note';
+            files.data.icon = 'txt';
+            files.data.label = 'Note';
             tpl.append(Ext.get('backupmodx-download-container'), files.note);
         }
     },
