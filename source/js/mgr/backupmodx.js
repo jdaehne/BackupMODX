@@ -1,4 +1,4 @@
-var backupmodx = function (config) {
+let backupmodx = function (config) {
     config = config || {};
     Ext.applyIf(config, {});
     backupmodx.superclass.constructor.call(this, config);
@@ -13,7 +13,7 @@ Ext.extend(backupmodx, Ext.Component, {
         });
     },
     templatingFiles: function (files) {
-        var tpl = new Ext.XTemplate(
+        let tpl = new Ext.XTemplate(
             '<tpl for=".">',
             '<div>' +
             '<a class="downloadLink" onclick="BackupMODX.download(\'{filename}\',\'{name}\')">' +
@@ -24,23 +24,26 @@ Ext.extend(backupmodx, Ext.Component, {
         );
         Ext.get('backupmodx-download-container').dom.innerText = '';
         if (files.database !== '') {
+            files.data = files.data || {};
             files.data.icon = 'sql';
             files.data.label = 'Database';
             tpl.append(Ext.get('backupmodx-download-container'), files.database);
         }
         if (files.files !== '') {
+            files.data = files.data || {};
             files.data.icon = 'zip';
             files.data.label = 'Files';
             tpl.append(Ext.get('backupmodx-download-container'), files.files);
         }
         if (files.note !== '') {
+            files.data = files.data || {};
             files.data.icon = 'txt';
             files.data.label = 'Note';
             tpl.append(Ext.get('backupmodx-download-container'), files.note);
         }
     },
     backup: function () {
-        var database = document.getElementById('backupmodx-input-database').checked,
+        const database = document.getElementById('backupmodx-input-database').checked,
             files = document.getElementById('backupmodx-input-files').checked,
             note = document.getElementById('backupmodx-input-note').value;
 
@@ -57,7 +60,7 @@ Ext.extend(backupmodx, Ext.Component, {
                     note: note
                 },
                 success: function (response) {
-                    var data = Ext.decode(response.responseText);
+                    const data = Ext.decode(response.responseText);
                     if (data.success) {
                         BackupMODX.templatingFiles(data.results.files);
                         Ext.get('backupmodx-remove-btn').removeClass('hide');
@@ -73,8 +76,7 @@ Ext.extend(backupmodx, Ext.Component, {
                     }
                     Ext.get('backupmodx-spinner').addClass('hide');
                 },
-                failure: function (response) {
-                    var data = Ext.decode(response.responseText);
+                failure: function () {
                     Ext.Msg.show({
                         title: _('backupmodx.err_msg_title'),
                         msg: _('backupmodx.err_timeout'),
@@ -105,9 +107,9 @@ Ext.extend(backupmodx, Ext.Component, {
                 action: 'getbackups'
             },
             success: function (response) {
-                var data = Ext.decode(response.responseText);
+                const data = Ext.decode(response.responseText);
                 if (data.success) {
-                    var files = data.results,
+                    let files = data.results,
                         tpl = new Ext.XTemplate(
                             '<tpl for=".">',
                             '<div class="restoreItem">',
@@ -131,7 +133,7 @@ Ext.extend(backupmodx, Ext.Component, {
                 }
             },
             failure: function (response) {
-                var data = Ext.decode(response.responseText);
+                const data = Ext.decode(response.responseText);
                 Ext.Msg.show({
                     title: _('backupmodx.err_msg_title'),
                     msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
@@ -161,16 +163,16 @@ Ext.extend(backupmodx, Ext.Component, {
                 action: 'removebackup'
             },
             success: function (response) {
-                var data = Ext.decode(response.responseText),
+                const data = Ext.decode(response.responseText),
                     files = data.results;
-                if (typeof files != "undefined" && files != null && files.length != null && files.length === 0) {
+                if (typeof files != 'undefined' && files != null && files.length != null && files.length === 0) {
                     Ext.get('backupmodx-restore-container').dom.innerText = '';
                     Ext.get('backupmodx-form-backup').removeClass('hide');
                     Ext.get('backupmodx-form-download').addClass('hide');
                 }
             },
             failure: function (response) {
-                var data = Ext.decode(response.responseText);
+                const data = Ext.decode(response.responseText);
                 Ext.Msg.show({
                     title: _('backupmodx.err_msg_title'),
                     msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
@@ -181,7 +183,7 @@ Ext.extend(backupmodx, Ext.Component, {
         });
     },
     restoreBackup: function () {
-        var database = Ext.DomQuery.selectNode('input[name=database]:checked');
+        const database = Ext.DomQuery.selectNode('input[name=database]:checked');
         if (database) {
             Ext.Ajax.request({
                 url: BackupMODX.config.connectorUrl,
@@ -190,7 +192,7 @@ Ext.extend(backupmodx, Ext.Component, {
                     database: database.value
                 },
                 success: function (response) {
-                    var data = Ext.decode(response.responseText);
+                    const data = Ext.decode(response.responseText);
                     if (data.success) {
                         Ext.Msg.show({
                             title: _('backupmodx.success_msg_title'),
@@ -211,7 +213,7 @@ Ext.extend(backupmodx, Ext.Component, {
                     }
                 },
                 failure: function (response) {
-                    var data = Ext.decode(response.responseText);
+                    const data = Ext.decode(response.responseText);
                     Ext.Msg.show({
                         title: _('backupmodx.err_msg_title'),
                         msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
@@ -230,9 +232,9 @@ Ext.extend(backupmodx, Ext.Component, {
         }
     },
     about: function () {
-        var msg = '<span style="display: inline-block; text-align: center">' +
+        const msg = '<span style="display: inline-block; text-align: center">' +
             '<img width="200" style="margin: 0 50px;" src="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro@2x.png 2x" alt"Quadro"><br>' +
-            '<span style="display: block;margin-bottom: 20px">&copy; 2015-2024 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
+            '<span style="display: block;margin-bottom: 20px">&copy; 2015-2026 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
             '<img width="200" src="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio"><br>' +
             'Version 3.x refactored by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a>' +
             '</span>';

@@ -1,5 +1,7 @@
 {
   "name": "treehillstudio/backupmodx",
+  "description": "Backup dashboard widget for MODX",
+  "version": "3.1.2",
   "authors": [
     {
       "name": "Jan Dähne",

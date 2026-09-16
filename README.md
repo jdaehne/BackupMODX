@@ -2,7 +2,7 @@
 
 # BackupMODX
 
-Backup Dashboard Widget for MODX CMS.
+Dashboard widget to back up your MODX site
 
 ## Features
 

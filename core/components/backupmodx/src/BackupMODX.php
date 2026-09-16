@@ -2,7 +2,7 @@
 /**
  * BackupMODX
  *
- * Copyright 2015-2024 by Jan Dähne <info@quadro-system.de>
+ * Copyright 2015-2026 by Jan Dähne <info@quadro-system.de>
  *
  * @package backupmodx
  * @subpackage classfile
@@ -40,7 +40,7 @@ class BackupMODX
      * The version
      * @var string $version
      */
-    public $version = '3.1.1';
+    public $version = '3.1.2';
 
     /**
      * The class options
