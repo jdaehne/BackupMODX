@@ -5,7 +5,7 @@
  * @package backupmodx
  * @subpackage lexicon
  */
-$_lang['area_cron'] = 'хрон';
+$_lang['area_cron'] = 'Cron';
 $_lang['setting_backupmodx.cronDatabase'] = 'Резервирование базы данных';
 $_lang['setting_backupmodx.cronDatabase_desc'] = 'Включать или нет Базу данных в резервную копию по расписанию.';
 $_lang['setting_backupmodx.cronEnable'] = 'Резервное копирование по расписанию';
@@ -21,7 +21,7 @@ $_lang['setting_backupmodx.cronMaxFiles_desc'] = 'Максимальное ко�
 $_lang['setting_backupmodx.cronNote'] = 'Примечание';
 $_lang['setting_backupmodx.cronNote_desc'] = 'Текстовый файл с описанием будет добавлен к резервной копии (необязателен).';
 $_lang['setting_backupmodx.debug'] = 'Отладка';
-$_lang['setting_backupmodx.debug_desc'] = 'Записывать отладочную информацию в лог ошибок MODX.';
+$_lang['setting_backupmodx.debug_desc'] = 'Записывать отладочную информацию в лог-файл BackupMODX (core/cache/logs/backupmodx.log).';
 $_lang['setting_backupmodx.excludeFiles'] = 'Исключить файлы';
 $_lang['setting_backupmodx.excludeFiles_desc'] = 'Список файлов, которые необходимо исключить из резервного копирования, разделенный запятыми. Возможны регулярные выражения. Пример: \..* для имен файлов, начинающихся с точки.';
 $_lang['setting_backupmodx.excludeFolders'] = 'Исключить папки';

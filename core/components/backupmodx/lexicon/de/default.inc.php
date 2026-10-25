@@ -7,7 +7,7 @@
  */
 $_lang['backupmodx'] = 'BackupMODX';
 $_lang['backupmodx.widget'] = 'BackupMODX';
-$_lang['backupmodx.widget_desc'] = 'Backup Dashboard Widget';
+$_lang['backupmodx.widget_desc'] = 'Backup-Dashboard-Widget';
 $_lang['backupmodx.add_readme'] = 'Füge eine Readme-Datei hinzu <span>(txt-Datei)</span>:';
 $_lang['backupmodx.btn_cancel'] = 'Abbrechen';
 $_lang['backupmodx.btn_remove'] = 'Backup entfernen';
@@ -16,7 +16,8 @@ $_lang['backupmodx.btn_start'] = 'Backup starten';
 $_lang['backupmodx.database'] = 'Datenbank';
 $_lang['backupmodx.download'] = 'Herunterladen';
 $_lang['backupmodx.files'] = 'Dateien';
-$_lang['backupmodx.intro'] = 'Sicheren Sie ihre MODX-Site';
+$_lang['backupmodx.intro'] = 'Sichern Sie Ihre MODX-Site';
+$_lang['backupmodx.note'] = 'Notiz';
 $_lang['backupmodx.notes'] = 'Geben Sie hier Ihre optionalen Notizen ein …';
 $_lang['backupmodx.restore'] = 'Backup wiederherstellen';
 $_lang['backupmodx.err_backup_ne'] = 'Das Backup existiert nicht!';

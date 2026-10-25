@@ -8,34 +8,21 @@
 
 namespace BackupMODX\Backup;
 
-use BackupMODX;
+use BackupMODX\BackupMODX;
 use FilesystemIterator;
 use Madnest\Madzipper\Madzipper;
 use Exception;
 use Ifsnop\Mysqldump as IMysqldump;
-use modX;
 use RecursiveCallbackFilterIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use xPDO;
 
 /**
  * Class Backup
  */
 class Backup extends BackupMODX
 {
-    /**
-     * Backup constructor
-     *
-     * @param modX $modx
-     * @param array $options
-     */
-    public function __construct(modX &$modx, $options = array())
-    {
-        parent::__construct($modx, $options);
-    }
-
     /**
      * @var array $excludeFolders Default excluded folders
      */
@@ -60,51 +47,41 @@ class Backup extends BackupMODX
      */
     public function backupFiles($filename = null)
     {
-        $excludeFolders = array_merge($this->excludeFolders, array($this->getOption('targetPath')));
-        if ($this->getOption('excludeFolders') != '') {
-            $excludeFolders = array_merge($excludeFolders, explode(',', $this->getOption('excludeFolders')));
-        }
+        $excludeFolders = array_merge($this->excludeFolders, array($this->getOption('targetPath')), $this->getListOption('excludeFolders'));
         $excludeFolders = array_map(array($this, 'translatePath'), $excludeFolders);
         $excludeFolders = array_map(array($this, 'trimPath'), $excludeFolders);
-        $excludeFiles = $this->excludeFiles;
-        if ($this->getOption('excludeFiles') != '') {
-            $excludeFiles = array_merge($excludeFiles, explode(',', $this->getOption('excludeFiles')));
-        }
+        $excludeFiles = array_merge($this->excludeFiles, $this->getListOption('excludeFiles'));
 
-        if ($this->getOption('debug')) {
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Excluded ' . count($excludeFolders) . ' folders.', $this->getOption('logTarget'), 'BackupMODX');
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Folder list:' . "\n" . print_r($excludeFolders, true), $this->getOption('logTarget'), 'BackupMODX');
-        }
+        $this->debug('Excluded ' . count($excludeFolders) . ' folders.');
+        $this->debug('Folder list:' . "\n" . print_r($excludeFolders, true));
 
         $stripPrefix = self::stripPrefix();
-
-        // Collect all files to back up in the different MODX folders
-        $files = $this->getFiles(MODX_BASE_PATH, array_merge(array(
+        $modxPaths = array(
             MODX_ASSETS_PATH,
             MODX_CONNECTORS_PATH,
             MODX_CORE_PATH,
             MODX_MANAGER_PATH,
-        ), $excludeFolders), $excludeFiles, $stripPrefix);
-        $files = array_merge($files, $this->getFiles(MODX_ASSETS_PATH, $excludeFolders, $excludeFiles, $stripPrefix));
-        $files = array_merge($files, $this->getFiles(MODX_CORE_PATH, $excludeFolders, $excludeFiles, $stripPrefix));
-        $files = array_merge($files, $this->getFiles(MODX_CONNECTORS_PATH, $excludeFolders, $excludeFiles, $stripPrefix));
-        $files = array_merge($files, $this->getFiles(MODX_MANAGER_PATH, $excludeFolders, $excludeFiles, $stripPrefix));
+        );
+
+        // Collect all files to back up in the base path (without the MODX folders) and in the different MODX folders
+        $files = $this->getFiles(MODX_BASE_PATH, array_merge($modxPaths, $excludeFolders), $excludeFiles, $stripPrefix);
+        foreach ($modxPaths as $modxPath) {
+            $files = array_merge($files, $this->getFiles($modxPath, $excludeFolders, $excludeFiles, $stripPrefix));
+        }
 
         if ($this->getOption('debug')) {
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup ' . count($files) . ' files.', $this->getOption('logTarget'), 'BackupMODX');
+            $this->log('File backup ' . count($files) . ' files.');
             $fileSizeList = [];
             foreach ($files as $file) {
                 $fileSizeList[] = $stripPrefix . $file . ': ' . $this->humanFilesize(filesize($stripPrefix . $file));
             }
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup files list:' . "\n" . print_r($fileSizeList, true), $this->getOption('logTarget'), 'BackupMODX');
+            $this->log('File backup files list:' . "\n" . print_r($fileSizeList, true));
         }
 
         $filename = $filename ?: $this->createFilename();
         $target = $this->targetPath($filename) . $filename . '.zip';
 
-        if ($this->getOption('debug')) {
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'File backup target: ' . $target, $this->getOption('logTarget'), 'BackupMODX');
-        }
+        $this->debug('File backup target: ' . $target);
 
         try {
             $zipper = new Madzipper();
@@ -113,17 +90,10 @@ class Backup extends BackupMODX
                 $zipper->add($path, $name);
             }
             $zipper->close();
-            return array(
-                'name' => $filename,
-                'filename' => basename($target),
-                'path' => $target,
-                'size' => $this->humanFilesize(filesize($target)),
-            );
+            return $this->fileResult($filename, $target);
         } catch (Exception $e) {
             $msg = 'Zip Error: ' . $e->getMessage();
-            if ($this->getOption('debug')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, $msg, $this->getOption('logTarget'), 'BackupMODX');
-            }
+            $this->debug($msg);
             return $msg;
         }
     }
@@ -153,23 +123,14 @@ class Backup extends BackupMODX
             ));
             $dump->start($target);
 
-            if ($this->getOption('debug')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup.', $this->getOption('logTarget'), 'BackupMODX');
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup size: ' . $this->humanFilesize(filesize($target)), $this->getOption('logTarget'), 'BackupMODX');
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Database backup target: ' . $target, $this->getOption('logTarget'), 'BackupMODX');
-            }
+            $this->debug('Database backup.');
+            $this->debug('Database backup size: ' . $this->humanFilesize(filesize($target)));
+            $this->debug('Database backup target: ' . $target);
 
-            return array(
-                'name' => $filename,
-                'filename' => basename($target),
-                'path' => $target,
-                'size' => $this->humanFilesize(filesize($target)),
-            );
+            return $this->fileResult($filename, $target);
         } catch (Exception $e) {
             $msg = 'mysqldump Error: ' . $e->getMessage();
-            if ($this->getOption('debug')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, $msg, $this->getOption('logTarget'), 'BackupMODX');
-            }
+            $this->debug($msg);
             return $msg;
         }
     }
@@ -186,20 +147,11 @@ class Backup extends BackupMODX
         $filename = $filename ?: $this->createFilename();
         $target = $this->targetPath($filename) . $filename . '.txt';
 
-        $fp = fopen($target, 'wb');
-        fwrite($fp, $message);
-        fclose($fp);
+        file_put_contents($target, $message);
 
-        if ($this->getOption('debug')) {
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Backup note.', $this->getOption('logTarget'), 'BackupMODX');
-        }
+        $this->debug('Backup note.');
 
-        return array(
-            'name' => $filename,
-            'filename' => basename($target),
-            'path' => $target,
-            'size' => $this->humanFilesize(filesize($target)),
-        );
+        return $this->fileResult($filename, $target);
     }
 
     /**
@@ -221,41 +173,28 @@ class Backup extends BackupMODX
         $targetPath = $this->targetPath($filename);
 
         // Create Backupdirectory if not exists
-        $cacheManager = $this->modx->getCacheManager();
-        if ($cacheManager->writeTree($targetPath)) {
-            if ($database) {
-                $database = $this->backupDatabase($filename);
-            }
-            if ($message != '') {
-                $note = $this->createNote($message, $filename);
-            } else {
-                $note = '';
-            }
-            if ($files) {
-                $files = $this->backupFiles($filename);
-            }
-
-            if ($database || $note || $files) {
-                return array(
-                    'filename' => $filename,
-                    'path' => $targetPath,
-                    'files' => array(
-                        'database' => (!$database) ? '' : $database,
-                        'files' => (!$files) ? '' : $files,
-                        'note' => (!$note) ? '' : $note,
-                    ),
-                );
-            } else {
-                $cacheManager->deleteTree($targetPath, array(
-                    'deleteTop' => true,
-                    'skipDirs' => false,
-                    'extensions' => array('.sql', '.zip', '.txt')
-                ));
-                return $this->modx->lexicon('backupmodx.err_create_backup');
-            }
-        } else {
+        if (!$this->modx->getCacheManager()->writeTree($targetPath)) {
             return $this->modx->lexicon('backupmodx.err_create_target_path');
         }
+
+        $database = $database ? $this->backupDatabase($filename) : false;
+        $note = ($message != '') ? $this->createNote($message, $filename) : '';
+        $files = $files ? $this->backupFiles($filename) : false;
+
+        if (!$database && !$note && !$files) {
+            $this->deleteFolder($targetPath);
+            return $this->modx->lexicon('backupmodx.err_create_backup');
+        }
+
+        return array(
+            'filename' => $filename,
+            'path' => $targetPath,
+            'files' => array(
+                'database' => $database ?: '',
+                'files' => $files ?: '',
+                'note' => $note ?: '',
+            ),
+        );
     }
 
     /**
@@ -279,6 +218,36 @@ class Backup extends BackupMODX
         $filename = $filename ?: $this->createFilename();
 
         return $this->getOption('targetPath') . $filename . '/';
+    }
+
+    /**
+     * Get the result array of a created backup file
+     *
+     * @param string $filename
+     * @param string $target
+     * @return array
+     */
+    private function fileResult($filename, $target)
+    {
+        return array(
+            'name' => $filename,
+            'filename' => basename($target),
+            'path' => $target,
+            'size' => $this->humanFilesize(filesize($target)),
+        );
+    }
+
+    /**
+     * Get a comma separated option as array
+     *
+     * @param string $key
+     * @return array
+     */
+    private function getListOption($key)
+    {
+        $value = $this->getOption($key);
+
+        return ($value != '') ? explode(',', $value) : array();
     }
 
     /**
@@ -320,16 +289,13 @@ class Backup extends BackupMODX
     private function getFiles($directory, $excludeFolders, $excludeFiles, $stripPrefix = '')
     {
         $excludeFolders = array_map(function ($item) {
-            $item = trim($item);
-            return rtrim($item, '/\\');
+            return rtrim(trim($item), '/\\');
         }, $excludeFolders);
         $excludeFiles = array_map(function ($item) {
-            $item = trim($item);
-            return '~' . str_replace('~', '\~', $item) . '~';
+            return '~' . str_replace('~', '\~', trim($item)) . '~';
         }, $excludeFiles);
         $stripPrefix = rtrim($stripPrefix, '/\\');
 
-        $files = array();
         /**
          * @param SplFileInfo $file
          * @param mixed $key
@@ -337,11 +303,8 @@ class Backup extends BackupMODX
          * @return bool True if you need to recurse or if the item is acceptable
          */
         $filter = function ($file, $key, $iterator) use ($excludeFolders, $excludeFiles) {
-            $cleanFilename = $key;
             if ($file->isDir()) {
-                if ($iterator->hasChildren() && !in_array($cleanFilename, $excludeFolders)) {
-                    return true;
-                }
+                return $iterator->hasChildren() && !in_array($key, $excludeFolders);
             }
             if ($file->isFile()) {
                 foreach ($excludeFiles as $excludeFile) {
@@ -349,13 +312,15 @@ class Backup extends BackupMODX
                         return false;
                     }
                 }
+                return true;
             }
-            return $file->isFile();
+            return false;
         };
 
         $innerIterator = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator(new RecursiveCallbackFilterIterator($innerIterator, $filter));
 
+        $files = array();
         foreach ($iterator as $path => $fileInfo) {
             $name = pathinfo($path, PATHINFO_BASENAME);
             $dir = pathinfo($path, PATHINFO_DIRNAME);
@@ -375,13 +340,13 @@ class Backup extends BackupMODX
     private static function stripPrefix()
     {
         if (strcmp(MODX_BASE_PATH . 'core/', MODX_CORE_PATH) === 0) {
-            $stripPrefix = MODX_BASE_PATH;
-        } else {
-            $stripPrefix = '';
-            for ($i = 0; $i <= strlen(MODX_BASE_PATH); $i++) {
-                if (strcmp(substr(MODX_BASE_PATH . 'core/', 0, $i), substr(MODX_CORE_PATH, 0, $i)) === 0) {
-                    $stripPrefix = substr(MODX_BASE_PATH, 0, $i);
-                }
+            return MODX_BASE_PATH;
+        }
+
+        $stripPrefix = '';
+        for ($i = 0; $i <= strlen(MODX_BASE_PATH); $i++) {
+            if (strcmp(substr(MODX_BASE_PATH . 'core/', 0, $i), substr(MODX_CORE_PATH, 0, $i)) === 0) {
+                $stripPrefix = substr(MODX_BASE_PATH, 0, $i);
             }
         }
         return $stripPrefix;
@@ -396,9 +361,7 @@ class Backup extends BackupMODX
         $error = error_get_last();
         if (is_array($error) && isset($error['type']) && $error['type'] === E_ERROR) {
             $message = (isset($error['message'])) ? $error['message'] : 'Unknown Error!';
-            if ($this->getOption('debug')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Script terminated with the error ' . $message, $this->getOption('logTarget'), 'BackupMODX');
-            }
+            $this->debug('Script terminated with the error ' . $message);
             if (php_sapi_name() == 'cli') {
                 fwrite(STDERR, $message . "\n");
                 exit(1);

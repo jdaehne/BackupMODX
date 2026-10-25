@@ -152,7 +152,7 @@ async function taskBump() {
             replace: apiReplace
         }], 'daterange in');
     }
-    await replaceInFile('core/backupmodx/agenda/composer.json', [{
+    await replaceInFile('core/components/backupmodx/composer.json', [{
         search: /"php": "\d.\d.*?"/g,
         replace: '"php": "' + phpversion + '"'
     }, {
