@@ -14,7 +14,7 @@
   border: 1px solid transparent;
 }
 .backupmodxWidget .downloadLink:hover {
-  background: #4095ca;
+  background: rgb(15.987933635%, 54.6787330317%, 49.2428355958%);
   color: #fff;
 }
 .backupmodxWidget .icon {
@@ -42,13 +42,15 @@
 }
 .backupmodxWidget .textarea {
   box-sizing: border-box;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   width: 100%;
   height: 60px;
   display: block;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin: 5px 0 5px 0;
+  margin: 5px 0;
   padding: 5px;
 }
 .backupmodxWidget .restore {
@@ -56,9 +58,6 @@
 }
 .backupmodxWidget .downloads {
   padding-bottom: 1em;
-}
-.backupmodxWidget {
-  /* Checkboxes */
 }
 .backupmodxWidget .selectBox input[type=checkbox], .backupmodxWidget .selectBox input[type=radio] {
   display: none;
@@ -78,16 +77,13 @@
   border-color: #ccc;
 }
 .backupmodxWidget .selectBox .downloadLink:hover {
-  background: #4095ca;
+  background: rgb(15.987933635%, 54.6787330317%, 49.2428355958%);
   color: #fff;
-  border-color: #4095ca;
+  border-color: rgb(15.987933635%, 54.6787330317%, 49.2428355958%);
 }
 .backupmodxWidget .selectBox .downloadLink .download:before {
   opacity: 0;
   transition: inherit;
-}
-.backupmodxWidget {
-  /* helper */
 }
 .backupmodxWidget .hide {
   display: none;
@@ -98,8 +94,11 @@
 .backupmodxWidget button {
   margin: 0 2px 0 0;
 }
-.backupmodxWidget {
-  /* Spinner */
+.backupmodxWidget .buttons {
+  position: relative;
+}
+.backupmodxWidget .spinnerWrapper {
+  margin: 50px;
 }
 .backupmodxWidget .spinnerWrapper .spinner {
   margin: 0 auto 30px;
@@ -123,22 +122,16 @@
 .backupmodxWidget .spinnerWrapper .spinner:before {
   border: none;
 }
-.backupmodxWidget .spinnerWrapper {
-  margin: 50px;
-}
 .backupmodxWidget .spinnerWrapper .text {
   text-align: center;
 }
 
 @keyframes backupmodxcheck {
-  0% {
+  0%, 100% {
     transform: scale(1);
   }
   70% {
     transform: scale(2);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 @keyframes sk-bouncedelay {
@@ -149,10 +142,6 @@
     transform: scale(1);
   }
 }
-.buttons {
-  position: relative;
-}
-
 .backupmodx_window a {
   color: rgb(69.9277605779%, 75.092879257%, 15.4953560372%);
   text-decoration: none;

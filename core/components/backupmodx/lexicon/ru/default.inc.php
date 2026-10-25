@@ -17,6 +17,7 @@ $_lang['backupmodx.database'] = 'База данных';
 $_lang['backupmodx.download'] = 'Скачать';
 $_lang['backupmodx.files'] = 'Файлы';
 $_lang['backupmodx.intro'] = 'Резервное копирование вашего MODX-сайта';
+$_lang['backupmodx.note'] = 'Примечание';
 $_lang['backupmodx.notes'] = 'Введите здесь свои дополнительные примечания …';
 $_lang['backupmodx.restore'] = 'Восстановление резервной копии';
 $_lang['backupmodx.err_backup_ne'] = 'Резервная копия не существует!';

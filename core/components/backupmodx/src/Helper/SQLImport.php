@@ -33,13 +33,10 @@ class SQLImport
         $file = file($sqlFile);
 
         # import file line by line
-        # and filter (remove) those lines, beginning with a sql comment token
+        # and filter (remove) those lines, beginning with a sql comment or sql notes token
         $file = array_filter($file, function ($line) {
-            return strpos(ltrim($line), '--') !== 0;
-        });
-        # and filter (remove) those lines, beginning with a sql notes token
-        $file = array_filter($file, function ($line) {
-            return strpos(ltrim($line), '/*') !== 0;
+            $line = ltrim($line);
+            return strpos($line, '--') !== 0 && strpos($line, '/*') !== 0;
         });
 
         $sql = '';
@@ -62,10 +59,7 @@ class SQLImport
                         if ($logQuery) {
                             $log .= "$sql\ndo---do\n";
                         }
-                        $stmt = $modx->prepare($sql);
-                        if (!$stmt->execute()) {
-                            throw new Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
-                        }
+                        self::execute($modx, $sql, $query);
                         $sql = '';
                     } else {
                         $sql .= $query . '; ';
@@ -74,10 +68,7 @@ class SQLImport
             } else {
                 $delimiter = is_int(strpos($query, ';'));
                 if ($delimiter) {
-                    $stmt = $modx->prepare("$sql $query");
-                    if (!$stmt->execute()) {
-                        throw new Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
-                    }
+                    self::execute($modx, "$sql $query", $query);
                     if ($logQuery) {
                         $log .= "$sql $query\n---\n";
                     }
@@ -90,6 +81,20 @@ class SQLImport
 
         return ($logQuery) ? $log : true;
     }
+
+    /**
+     * Execute an SQL statement.
+     *
+     * @param modX $modx A reference to the modX instance.
+     * @param string $sql The SQL statement to execute.
+     * @param string $query The query line reported in the exception message.
+     * @throws Exception
+     */
+    private static function execute(modX $modx, $sql, $query)
+    {
+        $stmt = $modx->prepare($sql);
+        if (!$stmt->execute()) {
+            throw new Exception(implode(' ', $stmt->errorInfo()) . "\n" . 'SQL Query: ' . $query);
+        }
+    }
 }
-
-

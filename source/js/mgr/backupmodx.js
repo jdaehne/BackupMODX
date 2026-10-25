@@ -6,140 +6,85 @@ let backupmodx = function (config) {
 };
 Ext.extend(backupmodx, Ext.Component, {
     config: {}, util: {},
-    initComponent: function () {
-        this.stores = {};
-        this.ajax = new Ext.data.Connection({
-            disableCaching: true
-        });
-    },
+    downloadTpl: new Ext.XTemplate(
+        '<tpl for=".">',
+        '<div>' +
+        '<a class="downloadLink" onclick="BackupMODX.download(\'{filename}\',\'{name}\')">' +
+        '<i class="icon icon-{icon}"></i> {label} <i>({size})</i> <i class="download icon icon-download"></i>' +
+        '</a>' +
+        '</div>',
+        '</tpl>'
+    ),
+    restoreTpl: new Ext.XTemplate(
+        '<tpl for=".">',
+        '<div class="restoreItem">',
+        '<div><strong>{date_format}</strong>' +
+        '<tpl if="note != \'\'"> | {note:htmlEncode}</tpl>' +
+        '</div>',
+        '<label class="selectBox">',
+        '<input type="radio" name="database" value="{name}">',
+        '<div class="downloadLink"><i class="icon icon-sql"></i> {[_(\'backupmodx.database\')]} <i class="download icon icon-check"></i></div>',
+        '</label>',
+        '</div>',
+        '</tpl>'
+    ),
     templatingFiles: function (files) {
-        let tpl = new Ext.XTemplate(
-            '<tpl for=".">',
-            '<div>' +
-            '<a class="downloadLink" onclick="BackupMODX.download(\'{filename}\',\'{name}\')">' +
-            '<i class="icon icon-{icon}"></i> {label} <i>({size})</i> <i class="download icon icon-download"></i>' +
-            '</a>' +
-            '</div>',
-            '</tpl>'
-        );
-        Ext.get('backupmodx-download-container').dom.innerText = '';
-        if (files.database !== '') {
-            files.data = files.data || {};
-            files.data.icon = 'sql';
-            files.data.label = 'Database';
-            tpl.append(Ext.get('backupmodx-download-container'), files.database);
-        }
-        if (files.files !== '') {
-            files.data = files.data || {};
-            files.data.icon = 'zip';
-            files.data.label = 'Files';
-            tpl.append(Ext.get('backupmodx-download-container'), files.files);
-        }
-        if (files.note !== '') {
-            files.data = files.data || {};
-            files.data.icon = 'txt';
-            files.data.label = 'Note';
-            tpl.append(Ext.get('backupmodx-download-container'), files.note);
-        }
+        const container = Ext.get('backupmodx-download-container');
+        container.dom.innerText = '';
+        Ext.each([
+            {key: 'database', icon: 'sql', label: _('backupmodx.database')},
+            {key: 'files', icon: 'zip', label: _('backupmodx.files')},
+            {key: 'note', icon: 'txt', label: _('backupmodx.note')}
+        ], function (type) {
+            if (files[type.key] !== '') {
+                this.downloadTpl.append(container, Ext.apply({icon: type.icon, label: type.label}, files[type.key]));
+            }
+        }, this);
     },
     backup: function () {
         const database = document.getElementById('backupmodx-input-database').checked,
             files = document.getElementById('backupmodx-input-files').checked,
             note = document.getElementById('backupmodx-input-note').value;
 
-        if (database || files) {
-            Ext.get('backupmodx-form-backup').addClass('hide');
-            Ext.get('backupmodx-spinner').removeClass('hide');
-            Ext.Ajax.request({
-                url: BackupMODX.config.connectorUrl,
-                timeout: ((BackupMODX.config.timelimit || 120) * 1000) + 1000,
-                params: {
-                    action: 'backup',
-                    database: database,
-                    files: files,
-                    note: note
-                },
-                success: function (response) {
-                    const data = Ext.decode(response.responseText);
-                    if (data.success) {
-                        BackupMODX.templatingFiles(data.results.files);
-                        Ext.get('backupmodx-remove-btn').removeClass('hide');
-                        Ext.get('backupmodx-form-download').removeClass('hide');
-                    } else {
-                        Ext.Msg.show({
-                            title: _('backupmodx.err_msg_title'),
-                            msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
-                            buttons: Ext.MessageBox.OK,
-                            icon: Ext.MessageBox.ERROR
-                        });
-                        Ext.get('backupmodx-form-backup').removeClass('hide');
-                    }
-                    Ext.get('backupmodx-spinner').addClass('hide');
-                },
-                failure: function () {
-                    Ext.Msg.show({
-                        title: _('backupmodx.err_msg_title'),
-                        msg: _('backupmodx.err_timeout'),
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.ERROR
-                    });
-                    Ext.get('backupmodx-spinner').addClass('hide');
-                    Ext.get('backupmodx-form-backup').removeClass('hide');
-                }
-            });
-        } else {
-            Ext.Msg.show({
-                title: _('backupmodx.err_msg_title'),
-                msg: _('backupmodx.err_missing_backup_options'),
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.WARNING
-            });
+        if (!database && !files) {
+            this.showMessage(_('backupmodx.err_missing_backup_options'), Ext.MessageBox.WARNING);
+            return;
         }
+
+        this.showParts(['spinner']);
+        this.request({
+            action: 'backup',
+            database: database,
+            files: files,
+            note: note
+        }, function (data) {
+            if (data.success) {
+                this.templatingFiles(data.results.files);
+                Ext.get('backupmodx-remove-btn').removeClass('hide');
+                this.showParts(['form-download']);
+            } else {
+                this.showError(data, Ext.MessageBox.ERROR);
+                this.showParts(['form-backup']);
+            }
+        }, function () {
+            this.showMessage(_('backupmodx.err_timeout'), Ext.MessageBox.ERROR);
+            this.showParts(['form-backup']);
+        }, ((BackupMODX.config.timelimit || 120) * 1000) + 1000);
     },
     restore: function () {
-        Ext.get('backupmodx-form-backup').addClass('hide');
-        Ext.get('backupmodx-form-download').addClass('hide');
-        Ext.get('backupmodx-form-restore').removeClass('hide');
-
-        Ext.Ajax.request({
-            url: BackupMODX.config.connectorUrl,
-            params: {
-                action: 'getbackups'
-            },
-            success: function (response) {
-                const data = Ext.decode(response.responseText);
-                if (data.success) {
-                    let files = data.results,
-                        tpl = new Ext.XTemplate(
-                            '<tpl for=".">',
-                            '<div class="restoreItem">',
-                            '<div><strong>{date_format}</strong>' +
-                            '<tpl if="note != \'\'"> | {note}</tpl>' +
-                            '</div>',
-                            '<label class="selectBox">',
-                            '<input type="radio" name="database" value="{name}">',
-                            '<div class="downloadLink"><i class="icon icon-sql"></i> ' + _('backupmodx.database') + ' <i class="download icon icon-check"></i></div>',
-                            '</label>',
-                            '</div>',
-                            '</tpl>'
-                        );
-                    if (files !== '') {
-                        tpl.overwrite(Ext.get('backupmodx-restore-container'), files);
-                    }
-                    Ext.get('backupmodx-restore-btn').removeClass('hide');
-                } else {
-                    Ext.get('backupmodx-restore-container').dom.innerText = data.message;
-                    Ext.get('backupmodx-restore-btn').addClass('hide');
+        this.showParts(['form-restore']);
+        this.request({
+            action: 'getbackups'
+        }, function (data) {
+            const container = Ext.get('backupmodx-restore-container');
+            if (data.success) {
+                if (data.results !== '') {
+                    this.restoreTpl.overwrite(container, data.results);
                 }
-            },
-            failure: function (response) {
-                const data = Ext.decode(response.responseText);
-                Ext.Msg.show({
-                    title: _('backupmodx.err_msg_title'),
-                    msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
-                    buttons: Ext.MessageBox.OK,
-                    icon: Ext.MessageBox.ERROR
-                });
+                Ext.get('backupmodx-restore-btn').removeClass('hide');
+            } else {
+                container.dom.innerText = data.message;
+                Ext.get('backupmodx-restore-btn').addClass('hide');
             }
         });
     },
@@ -152,98 +97,117 @@ Ext.extend(backupmodx, Ext.Component, {
         });
     },
     cancel: function () {
-        Ext.get('backupmodx-form-backup').removeClass('hide');
-        Ext.get('backupmodx-form-download').addClass('hide');
-        Ext.get('backupmodx-form-restore').addClass('hide');
+        this.showParts(['form-backup']);
     },
     removeBackup: function () {
-        Ext.Ajax.request({
-            url: BackupMODX.config.connectorUrl,
-            params: {
-                action: 'removebackup'
-            },
-            success: function (response) {
-                const data = Ext.decode(response.responseText),
-                    files = data.results;
-                if (typeof files != 'undefined' && files != null && files.length != null && files.length === 0) {
-                    Ext.get('backupmodx-restore-container').dom.innerText = '';
-                    Ext.get('backupmodx-form-backup').removeClass('hide');
-                    Ext.get('backupmodx-form-download').addClass('hide');
-                }
-            },
-            failure: function (response) {
-                const data = Ext.decode(response.responseText);
-                Ext.Msg.show({
-                    title: _('backupmodx.err_msg_title'),
-                    msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
-                    buttons: Ext.MessageBox.OK,
-                    icon: Ext.MessageBox.ERROR
-                });
+        this.request({
+            action: 'removebackup'
+        }, function (data) {
+            if (Ext.isArray(data.results) && data.results.length === 0) {
+                Ext.get('backupmodx-restore-container').dom.innerText = '';
+                this.showParts(['form-backup']);
             }
         });
     },
     restoreBackup: function () {
-        const database = Ext.DomQuery.selectNode('input[name=database]:checked');
-        if (database) {
-            Ext.Ajax.request({
-                url: BackupMODX.config.connectorUrl,
-                params: {
-                    action: 'restorebackup',
-                    database: database.value
-                },
-                success: function (response) {
-                    const data = Ext.decode(response.responseText);
-                    if (data.success) {
-                        Ext.Msg.show({
-                            title: _('backupmodx.success_msg_title'),
-                            msg: _('backupmodx.success_restore'),
-                            buttons: Ext.MessageBox.OK,
-                            icon: Ext.MessageBox.INFO,
-                            fn: function () {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        Ext.Msg.show({
-                            title: _('backupmodx.err_msg_title'),
-                            msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
-                            buttons: Ext.MessageBox.OK,
-                            icon: Ext.MessageBox.WARNING
-                        });
-                    }
-                },
-                failure: function (response) {
-                    const data = Ext.decode(response.responseText);
-                    Ext.Msg.show({
-                        title: _('backupmodx.err_msg_title'),
-                        msg: (data.message) ? data.message : _('backupmodx.err_unknown'),
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.ERROR
-                    });
-                }
-            });
-        } else {
-            Ext.Msg.show({
-                title: _('backupmodx.err_msg_title'),
-                msg: _('backupmodx.err_missing_restore_options'),
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.WARNING
-            });
+        const database = Ext.DomQuery.selectNode('input[name=database]:checked', 'backupmodx-restore-container');
+        if (!database) {
+            this.showMessage(_('backupmodx.err_missing_restore_options'), Ext.MessageBox.WARNING);
+            return;
         }
+
+        this.request({
+            action: 'restorebackup',
+            database: database.value
+        }, function (data) {
+            if (data.success) {
+                Ext.Msg.show({
+                    title: _('backupmodx.success_msg_title'),
+                    msg: _('backupmodx.success_restore'),
+                    buttons: Ext.MessageBox.OK,
+                    icon: Ext.MessageBox.INFO,
+                    fn: function () {
+                        location.reload();
+                    }
+                });
+            } else {
+                this.showError(data, Ext.MessageBox.WARNING);
+            }
+        });
     },
     about: function () {
-        const msg = '<span style="display: inline-block; text-align: center">' +
-            '<img width="200" style="margin: 0 50px;" src="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/quadro@2x.png 2x" alt"Quadro"><br>' +
-            '<span style="display: block;margin-bottom: 20px">&copy; 2015-2026 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
-            '<img width="200" src="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + BackupMODX.config.assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio"><br>' +
-            'Version 3.x refactored by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a>' +
-            '</span>';
+        const assetsUrl = BackupMODX.config.assetsUrl,
+            msg = '<span style="display: inline-block; text-align: center">' +
+                '<img width="200" style="margin: 0 50px;" src="' + assetsUrl + 'img/mgr/quadro.png" srcset="' + assetsUrl + 'img/mgr/quadro@2x.png 2x" alt="Quadro"><br>' +
+                '<span style="display: block;margin-bottom: 20px">&copy; 2015-2026 by <a href="https://www.quadro-system.de" target="_blank">www.quadro-system.de</a></span>' +
+                '<img width="200" src="' + assetsUrl + 'img/mgr/treehill-studio.png" srcset="' + assetsUrl + 'img/mgr/treehill-studio@2x.png 2x" alt="Treehill Studio"><br>' +
+                'Version 3.x refactored by <a href="https://treehillstudio.com" target="_blank">treehillstudio.com</a>' +
+                '</span>';
         Ext.Msg.show({
             title: _('backupmodx') + ' ' + BackupMODX.config.version,
             msg: msg,
             buttons: Ext.Msg.OK,
             cls: 'backupmodx_window',
             width: 358
+        });
+    },
+    /**
+     * Send a request to the BackupMODX connector
+     *
+     * @param {Object} params The request parameters
+     * @param {Function} success Called with the decoded response data
+     * @param {Function} [failure] Called on a failed request, defaults to an error message
+     * @param {Number} [timeout] The request timeout in milliseconds
+     */
+    request: function (params, success, failure, timeout) {
+        const options = {
+            url: BackupMODX.config.connectorUrl,
+            params: params,
+            scope: this,
+            success: function (response) {
+                success.call(this, this.decode(response));
+            },
+            failure: failure || function (response) {
+                this.showError(this.decode(response), Ext.MessageBox.ERROR);
+            }
+        };
+        if (timeout) {
+            options.timeout = timeout;
+        }
+        Ext.Ajax.request(options);
+    },
+    /**
+     * Decode a connector response, an invalid response results in an empty object
+     *
+     * @param {Object} response
+     * @returns {Object}
+     */
+    decode: function (response) {
+        try {
+            return Ext.decode(response.responseText) || {};
+        } catch (e) {
+            return {};
+        }
+    },
+    showMessage: function (msg, icon) {
+        Ext.Msg.show({
+            title: _('backupmodx.err_msg_title'),
+            msg: msg,
+            buttons: Ext.MessageBox.OK,
+            icon: icon
+        });
+    },
+    showError: function (data, icon) {
+        this.showMessage((data.message) ? data.message : _('backupmodx.err_unknown'), icon);
+    },
+    /**
+     * Show the given widget parts and hide the other ones
+     *
+     * @param {Array} visible The ids of the visible parts without the backupmodx- prefix
+     */
+    showParts: function (visible) {
+        Ext.each(['form-backup', 'form-download', 'form-restore', 'spinner'], function (part) {
+            Ext.get('backupmodx-' + part)[(visible.indexOf(part) !== -1) ? 'removeClass' : 'addClass']('hide');
         });
     }
 });

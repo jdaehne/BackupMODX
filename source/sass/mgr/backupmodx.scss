@@ -1,17 +1,26 @@
 @use "sass:color";
 
 $treehillstudio-color: #cbd842;
-$red: #be0000;
-$primary: #00948e;
+$link-color: #fff;
+$link-background: #32ab9a;
+$link-hover-background: color.adjust($link-background, $lightness: -8%);
+$border-color: #ccc;
+$border-radius: 4px;
+$muted-color: grey;
+
+@mixin link-hover {
+  background: $link-hover-background;
+  color: $link-color;
+}
 
 .backupmodxWidget {
   .downloadLink {
     text-decoration: none;
     display: block;
     padding: 0.4em 3em 0.4em 1em;
-    color: #fff;
-    border-radius: 4px;
-    background: #32ab9a;
+    color: $link-color;
+    border-radius: $border-radius;
+    background: $link-background;
     margin: 0.5em 0;
     font-size: 14px;
     transition: all 0.3s ease;
@@ -20,8 +29,7 @@ $primary: #00948e;
     cursor: pointer;
     border: 1px solid transparent;
     &:hover {
-      background: #4095ca;
-      color: #fff;
+      @include link-hover;
     }
   }
   .icon {
@@ -44,7 +52,7 @@ $primary: #00948e;
     padding: 5px 0;
     display: block;
     span {
-      color: grey;
+      color: $muted-color;
     }
   }
   .textarea {
@@ -53,9 +61,9 @@ $primary: #00948e;
     width: 100%;
     height: 60px;
     display: block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 5px 0 5px 0;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    margin: 5px 0;
     padding: 5px;
   }
   .restore {
@@ -64,40 +72,37 @@ $primary: #00948e;
   .downloads {
     padding-bottom: 1em;
   }
-  /* Checkboxes */
+
+  // Checkboxes
   .selectBox {
     input[type="checkbox"], input[type="radio"] {
       display: none;
       &:checked + .downloadLink {
-        background: #32ab9a;
-        color: #fff;
+        background: $link-background;
+        color: $link-color;
         border-color: transparent;
-        .download {
-          &:before {
-            opacity: 1;
-            animation: 0.5s ease backupmodxcheck;
-          }
+        .download:before {
+          opacity: 1;
+          animation: 0.5s ease backupmodxcheck;
         }
       }
     }
     .downloadLink {
       background: transparent;
       color: inherit;
-      border-color: #ccc;
+      border-color: $border-color;
       &:hover {
-        background: #4095ca;
-        color: #fff;
-        border-color: #4095ca;
+        @include link-hover;
+        border-color: $link-hover-background;
       }
-      .download {
-        &:before {
-          opacity: 0;
-          transition: inherit;
-        }
+      .download:before {
+        opacity: 0;
+        transition: inherit;
       }
     }
   }
-  /* helper */
+
+  // Helper
   .hide {
     display: none;
   }
@@ -107,8 +112,13 @@ $primary: #00948e;
   button {
     margin: 0 2px 0 0;
   }
-  /* Spinner */
+  .buttons {
+    position: relative;
+  }
+
+  // Spinner
   .spinnerWrapper {
+    margin: 50px;
     .spinner {
       margin: 0 auto 30px;
       width: 70px;
@@ -131,7 +141,6 @@ $primary: #00948e;
         border: none;
       }
     }
-    margin: 50px;
     .text {
       text-align: center;
     }
@@ -139,14 +148,11 @@ $primary: #00948e;
 }
 
 @keyframes backupmodxcheck {
-  0% {
+  0%, 100% {
     transform: scale(1);
   }
   70% {
     transform: scale(2);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 
@@ -155,12 +161,8 @@ $primary: #00948e;
     transform: scale(0);
   }
   40% {
-    transform: scale(1.0);
+    transform: scale(1);
   }
-}
-
-.buttons {
-  position: relative;
 }
 
 .backupmodx_window {
@@ -189,6 +191,6 @@ $primary: #00948e;
   }
   &.modx3 {
     right: 50%;
-    transform: translateX(+50%);
+    transform: translateX(50%);
   }
 }

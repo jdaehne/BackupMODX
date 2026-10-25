@@ -40,7 +40,7 @@ class BackupMODX
      * The version
      * @var string $version
      */
-    public $version = '3.1.2';
+    public $version = '3.1.3';
 
     /**
      * The class options
@@ -86,10 +86,7 @@ class BackupMODX
 
         // Add default options
         $this->options = array_merge($this->options, array(
-            'targetPath' => $this->getOption('targetPath', $options, '{assets_path}backups/'),
-            'excludes' => $this->getOption('excludes', $options, ''),
-            'zipAlias' => $this->getOption('zipAlias', $options, 'zip'),
-            'mysqldumpAlias' => $this->getOption('mysqldumpAlias', $options, 'mysqldump'),
+            'targetPath' => $this->translatePath($this->getOption('targetPath', $options, '{core_path}backup/')),
             'debug' => (bool)$this->getOption('debug', $options, false),
             'logTarget' => json_decode($this->getOption('logTarget', $options, '{"target":"FILE","options":{"filename":"' . $this->namespace . '.log"}}'), true),
             'timelimit' => (int)$this->getOption('timelimit', $options, 120)
@@ -150,6 +147,10 @@ class BackupMODX
      */
     public function getFile($folder, $filename)
     {
+        if (!$this->isValidName($folder) || !$this->isValidName($filename)) {
+            return false;
+        }
+
         $file = $this->getOption('targetPath') . $folder . '/' . $filename;
 
         if (file_exists($file)) {
@@ -160,22 +161,41 @@ class BackupMODX
     }
 
     /**
+     * Check if a backup folder or file name is a plain name without any path
+     * information, to keep the file access inside the backup target path
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function isValidName($name)
+    {
+        return is_string($name) && $name !== '' && $name !== '.' && $name !== '..' && strpbrk($name, "/\\\0") === false;
+    }
+
+    /**
      * Get backups
      *
      * @return array
      */
     public function getBackups()
     {
-        $backups = array();
-        $folders = preg_grep('/^([^.])/', scandir($this->getOption('targetPath'))); // ignore hidden files: '.' and '..'
+        $targetPath = $this->getOption('targetPath');
+        $dateFormat = $this->modx->getOption('manager_date_format') . ' ' . $this->modx->getOption('manager_time_format');
 
-        foreach ($folders as $folder) {
-            $filenames = preg_grep('/^([^.])/', scandir($this->getOption('targetPath') . $folder));
+        $backups = array();
+        foreach ($this->scanFolder($targetPath) as $folder) {
+            $folderPath = $targetPath . $folder . '/';
+            $date = filemtime($folderPath);
+            $backup = array(
+                'name' => $folder,
+                'path' => $targetPath,
+                'date' => $date,
+                'date_format' => date($dateFormat, $date),
+            );
 
             $files = array();
             $note = '';
-
-            foreach ($filenames as $file) {
+            foreach ($this->scanFolder($folderPath) as $file) {
                 switch (pathinfo($file, PATHINFO_EXTENSION)) {
                     case 'zip':
                         $files['files'] = $file;
@@ -185,28 +205,16 @@ class BackupMODX
                         break;
                     case 'txt':
                         $files['note'] = $file;
-                        $note = file_get_contents($this->getOption('targetPath') . $folder . '/' . $file);
+                        $note = file_get_contents($folderPath . $file);
                         break;
                 }
             }
 
             if (!empty($files)) {
-                $backups[] = array(
-                    'name' => $folder,
-                    'path' => $this->getOption('targetPath'),
-                    'date' => filemtime($this->getOption('targetPath') . $folder),
-                    'date_format' => date($this->modx->getOption('manager_date_format') . ' ' . $this->modx->getOption('manager_time_format'), filemtime($this->getOption('targetPath') . $folder)),
-                    'note' => $note,
-                    'files' => $files,
-                );
-            } else {
-                $backups[] = array(
-                    'name' => $folder,
-                    'path' => $this->getOption('targetPath'),
-                    'date' => filemtime($this->getOption('targetPath') . $folder),
-                    'date_format' => date($this->modx->getOption('manager_date_format') . ' ' . $this->modx->getOption('manager_time_format'), filemtime($this->getOption('targetPath') . $folder)),
-                );
+                $backup['note'] = $note;
+                $backup['files'] = $files;
             }
+            $backups[] = $backup;
         }
 
         return array_reverse($backups);
@@ -223,16 +231,8 @@ class BackupMODX
         $path = $this->getOption('targetPath') . $backup;
 
         if (file_exists($path)) {
-            $cacheManager = $this->modx->getCacheManager();
-            $cacheManager->deleteTree($path, array(
-                'deleteTop' => true,
-                'skipDirs' => false,
-                'extensions' => array('.sql', '.zip', '.txt')
-            ));
-
-            if ($this->getOption('debug')) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Remove backup: ' . $path, $this->getOption('logTarget'), 'BackupMODX');
-            }
+            $this->deleteFolder($path);
+            $this->debug('Remove backup: ' . $path);
 
             return true;
         }
@@ -248,33 +248,84 @@ class BackupMODX
      */
     public function cleanCronBackups($maxDatabase = 10, $maxFiles = 5)
     {
-        $max = max($maxFiles, $maxDatabase);
-
         $backups = $this->getBackups();
 
         // Remove old files
         foreach (array_slice($backups, $maxFiles) as $backup) {
-            if (isset($backup['files']['files'])) {
-                $file = $backup['path'] . $backup['name'] . '/' . $backup['files']['files'];
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
+            $this->removeBackupFile($backup, 'files');
         }
 
         // Remove old databases
         foreach (array_slice($backups, $maxDatabase) as $backup) {
-            if (isset($backup['files']['database'])) {
-                $file = $backup['path'] . $backup['name'] . '/' . $backup['files']['database'];
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
+            $this->removeBackupFile($backup, 'database');
         }
 
         // Remove old backup folders
-        foreach (array_slice($backups, $max) as $backup) {
+        foreach (array_slice($backups, max($maxFiles, $maxDatabase)) as $backup) {
             $this->removeBackup($backup['name']);
+        }
+    }
+
+    /**
+     * Remove a single file of a backup
+     *
+     * @param array $backup A backup entry returned by getBackups
+     * @param string $type The file type key (files, database or note)
+     */
+    private function removeBackupFile($backup, $type)
+    {
+        if (isset($backup['files'][$type])) {
+            $file = $backup['path'] . $backup['name'] . '/' . $backup['files'][$type];
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+    }
+
+    /**
+     * Delete a backup folder including its backup files
+     *
+     * @param string $path
+     */
+    protected function deleteFolder($path)
+    {
+        $this->modx->getCacheManager()->deleteTree($path, array(
+            'deleteTop' => true,
+            'skipDirs' => false,
+            'extensions' => array('.sql', '.zip', '.txt')
+        ));
+    }
+
+    /**
+     * List the non-hidden entries of a folder
+     *
+     * @param string $path
+     * @return array
+     */
+    private function scanFolder($path)
+    {
+        return preg_grep('/^([^.])/', scandir($path)); // ignore hidden files: '.' and '..'
+    }
+
+    /**
+     * Log a message to the BackupMODX log target
+     *
+     * @param string $message
+     */
+    protected function log($message)
+    {
+        $this->modx->log(xPDO::LOG_LEVEL_ERROR, $message, $this->getOption('logTarget'), 'BackupMODX');
+    }
+
+    /**
+     * Log a message to the BackupMODX log target, if debug mode is enabled
+     *
+     * @param string $message
+     */
+    protected function debug($message)
+    {
+        if ($this->getOption('debug')) {
+            $this->log($message);
         }
     }
 }
